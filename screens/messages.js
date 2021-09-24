@@ -50,10 +50,8 @@
     return(
         <SafeAreaView style={styles.container} >
             
-                <View style={{height:height/4.1,}}>
-                    <Text style={styles.newMatch}>
-                        New Matches
-                    </Text>
+                <View style={{height:height/6.5,backgroundColor:'white'}}>
+                  
                     <ScrollView
                     horizontal
                     >
@@ -73,9 +71,11 @@
                         
                         </View>
                     </ScrollView>  
-
-                    <Text style={styles.newMatch}>Messages</Text>
+                    <View style={styles.msgTexContainer}>
+                        <Text style={styles.msgText}>Messages</Text>
+                    </View>
                 </View>
+                
             
                     
                         <View style={{width:width,height:height/1.44,marginBottom:width/7.2,backgroundColor:'#efefef',}}>
@@ -125,27 +125,35 @@
         //flex:1,
         //width:"100%"
     },
-    newMatch:{
+    msgText:{
         color:"#ff7100",
-        fontWeight:"300",
-        fontSize:width/15,
-        backgroundColor:'white',
+        fontWeight:"500",
+        fontSize:width/23,
+        //backgroundColor:'black',
 
-        width:width/1.7,
-        height:width/7.3,
+        width:width,
+        height:height/29,
         //marginBottom:(width)/width/1.2,
         //marginTop:(width)/width/1.2,
-        marginLeft:width/50
-        
-        
+        marginLeft:width/40
+
+        },
+        msgTexContainer:{
+            //backgroundColor:'#efefef',
+            position:'absolute',
+           
+            marginTop:height/8.5
+            
         },
 
     matchesUsers:{
         flexDirection:"row",
         //flexWrap:"wrap",
-        backgroundColor:'white',
+        //backgroundColor:'red',
         //width:'100%',
-        height:width/3,
+        height:width/4,
+        
+        
     
         //marginBottom:width/(width/1.01),
         
@@ -169,6 +177,7 @@
         width:width/5.8,
         height:width/5.8,
         borderRadius:width/8,
+       // backgroundColor:'red'
     },
     itemConatiner:{
         alignSelf:'center',
