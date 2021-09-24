@@ -1,0 +1,164 @@
+
+[
+    {
+        "partnair":{
+            "id":1,
+            "name":"wahid boujemaa",
+            "avatar":"https://scontent.ftun5-1.fna.fbcdn.net/v/t1.18169-9/11880505_389864781223543_6418437934454991901_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=HG8MGpD1NdEAX9E4dqz&_nc_ht=scontent.ftun5-1.fna&oh=04b1c2711b9eef47d3cafc214b139975&oe=6153D30D"
+        },
+      
+        "messages":[
+            {
+                "id":1,
+                "content":"hello ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"me"
+            },
+            {
+               "id":2,
+                "content":"hello ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"partnair"
+            },
+            {
+                "id":3,
+                "content":"hello ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"me"
+            },
+            {
+                "id":4,
+                "content":"hello ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"partnair"
+            },
+            {
+                "id":5,
+                "content":"Hey there, t",
+                "sended_at":"12:42 12/12/2020",
+                "is_emiteur":"me"
+            }
+           
+        ]
+            
+
+    },
+
+
+    
+    
+    
+    {
+        "partnair":{
+            "id":2,
+            "name":"Moncef",
+           "avatar":"https://scontent.ftun10-1.fna.fbcdn.net/v/t39.30808-6/239313930_3026692510946675_3655764666210239985_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=3jvNL-mC6W8AX_vFErn&tn=hOMOpji0u81ExvfW&_nc_ht=scontent.ftun10-1.fna&oh=e2c5266a22e03de29dbd5c06ebf58d8b&oe=61365148"
+        },
+     
+        "messages":[
+            {
+                "id":1,
+                "content":"ha ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"partnair"
+            },
+            {
+                "id":2,
+                "content":"oui ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"me"
+            },
+            {
+                "id":3,
+                "content":"nn ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"partnair"
+            },
+            {
+                "id":4,
+                "content":"Hey there, this is my test for a po",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"me"
+            },
+            {
+                "id":5,
+                "content":"Hey there, this is my test for a po sqddfqsfdd qdqohjoiuhqdes kjuhsqiuhbqds oqshoukhqsd oiuhqkoude",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"partnair"
+            },
+
+            {
+                "id":6,
+                "content":"ha haya kife wa9te trawah w  kadh ....  ha9a ti hawka n9ol fi de n importe qoui hachti b msg twil chwaya  ti kha il hasal mriguil haka ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"me"
+            },
+            {
+                "id":7,
+                "content":"ha haya kife wa9te trawah w  kadh ....  ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"partnair"
+            },
+            {
+                "id":8,
+                "content":"ha haya kireeazraezfe wa9tearar derzfrzrrfz w ar kaardaarrh .aaarrararr...  ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"me"
+            },
+            {
+                "id":9,
+                "content":"ha haya ki  sreeazraqqs  ezfe wa9te  arar qssqsq qssqderzfr   zrrfz w ar kaardaarrh .aaarrararr...  ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"partnair"
+            },
+            {
+                "id":10,
+                "content":"ha haya ki  qdsqs  ezfe wa9te  arar fffqssqsq qssqderzfr   zq rrfz w ar kafffarda arrh .aaar rararr...  ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"me"
+            }
+
+        ]
+            
+
+    },
+
+       
+    {
+        "partnair":{
+            "id":3,
+            "name":"zied",
+            "avatar":"https://scontent.ftun10-1.fna.fbcdn.net/v/t1.18169-9/10383015_659507697451884_5463364360211764491_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=jqRLvrDL7ZUAX_HgAt4&_nc_ht=scontent.ftun10-1.fna&oh=6c5ffe8853a00462f4a847e40bbb341d&oe=6156C7C0"
+        },
+     
+        "messages":[
+            {
+                "id":1,
+                "content":"hafffdd ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"me"
+            },
+            {
+                "id":2,
+                "content":"oufdfdfdfdi ",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"partnair"
+            },
+            {
+                "id":3,
+                "content":"ndffdfdfdn",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"me"
+            },
+            {
+                "id":4,
+                "content":"Hey there, this is my test for a post of my social app in React Native.",
+                "sended_at":"12:02 02/02/2002",
+                "is_emiteur":"partnair"
+            }
+        ]
+            
+
+    }
+
+]
