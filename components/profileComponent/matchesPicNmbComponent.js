@@ -1,18 +1,22 @@
 import React,{useEffect} from "react";
-import { StyleSheet, Text, View, Image, ScrollView,Dimensions } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity,Dimensions } from "react-native";
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 
 
 export default function matchesAndPicNbr(props){
-    const {matches,nbrPictures}=props
+    const {matches,nbrPictures,setEditGalaryVisibility}=props
    
     return (
         <View style={styles.container}>
             <View style={styles.textContainer}>
                 <Text style ={styles.matchesAndPicText}>Matches</Text>
-                <Text style ={styles.matchesAndPicText}>Pictures</Text>
+                <TouchableOpacity
+                    onPress={()=>setEditGalaryVisibility(true)}
+                >
+                    <Text style ={styles.matchesAndPicText}>Pictures</Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.separtor}></View>
             <View style={styles.valuesContainer}>

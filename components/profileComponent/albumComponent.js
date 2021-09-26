@@ -1,6 +1,5 @@
 import React,{useEffect,useState} from "react";
 import { StyleSheet, Modal , View, Image, FlatList,Dimensions,text,TouchableOpacity } from "react-native";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 
 let width =Dimensions.get("window").width

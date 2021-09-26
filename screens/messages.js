@@ -1,7 +1,6 @@
     import React, {useState } from 'react'
     import { View, Text, Dimensions,StyleSheet,Image, FlatList, ScrollView, TouchableOpacity,SafeAreaView } from 'react-native'
     import users from '../testData/users';
-    import messageData from '../testData/messageData'
     import descuChat from '../testData/chatData'
 
     let width =Dimensions.get("window").width

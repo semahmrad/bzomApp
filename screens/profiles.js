@@ -7,7 +7,7 @@ import Matches from './../components/profileComponent/matchesPicNmbComponent'
 import AlbumPic from './../components/profileComponent/albumComponent'
 import EditButton from './../components/profileComponent/editPicturebutton'
 import SpaceCloseImagePickButton from '../components/profileComponent/spaceCloseButtonImagePicker'
-
+import EditAlbum from './../components/profileComponent/editAlbum'
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 
@@ -25,13 +25,22 @@ export default function profile(){
 
 
 const [buttonVisibilty,setButtonVisibilty]=useState(false)
+const [editGalaryVisibility,setEditGalaryVisibility]=useState(false)
 
     return (
         <View>
+            <EditAlbum
+                albumImg={albumImg}
+                editGalaryVisibility={editGalaryVisibility}
+                setEditGalaryVisibility={setEditGalaryVisibility}
+
+            />
             <SpaceCloseImagePickButton
                 setButtonVisibilty={setButtonVisibilty}
                 buttonVisibilty={buttonVisibilty}
             />
+
+           
 
              <EditButton
              setButtonVisibilty={setButtonVisibilty}
@@ -53,6 +62,7 @@ const [buttonVisibilty,setButtonVisibilty]=useState(false)
             <Matches 
                 matches={matches}
                 nbrPictures={nbrPictures}
+                setEditGalaryVisibility={setEditGalaryVisibility}
             />
 
             <AlbumPic
