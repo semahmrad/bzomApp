@@ -1,12 +1,7 @@
 {
     "user_name":"Semah Mrad",
-    "profile_Pic":"https://scontent.ftun10-1.fna.fbcdn.net/v/t39.30808-6/222220421_1235136846922645_6032050875816792278_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=upiR5L5l4PgAX9s2rTm&_nc_ht=scontent.ftun10-1.fna&oh=71735b866929f2caa18474d6d2d06ef3&oe=614DCD67",
     "bio":"Devlopper, IA , chess player , Violin aa",
     "album":[
-        {
-            "img_id":"0",
-            "img_path":"https://scontent.ftun10-1.fna.fbcdn.net/v/t39.30808-6/222220421_1235136846922645_6032050875816792278_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=upiR5L5l4PgAX9s2rTm&_nc_ht=scontent.ftun10-1.fna&oh=71735b866929f2caa18474d6d2d06ef3&oe=614DCD67"
-        },
         {
             "img_id":"1",
             "img_path":"https://scontent.ftun6-1.fna.fbcdn.net/v/t1.6435-9/123484724_1065365220566476_8028278990525385934_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=174925&_nc_ohc=4BBCPOeZNhAAX-g5K2I&tn=hOMOpji0u81ExvfW&_nc_ht=scontent.ftun6-1.fna&oh=811b342200bf984b6e1e0a67b98e425f&oe=61679696"
@@ -27,6 +22,7 @@
             "img_id":"5",
             "img_path":"https://scontent.ftun6-1.fna.fbcdn.net/v/t1.18169-9/30656598_444572965979041_6523002959509129157_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=174925&_nc_ohc=kTXfCU0w29IAX8-BSnF&tn=hOMOpji0u81ExvfW&_nc_ht=scontent.ftun6-1.fna&oh=014bc4de6da8398be2a0eafd7148f86e&oe=6167C9D2"
         }
+        
     ],
     "matches_nbr":"30"
 }

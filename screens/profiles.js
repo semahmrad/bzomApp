@@ -25,7 +25,7 @@ export default function profile(){
 
 
 const [buttonVisibilty,setButtonVisibilty]=useState(false)
-const [editGalaryVisibility,setEditGalaryVisibility]=useState(false)
+const [editGalaryVisibility,setEditGalaryVisibility]=useState(true)
 
     return (
         <View>
@@ -50,7 +50,7 @@ const [editGalaryVisibility,setEditGalaryVisibility]=useState(false)
 
             <ProfilePic
                 setButtonVisibilty={setButtonVisibilty}
-                imgSrc={imgSrc}
+                imgSrc={albumImg[0].img_path}
                 userName={userName}
                 bio={bio}
                 buttonVisibilty={buttonVisibilty}
