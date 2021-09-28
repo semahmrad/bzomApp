@@ -15,15 +15,7 @@ export default function Picture(props){
             <TouchableOpacity
 
                onPress={()=>setButtonVisibilty(!buttonVisibilty)} 
-             /*  onPress={()=>ImagePicker.openPicker({
-                   freeStyleCropEnabled:true,
-                    width: width/5,
-                    height: width/5,
-                    cropping: true
-                  }).then(image => {
-                    console.log(image);
-                    setImagePath(image.path)
-                  }).catch(e=>{console.warn(error)})}*/
+       
                 style={styles.editProfilePicButton}
             >
                 <Image 

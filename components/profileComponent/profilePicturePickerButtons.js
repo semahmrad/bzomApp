@@ -40,7 +40,8 @@ export default function profilePickerButton(props){
                
                 <TouchableOpacity
                     onPress={()=>{
-                        changeProfilePic(setImagePath)
+                        changeProfilePic(setImagePath);
+                        setButtonVisibilty(false);
                     }}
                 >
                     <Text style={styles.buttonUploadOpenCamerText}>Upload Picture</Text>
@@ -49,6 +50,7 @@ export default function profilePickerButton(props){
                 <TouchableOpacity
                     onPress={()=>{
                         openCamer(setImagePath);
+                        setButtonVisibilty(false);
                     }}
                 >
                     <Text style={styles.buttonUploadOpenCamerText}>Open Camera</Text>

@@ -25,7 +25,8 @@ export default function profile(){
 
 
 const [buttonVisibilty,setButtonVisibilty]=useState(false)
-const [editGalaryVisibility,setEditGalaryVisibility]=useState(true)
+const [editGalaryVisibility,setEditGalaryVisibility]=useState(false)
+const [imagePath,setImagePath]=useState(albumImg[0].img_path)
 
     return (
         <View>
@@ -33,6 +34,7 @@ const [editGalaryVisibility,setEditGalaryVisibility]=useState(true)
                 albumImg={albumImg}
                 editGalaryVisibility={editGalaryVisibility}
                 setEditGalaryVisibility={setEditGalaryVisibility}
+                setImagePath={setImagePath}
 
             />
             <SpaceCloseImagePickButton
@@ -54,7 +56,8 @@ const [editGalaryVisibility,setEditGalaryVisibility]=useState(true)
                 userName={userName}
                 bio={bio}
                 buttonVisibilty={buttonVisibilty}
-               
+                imagePath={imagePath}
+                setImagePath={setImagePath}
             />
             
            

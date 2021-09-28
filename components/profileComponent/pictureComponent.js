@@ -9,8 +9,8 @@ let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 
 export default function Picture(props){
-    const {imgSrc,userName,bio,buttonVisibilty,setButtonVisibilty}=props
-    const [imagePath,setImagePath]=useState(imgSrc)
+    const {imgSrc,userName,bio,buttonVisibilty,setButtonVisibilty,imagePath,setImagePath}=props
+    //const [imagePath,setImagePath]=useState(imgSrc)
    
 
     return (

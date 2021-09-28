@@ -43,25 +43,45 @@ const addPicVisibility=(galary,setGalary)=>{
     }
     else return null
 }
-const makeProfilePicView=(img_path)=>{
+const makeProfilePicView=(makeProfilePicVisibility,setMakeProfilePicVisibility,setImagePath,selectedPic,setEditGalaryVisibility)=>{
 
+    if(makeProfilePicVisibility){
     return (
-            
-        <View style={styles.makeProfilePicSpace}>
-            <Image 
-                source={{uri:img_path}}
-                style={styles.makeprofilePic}
-                resizeMode='stretch'
-            />
-        </View>
-    )
+        <View style={styles.makeProfilePicView}>
+               
+        <TouchableOpacity
+            onPress={()=>{
+                setImagePath(selectedPic);
+                setMakeProfilePicVisibility(false)
+                setEditGalaryVisibility(false)
+            }}
+        >
+            <Text style={styles.buttons}>Make as profile picture</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+            onPress={()=>{
+                setMakeProfilePicVisibility(false)
+                setEditGalaryVisibility(false)
+            }}
+        >
+            <Text style={styles.buttons}>Cancel</Text>
+        </TouchableOpacity>
+    </View>
+    )}
+    else return null
 }
 
 
 
+
 export default function editAlbum(props){
-const {albumImg,editGalaryVisibility,setEditGalaryVisibility}=props;
+const {albumImg,editGalaryVisibility,setEditGalaryVisibility,setImagePath}=props;
 const [galary,setGalary]=useState(albumImg);
+const [makeProfilePicVisibility,setMakeProfilePicVisibility]=useState(false);
+const [selectedPic,setSelectedPic]=useState('');
+
+
+
 
     return (
       
@@ -99,14 +119,21 @@ const [galary,setGalary]=useState(albumImg);
                                     <Text style={styles.deleteIcon}>x</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity 
-                                
+                                onPress={()=>{
+                                    setSelectedPic(item.img_path)
+                                    setMakeProfilePicVisibility(true)
+
+                                }}
+                                    
                                 >
                                     <Image 
                                     source={{uri:item.img_path}}
                                     style={styles.imgPath}
                                     resizeMode='stretch'
                                     />
+                                    
                                 </TouchableOpacity>
+                              
                               
                             </View>
                             
@@ -115,39 +142,22 @@ const [galary,setGalary]=useState(albumImg);
                  
                 })}
                 />  
-               <View style={styles.makeProfilePicSpace}>
-                   <View style={styles.headerMakeProfilePic}>
-                        <TouchableOpacity 
-                            style={styles.cancelButtonHeader}
-                        >
-                            <Text style={styles.textButtonHeader}>Ignore</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity 
-                            style={styles.donelButtonHeader}
-                        >
-                            <Text style={styles.textButtonHeader}>Done</Text>
-                        </TouchableOpacity>
-                   </View>
-                <Image 
-                source={{uri:'https://scontent.ftun6-1.fna.fbcdn.net/v/t1.6435-9/105037100_960679387701727_7116722160625512159_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=174925&_nc_ohc=IKy5wJia4y8AX-HCcF0&tn=hOMOpji0u81ExvfW&_nc_ht=scontent.ftun6-1.fna&oh=50f54fff1ffe5fa4e7d6df31ba837a05&oe=616568F8'}}
-                style={styles.makeprofilePic}
-                resizeMode='stretch'
-                />
-                <View style={styles.discreptionContainer}>
-                <Text style={styles.discreption}>if you want make this picture as profile picture click "Done" else click Ignore</Text>
+            
+        
                 </View>
-                </View>
-                      
-                </View>
-                <TouchableOpacity
-                        onPress={()=>{
-                            setEditGalaryVisibility(false)
-                            setGalary(albumImg)
-                        }}
-                        style={styles.closespace}
+               
+                    <TouchableOpacity
+                            onPress={()=>{
+                                setEditGalaryVisibility(false)
+                                setGalary(albumImg)
+                            }}
+                            style={styles.closespace}
                     />
                    
-            </View>
+
+                   {makeProfilePicView(makeProfilePicVisibility,setMakeProfilePicVisibility,setImagePath,selectedPic,setEditGalaryVisibility)}
+                </View>
+
             : null}        
          </View>
     );
@@ -311,5 +321,31 @@ const styles = StyleSheet.create({
         color:'#ff7100',
         fontFamily:'italic'
     },
+
+
+    //make as profile pic style
+    makeProfilePicView:{
+        position:'absolute',
+        zIndex:12,
+        backgroundColor:'white',
+        width:width,
+        height:height/7,
+        alignSelf:'center',
+        marginTop:height/1.265,
+        paddingTop:height/65,
+        //borderRadius:width/25,
+        alignItems:'center',
+    },
+    buttons:{
+        textAlign:'center',
+        marginBottom:height/45,
+        fontSize:height/40,
+        color:'white',
+        backgroundColor:'#ff7100',
+        width:width/1.2,
+        height:height/25,
+        borderRadius:width/36,
+    }
+
   
-})
+})  

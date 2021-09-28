@@ -15,7 +15,13 @@ export default function matchesAndPicNbr(props){
                 <TouchableOpacity
                     onPress={()=>setEditGalaryVisibility(true)}
                 >
-                    <Text style ={styles.matchesAndPicText}>Pictures</Text>
+                    <View style={styles.picturesContainer}>
+                        <Image 
+                            style={styles.editPicture}
+                            source={require('./profileComponentIcons/editProfilePic.png')}
+                        />
+                        <Text style ={styles.matchesAndPicText}>Pictures</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
             <View style={styles.separtor}></View>
