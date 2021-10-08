@@ -1,38 +1,48 @@
 import React,{useEffect} from "react";
 import { StyleSheet, Text, View, Image, ScrollView,Dimensions } from "react-native";
-import Geocoder from 'react-native-geocoding';
+
 import GetLocation from 'react-native-get-location'
+import Geocoder from 'react-native-geocoding';
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 
 export default function Location() {
+    Geocoder.init("AIzaSyAX8NZ3Tjhtesvy16l6-JLa4QhrxwcwbAo"); // use a valid API key
 
-    const getPosition=()=>{
+    const getLargAndLat=()=>{
+        
+    }
+    const getAdressFromLargLat=()=>{
         GetLocation.getCurrentPosition({
             enableHighAccuracy: true,
             timeout: 15000,
           
         })
         .then(location => {
-            console.log('location',location);
-            return location
+           // console.log('location',location);
+            Geocoder.from(location.altitude, location.latitude)
+            .then(json => {
+                console.log('console.log(addressComponent)==>',addressComponent);
+                    return addressComponent = json.results[0].address_components[0];
+                
+            })
+            .catch(error => console.warn('a==>',error));
         })
         .catch(error => {
             const { code, message } = error;
             console.warn('code, message');
         })
+    
     }
 
-    useEffect(()=>{
-       
-    },[]);
+   
 
     return (
         <View style={styles.container}>
 
             <Text style={styles.locationText}>Location</Text>
-            <Text style={styles.location}>{getPosition()}</Text>
+            <Text style={styles.location}>{getAdressFromLargLat()}</Text>
 
         </View>
     );

@@ -146,9 +146,11 @@ const styles = StyleSheet.create({
     //react style
     iconsReact:{
         flexDirection:'row',
-        justifyContent:"space-around",
         padding:width/18,
-        marginBottom:width/25
+        position:'absolute',
+        marginTop:height/1.25,
+        alignSelf:'center'
+
         
     },
     buttonIconLike:{
@@ -160,7 +162,8 @@ const styles = StyleSheet.create({
         alignItems:"center",
         borderWidth:width/300,
         width:width/7,
-        height:height/14
+        height:height/14,
+        marginLeft:width/5
         
     },
     buttonIconDisLike:{
@@ -184,5 +187,6 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         borderWidth:width/300,
+        marginLeft:width/5
     },
   });

@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     ageSelector:{
         //backgroundColor:'pink',
         width:width/2.2,
-        height:height/22,
+        height:height/15,
         marginLeft:width/12
 
     },

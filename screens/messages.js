@@ -1,5 +1,5 @@
     import React, {useState } from 'react'
-    import { View, Text, Dimensions,StyleSheet,Image, FlatList, ScrollView, TouchableOpacity,SafeAreaView } from 'react-native'
+    import { View, Text,TextInput, Dimensions,StyleSheet,Image, FlatList, ScrollView, TouchableOpacity,SafeAreaView } from 'react-native'
     import users from '../testData/users';
     import descuChat from '../testData/chatData'
 
@@ -7,7 +7,7 @@
     let height =Dimensions.get("window").height
 
 
-    const getLastMessageWithPartnair=(descuChat)=>{
+    const getLastMessageWithPartnair=(descuChat,searchInput)=>{
     const arrayMsgData=[]
 
 
@@ -25,7 +25,14 @@
         arrayMsgData.push(objectMsgData)
 
     });
-    return arrayMsgData
+    if(!searchInput){return arrayMsgData}
+    else{
+        const res= arrayMsgData.filter(messageObject=>messageObject.partnair.name.includes(searchInput));
+        return res
+    }
+   
+  
+   
     }
 
     const descuRenderByUser=(descuChat,username,arraymsg)=>{
@@ -43,11 +50,26 @@
 
 
     export default function messages({navigation}) {
-        const[msgArray,setMsgArray]=useState([])
-    
+        //const[msgArray,setMsgArray]=useState([])
+        const [searchInput,setSearchInput]=useState('')
+
+        
 
     return(
         <SafeAreaView style={styles.container} >
+            <View style={styles.searchZone}>
+                <Image
+                    source={require('./../components/messagesComponents/messagesIcons/search.png')}
+                    style={styles.searchicon}
+                />
+                <TextInput
+                    style={styles.searchInput}
+                    placeholder="search ..."
+                    value={searchInput}
+                    onChangeText={setSearchInput}
+                />
+            </View>
+           
             
                 <View style={{height:height/6.5,backgroundColor:'white'}}>
                   
@@ -80,13 +102,13 @@
                         <View style={{width:width,height:height/1.44,marginBottom:width/7.2,backgroundColor:'#efefef',}}>
                             <FlatList
                             
-                                data={getLastMessageWithPartnair(descuChat)}
+                                data={getLastMessageWithPartnair(descuChat,searchInput)}
                                 keyExtractor={item=>item.id}
                                 renderItem={({item})=>{
   
                                     return(                               
                                     <TouchableOpacity 
-                                        onPress={()=>navigation.navigate('chat',{partnair:item.partnair,discution:descuRenderByUser(descuChat,item.partnair.name,msgArray)},)}
+                                        onPress={()=>navigation.navigate('chat',{partnair:item.partnair,discution:descuRenderByUser(descuChat,item.partnair.name)},)}
                                         style={styles.itemConatiner}>
                                     
                                         <Image source={{uri:item.partnair.avatar}} style={{width:width/6,height:width/6,borderRadius:width/6,margin:width/70,borderWidth:width/180,borderColor:'white'}} />  
@@ -117,6 +139,29 @@
         height:height
         
         //marginTop:width/15
+    },
+    searchZone:{
+        flexDirection:'row',
+        backgroundColor:'#e4e6e8',
+        width:width/1.2,
+        height:height/22,
+        alignSelf:'center',
+        marginTop:height/100,
+        borderRadius:width/10,
+    },
+
+    searchicon:{
+        width:width/14,
+        height:height/28,
+        marginTop:height/180,
+        marginLeft:width/100,
+    },
+    searchInput:{
+        
+        marginLeft:width/70,
+        width:width/1.5,
+        height:height/20,
+        color:'black'
     },
     justBackground:{
     // padding:width/30,

@@ -16,10 +16,10 @@ export default function matchesAndPicNbr(props){
                     onPress={()=>setEditGalaryVisibility(true)}
                 >
                     <View style={styles.picturesContainer}>
-                        <Image 
+                        {/*<Image 
                             style={styles.editPicture}
                             source={require('./profileComponentIcons/editProfilePic.png')}
-                        />
+                        />*/}
                         <Text style ={styles.matchesAndPicText}>Pictures</Text>
                     </View>
                 </TouchableOpacity>
@@ -53,7 +53,21 @@ const styles = StyleSheet.create({
         width:width/3,
         textAlign:'center',
         fontWeight:'300',
+        color:'#1a0dae'
 
+    },
+    picturesContainer:{
+        flexDirection:'row',
+        justifyContent: 'center',
+
+    },
+    editPicture:{
+        width:width/18,
+        height:width/18,
+        //backgroundColor:'red',
+        marginRight:-width/15,
+        marginLeft:width/50,
+        marginTop:height/500
     },
 
   

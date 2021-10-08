@@ -113,7 +113,10 @@ const [selectedPic,setSelectedPic]=useState('');
                         return(
                             <View>
                                 <TouchableOpacity
-                                    onPress={()=>{setGalary(galary.filter(image => image!=item))}}
+                                    onPress={()=>{
+                                        setGalary(galary.filter(image => image!=item))
+                                        setMakeProfilePicVisibility(false)
+                                    }}
                                     style={styles.deletePicButton}
                                 >
                                     <Text style={styles.deleteIcon}>x</Text>

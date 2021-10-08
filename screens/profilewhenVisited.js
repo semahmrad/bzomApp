@@ -10,40 +10,32 @@ import AlbumPic from './../components/profileComponent/albumComponent'
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 
-const imgSrc=profileData.profile_Pic;
-const userName=profileData.user_name;
-const bio=profileData.bio;
-const matches =profileData.matches_nbr;
-const nbrPictures=profileData.album.length;
-const albumImg=profileData.album;
 
+export default function profileVisited(props){
 
-
-
-export default function profileVisited(){
-
-
+    const{profilePicture,userName,bio,matches,nbrPictures,albumImg}=props
 
     return (
-        <View>
 
-            <ProfilePic
-                imgSrc={imgSrc}
-                userName={userName}
-                bio={bio}
+           <View>
+                <ProfilePic
+                    imgSrc={profilePicture}
+                    userName={userName}
+                    bio={bio}
+                    
+                />
                 
-            />
             
-           
-          
-            <Matches 
-                matches={matches}
-                nbrPictures={nbrPictures}
-            />
+            
+                <Matches 
+                    matches={matches}
+                    nbrPictures={nbrPictures}
+                />
 
-            <AlbumPic
-                albumImg={albumImg}
-            />
+                <AlbumPic
+                    albumImg={albumImg}
+                />
+      
       
         </View>
     );

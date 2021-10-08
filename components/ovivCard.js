@@ -21,14 +21,13 @@ import LinearGradient from 'react-native-linear-gradient';
                         resizeMode="stretch"
                     >
                        
-                       
-                 
+                    
                        <LinearGradient colors={['#18191a4a', '#000000ab', 'black']}style={styles.cardTexetStyle}>
                  
                             <Text style={styles.name}>{user.name}</Text>
                             <Text style={styles.bio}>{user.bio}</Text>
      
-                          </LinearGradient>
+                        </LinearGradient>
                 
                        
                     </ImageBackground >
@@ -43,19 +42,21 @@ import LinearGradient from 'react-native-linear-gradient';
 const styles = StyleSheet.create({
   
     card:{
-        width:width/1.02,
-        height:height/1.4,
+        flex:1,
+        //width:width/1.02,
+        //height:height/1.4,
         alignSelf:"center",
         alignItems:"center",
         borderRadius:width/30,
         resizeMode:'contain',
         position:'absolute',
+        marginBottom:height,
     
     },
     userPicStyle:{
         flex:0.97,
-        width:"100%" ,
-        //height:"100%",
+        width:width/1.01,
+        height:height/1.4,
         overflow:"hidden",
         borderRadius:width/30,
         borderWidth:width/150,
