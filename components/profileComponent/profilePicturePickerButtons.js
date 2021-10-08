@@ -1,9 +1,12 @@
 import React,{useEffect,useState} from "react";
-import { StyleSheet, Text, View, Button, TouchableOpacity,Dimensions } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity,Dimensions } from "react-native";
 import ImagePicker from 'react-native-image-crop-picker';
 import picConfig from '../imagePickerConfiguration'
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
+if(height>732){height=(732+height)/2}
+
+
 
 const changeProfilePic=(setImagePath)=>{
     ImagePicker.openPicker({
@@ -29,10 +32,11 @@ const openCamer=(setImagePath)=>{
 }
 
 export default function profilePickerButton(props){
-    
+    console.log(height)
     const {buttonVisibilty,setButtonVisibilty,setImagePath}=props
 
     return (
+        <SafeAreaView>
         <View>
         { buttonVisibilty?
            
@@ -68,6 +72,7 @@ export default function profilePickerButton(props){
         :null
         }
         </View>
+        </SafeAreaView>
     );
 }
 const styles = StyleSheet.create({
@@ -77,6 +82,7 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
         width:width,
         height:height/5,
+        //flex:1,
         alignSelf:'center',
         marginTop:height/1.35,
         paddingTop:height/65,

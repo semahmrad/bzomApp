@@ -7,9 +7,6 @@ import Matches from './../components/profileComponent/matchesPicNmbComponent'
 import AlbumPic from './../components/profileComponent/albumComponent'
 
 
-let width =Dimensions.get("window").width
-let height=Dimensions.get("window").height
-
 
 export default function profileVisited(props){
 

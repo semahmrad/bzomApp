@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Image, Modal,Dimensions,TouchableOpacity } from
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
-
+if(height>732){height=(732+height)/2}
 export default function Picture(props){
     //const [popupVisibility,setPopupVisibility]=useState(false)
     const {setButtonVisibilty,buttonVisibilty}=props

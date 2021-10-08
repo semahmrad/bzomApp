@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, View,Text,Dimensions, TouchableOpacity, Image } 
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
-
+if(height>732){height=(732+height)/2}
 
 
  function TypingMsgAndSend (props){
@@ -125,7 +125,7 @@ const styles=StyleSheet.create({
         marginLeft:width/300,
        
         alignItems:'center',
-        maxHeight:110
+        maxHeight:50
       
     },
     textInput:{

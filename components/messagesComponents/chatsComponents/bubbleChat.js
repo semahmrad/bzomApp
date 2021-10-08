@@ -4,7 +4,7 @@ import {withSpring} from 'react-native-reanimated'
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height;
-const scale=width/360;
+if(height>732){height=(732+height)/2}
 
 const findMsgSender=(partnair,message)=>{
     if(message.is_emiteur=="me"){return "You"}

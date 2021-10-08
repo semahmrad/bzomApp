@@ -8,8 +8,7 @@ import AlbumPic from './../components/profileComponent/albumComponent'
 import EditButton from './../components/profileComponent/editPicturebutton'
 import SpaceCloseImagePickButton from '../components/profileComponent/spaceCloseButtonImagePicker'
 import EditAlbum from './../components/profileComponent/editAlbum'
-let width =Dimensions.get("window").width
-let height=Dimensions.get("window").height
+
 
 const imgSrc=profileData.profile_Pic;
 const userName=profileData.user_name;
