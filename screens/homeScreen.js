@@ -5,27 +5,18 @@ import Users from "../testData/users.js"
 import ReactionButton from '../components/actionButton' 
 import Swiper from 'react-native-deck-swiper'
 import { useNavigation } from '@react-navigation/native';
-import ProfileVisited from './../screens/profilewhenVisited'
+
+//for test 
+import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVisited'
+
+
 
 //import LinearGradient from 'react-native-linear-gradient'
  let width =Dimensions.get("window").width
  let height =Dimensions.get("window").height
  if(height>732){height=(732+height)/2}
 
- const visitedAccount=(visitedVisibility)=>{
- 
-    return(
-        <ProfileVisited
-            profilePicture={Users[visitedVisibility.id].image}
-            userName={Users[visitedVisibility.id].name}
-            bio={Users[visitedVisibility.id].bio}
-            matches={Users[visitedVisibility.id].matches}
-            nbrPictures={Users[visitedVisibility.id].album.length}
-            albumImg={Users[visitedVisibility.id].album}
-        />
-      )
 
-}
  
  export default function home() {
      const [buttonStyleState,setButtonStyleState]=useState(0)
@@ -33,18 +24,26 @@ import ProfileVisited from './../screens/profilewhenVisited'
  
 
     const [leftOrRight,setLeftOrRight]=useState('1')
-    const [visitedVisibility,setVisitedVisibility]=useState({visbility:false,id:null})
+
     const swipeRef=useRef()
 
 
     const navigation = useNavigation();
 
-     return(
-         
-        <View style={styles.justBackground}>
-            {visitedVisibility.visbility?visitedAccount(visitedVisibility)
+    
 
-            :<View style={{width:width,height:height}}>
+     return(
+        <ProfileWhenVisited
+            profilePic={"https://scontent.ftun10-1.fna.fbcdn.net/v/t1.6435-9/244692053_109149341539969_3957341101162102901_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=5-2oF5FhTCQAX8mjkEk&_nc_ht=scontent.ftun10-1.fna&oh=6aa921cb91bc89a062d4780dc93dd61a&oe=61890FAC"}
+        />
+
+        
+
+      
+      /*  <View style={styles.justBackground}>
+     
+
+            <View style={{width:width,height:height}}>
 
                 <Text style={{position: 'absolute',}}>Bz0m</Text>           
                 <View style={styles.container}>
@@ -134,7 +133,7 @@ import ProfileVisited from './../screens/profilewhenVisited'
                         animateCardOpacity={true}
                         stackAnimationFriction={300}
                         onTapCard={(id)=>{
-                            setVisitedVisibility({visbility:true,id:id})
+                         
                         }}
                         >
                             
@@ -147,8 +146,8 @@ import ProfileVisited from './../screens/profilewhenVisited'
                     buttonStyleState={buttonStyleState}
                     
                 />
-          </View>}
-        </View>
+          </View>
+        </View>*/
         
       
      );

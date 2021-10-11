@@ -50,15 +50,15 @@ export default [
     album:[
       {
         img_id:'1',
-        img_path:'https://s.france24.com/media/display/bbc9dc48-e79e-11eb-b00f-005056bfb2b6/422c604560196613fb07cfd4c92d91697ae74eb3.jpg'
+        img_path:'https://img.brut.media/w600/thumbnail/une-vie-jeff-bezos-6bb49d57-5de5-477b-980b-14aca1156797-portrait.jpg?ts=1625501968'
       },
       {
         img_id:'2',
-        img_path:'https://img-0.journaldunet.com/pcta2K3BAi1_LqvLpLjgEAc0EkU=/1500x/smart/b909fddd55474d50a6d83aba90c58e57/ccmcms-jdn/2085968.jpg'
+        img_path:'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/jeff-bezos-and-mackenzie-bezos-attend-the-2018-vanity-fair-news-photo-927381540-1547047564.jpg?crop=0.895xw:0.606xh;0.0748xw,0.0288xh&resize=480:*'
       },
       {
         img_id:'3',
-        img_path:'https://www.strategies.fr/sites/default/files/assets/images/strats-image-4056709.jpeg'
+        img_path:'https://static01.nyt.com/images/2021/02/09/opinion/09Omara2/09Omara2-mediumSquareAt3X.jpg'
       },
     ],
     matches:25

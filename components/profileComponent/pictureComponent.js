@@ -8,6 +8,7 @@ import ButtonPickerProfilePicture from './profilePicturePickerButtons'
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 if(height>732){height=(732+height)/2}
+
 export default function Picture(props){
     const {imgSrc,userName,bio,buttonVisibilty,setButtonVisibilty,imagePath,setImagePath}=props
     //const [imagePath,setImagePath]=useState(imgSrc)
