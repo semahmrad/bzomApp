@@ -27,7 +27,7 @@
     });
     if(!searchInput){return arrayMsgData}
     else{
-        const res= arrayMsgData.filter(messageObject=>messageObject.partnair.name.includes(searchInput));
+        const res= arrayMsgData.filter(messageObject=>messageObject.partnair.name.toUpperCase().includes(searchInput.toUpperCase()));
         return res
     }
    

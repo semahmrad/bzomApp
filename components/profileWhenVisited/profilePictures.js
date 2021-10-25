@@ -8,7 +8,7 @@ if(height>732){height=(732+height)/2}
 
 export default function pictureProfileVisited(props){
 
-    const {profilePic,nameProfile}=props
+    const {profilePic,nameProfile,bio}=props
 
     return (
         <View style={styles.container}>
@@ -16,9 +16,9 @@ export default function pictureProfileVisited(props){
                 style={styles.picProfile}
                 source={{uri:profilePic}}
             />
-             <Text style={styles.nameText}>Name Profile</Text>
+             <Text style={styles.nameText}>{nameProfile}</Text>
              <View style={styles.bioContainer}>
-                <Text style={styles.bioText}>hi my name is semah and i am developper </Text>
+                <Text style={styles.bioText}>{bio} </Text>
              </View>
         </View>
     );

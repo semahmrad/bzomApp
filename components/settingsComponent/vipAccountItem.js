@@ -2,9 +2,9 @@ import React, { memo } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView,Dimensions,TouchableOpacity } from "react-native";
 
 import ModalSelector from 'react-native-modal-selector'
-
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
+if(height>732){height=(732+height)/2}
 
 export default memo(
 
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     container:{
         //backgroundColor:'red',
         width:width,
-        height:height/10,
+        height:height/12,
        
 
     },
@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
     },
     purchase:{
         fontSize:height/50,
-        marginTop:height/70
+        marginTop:height/70,
+        color:'#0040d3',
       
     },
     separator:{

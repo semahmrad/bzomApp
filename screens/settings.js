@@ -6,6 +6,9 @@ import ShowMe from './../components/settingsComponent/showMeComponent'
 import AgeSliderRang from './../components/settingsComponent/ageRang'
 import Separator from './../components/settingsComponent/separator'
 import VipItem from './../components/settingsComponent/vipAccountItem'
+import ChangePassword from './../components/settingsComponent/changePassword'
+import PersonalInformation from './../components/settingsComponent/personalInformation'
+import AboutBzom from './../components/settingsComponent/aboutBzom'
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
@@ -25,11 +28,9 @@ export default function settings() {
             <AgeSliderRang/>
             <Separator/>
             <VipItem/>
-
-
-
-            
-          
+            <ChangePassword/>
+            <PersonalInformation/>
+            <AboutBzom/>
         </View>
     );
 }

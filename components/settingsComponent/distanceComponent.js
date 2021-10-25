@@ -3,9 +3,9 @@ import { StyleSheet, Text, View, Image, ScrollView,Dimensions } from "react-nati
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Slider from 'react-native-slider'
 
-
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
+if(height>732){height=(732+height)/2}
 export default function DistanceSlider() {
 
     const [sliderVal,setSliderVal]=useState(10);

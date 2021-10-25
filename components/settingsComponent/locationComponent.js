@@ -6,6 +6,7 @@ import Geocoder from 'react-native-geocoding';
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
+if(height>732){height=(732+height)/2}
 
 export default function Location() {
     Geocoder.init("AIzaSyAX8NZ3Tjhtesvy16l6-JLa4QhrxwcwbAo"); // use a valid API key

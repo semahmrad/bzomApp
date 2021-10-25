@@ -12,6 +12,9 @@ import Settings from "../screens/settings"
 import Chat from './messagesComponents/ChatScreen'
 import ImageDisplay from './profileComponent/imagesDisplay'
 
+//profile when visited stack and
+import ProfileWhenVisited from "./profileWhenVisited/profileWhenVisited"
+
 import profileData from './../testData/profile.json'
 
 const Tab = createBottomTabNavigator();
@@ -23,6 +26,16 @@ const imgSrc=profileData.profile_Pic;
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 if(height>732){height=(732+height)/2}
+
+const homeandProfileStack=()=>{
+    
+ 
+    return(
+        <homeProfile.Navigator>
+            <homeProfile.Screen name="Profile" component={Home} options={{tabBarShowLabel:true,headerShown: false}} />
+            <homeProfile.Screen name="profileWhenVisited" component={ProfileWhenVisited}options={{tabBarShowLabel:false,headerShown: false}} />
+        </homeProfile.Navigator>
+    )}
 
 const profilImageDisplayStack=()=>{
     
@@ -74,7 +87,7 @@ export default function Tabs() {
                 
                 
 
-                <Tab.Screen name="home" component={Home} options={{tabBarShowLabel:false,headerShown: false,
+                <Tab.Screen name="homeandProfileStack" component={homeandProfileStack} options={{tabBarShowLabel:false,headerShown: false,
                     tabBarIcon:({focused})=>(
                         <View style={styles.iconsContainerStyle}>
                             <Image 

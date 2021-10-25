@@ -1,5 +1,5 @@
 import React, { useState,useRef } from 'react'
-import { View, Dimensions,StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { View, Dimensions,StyleSheet,Text ,BackHandler,Alert,} from 'react-native'
 import Card from "../components/ovivCard"
 import Users from "../testData/users.js"
 import ReactionButton from '../components/actionButton' 
@@ -16,34 +16,37 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
  let height =Dimensions.get("window").height
  if(height>732){height=(732+height)/2}
 
+    const visitedProfileFn=(profileinfo,visibilityProfile,setVisbilityProfile)=>{
+        if(visibilityProfile){
+            console.log("profileinfo===========>",profileinfo.profilePic)
+        return(
+            < ProfileWhenVisited
+                profilePic={profileinfo.profilePic}
+                nameProfile={profileinfo.nameProfile}
+                bio={profileinfo.bio}
+                pictures={profileinfo.pictures}
+                setVisbilityProfile={setVisbilityProfile}
+                
 
+            />
+        )
+    }
+    }
  
- export default function home() {
-     const [buttonStyleState,setButtonStyleState]=useState(0)
+ export default function home({navigation}) {
+
     
- 
-
+    
+    const [buttonStyleState,setButtonStyleState]=useState(0)
     const [leftOrRight,setLeftOrRight]=useState('1')
-
     const swipeRef=useRef()
 
 
-    const navigation = useNavigation();
-
-    
-
-     return(
-        <ProfileWhenVisited
-            profilePic={"https://scontent.ftun10-1.fna.fbcdn.net/v/t1.6435-9/244692053_109149341539969_3957341101162102901_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=5-2oF5FhTCQAX8mjkEk&_nc_ht=scontent.ftun10-1.fna&oh=6aa921cb91bc89a062d4780dc93dd61a&oe=61890FAC"}
-        />
-
-        
-
-      
-      /*  <View style={styles.justBackground}>
+     return(     
+  <View style={styles.justBackground}>
      
 
-            <View style={{width:width,height:height}}>
+          <View style={{width:width,height:height}}>
 
                 <Text style={{position: 'absolute',}}>Bz0m</Text>           
                 <View style={styles.container}>
@@ -133,7 +136,16 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
                         animateCardOpacity={true}
                         stackAnimationFriction={300}
                         onTapCard={(id)=>{
-                         
+
+                            navigation.navigate('profileWhenVisited',
+                                {
+                                    profilePic:Users[id].image,
+                                    nameProfile:Users[id].name,
+                                    bio:Users[id].bio,
+                                    pictures:Users[id].album
+                                });
+                               
+                       
                         }}
                         >
                             
@@ -147,7 +159,8 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
                     
                 />
           </View>
-        </View>*/
+   
+        </View>
         
       
      );
@@ -157,15 +170,10 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
 const styles = StyleSheet.create({
     container: {
         flex:1,
-       // backgroundColor: '#131d23',
-    
-        //marginTop:width/9.5,
         height:height/1.4,
         alignContent:'center'
     },
     justBackground:{
-       
-        //backgroundColor: '#131d23',
         flex:1,
     },
   

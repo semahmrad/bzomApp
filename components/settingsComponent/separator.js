@@ -4,6 +4,7 @@ import ModalSelector from 'react-native-modal-selector'
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
+if(height>732){height=(732+height)/2}
 
 export default memo(
 
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#c5c5c5',
         height:height/500,
         width:width,
-        marginTop:height/20
+        marginTop:height/50
     },
 
   
