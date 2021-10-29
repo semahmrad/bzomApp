@@ -22,12 +22,12 @@ import LinearGradient from 'react-native-linear-gradient';
                     >
                        
                     
-                       <LinearGradient colors={['#18191a4a', '#000000ab', 'black']}style={styles.cardTexetStyle}>
-                 
+                    <View style={styles.textCardContainer}>
                             <Text style={styles.name}>{user.name}</Text>
                             <Text style={styles.bio}>{user.bio}</Text>
-     
-                        </LinearGradient>
+                    </View>
+                      
+                        
                 
                        
                     </ImageBackground >
@@ -56,40 +56,36 @@ const styles = StyleSheet.create({
     userPicStyle:{
         flex:0.97,
         width:width/1.01,
-        height:height/1.4,
+        height:height/1.3,
         overflow:"hidden",
         borderRadius:width/30,
         borderWidth:width/150,
         borderColor:"#131d23",
-        //marginTop:width/30,
+        marginTop:height/65,
         justifyContent:"flex-end",
         //position:"absolute",
         resizeMode: 'cover'
     },
   
     cardTexetStyle:{
-        paddingLeft:width/60,
-        backgroundColor:"#fff",
-        opacity:0.7,
-        height:height/11
-        
-        //borderTopLeftRadius:width/15,
-        //borderTopRightRadius:width/15,
-      
+        position:'absolute',
+    },
+    textCardContainer:{
+        //position:'absolute',
+        marginBottom:height/10,
+        marginLeft:width/25
+
     },
     name:{
         fontStyle:'italic',
-        fontSize:width/18,
-        color:"white",
+        fontSize:width/15,
+        color:'white',
         //marginLeft:width/45,
     },
     bio:{
-        //marginLeft:width/45,
-        fontSize:width/29,
-        //fontWeight:'500',
-        color:"white",
-        marginBottom:width/80,
-        
+        fontSize:width/27,
+        color:'white',
+
     },
 
   });

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Dimensions,StyleSheet,Text,Image,TouchableOpacity } from 'react-native'
 import { LinearGradient, RadialGradient } from 'rn-gradients';
-
+//#f1491f
  let width =Dimensions.get("window").width
  let height =Dimensions.get("window").height
  if(height>732){height=(732+height)/2}
@@ -17,8 +17,8 @@ import { LinearGradient, RadialGradient } from 'rn-gradients';
             opacityBackgroundLike:(buttonStyleState/500),
             opacityTintColorLike:1,
             //dislike
-            backgroundColorDislike:'white',
-            tintColorDislike:'#ff6266',
+            backgroundColorDislike:'#080808a6',
+            tintColorDislike:'#bfbfbf',
             opacityBackgroundDislike:1,
             opacityTintColorDislike:1,
             }
@@ -27,12 +27,12 @@ import { LinearGradient, RadialGradient } from 'rn-gradients';
      else if(buttonStyleState<-30){
         return {
             //like
-            backgroundColorLike:'white',
+            backgroundColorLike:'#080808a6',
             tintColorLike:'#3bf7be',
             opacityBackgroundLike:1,
             opacityTintColorLike:1,
             //dislike
-            backgroundColorDislike:'#ff6266',
+            backgroundColorDislike:'#bfbfbf',
             tintColorDislike:'white',
             opacityBackgroundDislike:buttonStyleState/200,
             opacityTintColorDislike:1-(buttonStyleState/200),
@@ -40,10 +40,10 @@ import { LinearGradient, RadialGradient } from 'rn-gradients';
      }
      else {
          return {
-            backgroundColorLike:'white',
+            backgroundColorLike:'#080808a6',
             tintColorLike:'#3bf7be',
-            backgroundColorDislike:'white',
-            tintColorDislike:'#ff6266',
+            backgroundColorDislike:'#080808a6',
+            tintColorDislike:'#bfbfbf',
             //like
             opacityBackgroundLike:1,
             opacityTintColorLike:1,
@@ -69,7 +69,7 @@ import { LinearGradient, RadialGradient } from 'rn-gradients';
            
 
             <View style={styles.iconsReact}>
-                <TouchableOpacity style={{...styles.buttonIconDisLike,borderColor:"#ff6266",backgroundColor:buttonStyleFuction(buttonStyleState).backgroundColorDislike,}} 
+                <TouchableOpacity style={{...styles.buttonIconDisLike,borderColor:"#bfbfbf",backgroundColor:buttonStyleFuction(buttonStyleState).backgroundColorDislike,}} 
                 onPress={()=>{swipeRef.current.swipeLeft()}}>
                     <Image 
                         source={require("./../reactIcons/cross.png")}
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         padding:width/18,
         position:'absolute',
-        marginTop:height/1.25,
+        marginTop:height/1.27,
         alignSelf:'center'
 
         
@@ -157,33 +157,33 @@ const styles = StyleSheet.create({
     buttonIconLike:{
        
         
-        borderRadius:width/9,
+        borderRadius:width/25,
         padding:width/40,
         justifyContent:"center",
         alignItems:"center",
         borderWidth:width/300,
-        width:width/7,
-        height:height/14,
-        marginLeft:width/5
+        marginLeft:width/5,
+        height:height/24.5,
+        width:width/6,
         
     },
     buttonIconDisLike:{
        
-        backgroundColor:'white',
-        borderRadius:width/9,
+        borderRadius:width/25,
         padding:width/40,
         justifyContent:"center",
         alignItems:"center",
         borderWidth:width/300,
-        width:width/7,
-        height:height/14
+        height:height/24.5,
+        width:width/6,
+      
         
     },
     undoIcon:{
-        borderRadius:50,
-        width:width/8.5,
-        height:height/17,
-        backgroundColor:'white',
+        borderRadius:width/35,
+        width:width/7,
+        height:height/25,
+        backgroundColor:'#080808a6',
         padding:width/90,
         justifyContent:"center",
         alignItems:"center",

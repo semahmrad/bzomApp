@@ -1,4 +1,7 @@
 import * as React from 'react';
+//baseColor
+import colors from './../projectColor/colors'
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, Text,Image, View,SafeAreaView,Dimensions } from 'react-native';
@@ -15,12 +18,19 @@ import ImageDisplay from './profileComponent/imagesDisplay'
 //profile when visited stack and
 import ProfileWhenVisited from "./profileWhenVisited/profileWhenVisited"
 
+//settings stack
+import ChangePassword from "./settingsComponent/settingsScreens/changePassword"
+import PersonalInformation from "./settingsComponent/settingsScreens/personalInformation"
+
+
+
 import profileData from './../testData/profile.json'
 
 const Tab = createBottomTabNavigator();
 const msgTab = createBottomTabNavigator();
 const imageDisplayStack = createBottomTabNavigator();
 const homeProfile = createBottomTabNavigator();
+const settings = createBottomTabNavigator();
 
 const imgSrc=profileData.profile_Pic;
 let width =Dimensions.get("window").width
@@ -32,7 +42,7 @@ const homeandProfileStack=()=>{
  
     return(
         <homeProfile.Navigator>
-            <homeProfile.Screen name="Profile" component={Home} options={{tabBarShowLabel:true,headerShown: false}} />
+            <homeProfile.Screen name="Profile" component={Home} options={{tabBarShowLabel:false,headerShown: false}} />
             <homeProfile.Screen name="profileWhenVisited" component={ProfileWhenVisited}options={{tabBarShowLabel:false,headerShown: false}} />
         </homeProfile.Navigator>
     )}
@@ -70,6 +80,19 @@ const msgStack=()=>{
         </msgTab.Navigator>
     )}
 
+    const settingsStack=()=>{
+    
+ 
+        return(
+        <settings.Navigator>
+            <settings.Screen name="settings" component={Settings} options={{tabBarShowLabel:false,headerShown: false}} />
+            <settings.Screen name="changePassword" component={ChangePassword}options={{tabBarShowLabel:false,headerShown: true,title: 'Change Password'}} />
+            <settings.Screen name="personalInformation" component={PersonalInformation}options={{tabBarShowLabel:false,headerShown: true,title: 'Personal Information'}} />
+        </settings.Navigator>
+
+
+        )}
+
 
 
 export default function Tabs() {
@@ -94,7 +117,7 @@ export default function Tabs() {
                                 source={require("../bottomNavBarIcons/ovivIcon.png")}
                                 resizeMode="contain"
                                 style={{
-                                    tintColor:focused ? "#ff7100": "#131d23",
+                                    tintColor:focused ? colors.baseColor: "#131d23",
                                     
                                     ... styles.navBarIconsStyle
                                 }}
@@ -110,7 +133,7 @@ export default function Tabs() {
                                 source={require("../bottomNavBarIcons/profile.png")}
                                 resizeMode="contain"
                                 style={{
-                                    tintColor:focused ? "#ff7100": "#131d23",
+                                    tintColor:focused ? colors.baseColor: "#131d23",
                                     ... styles.navBarIconsStyle
                                 }}
 
@@ -126,7 +149,7 @@ export default function Tabs() {
                                     source={require("../bottomNavBarIcons/messages.png")}
                                     resizeMode="contain"
                                     style={{
-                                        tintColor:focused ? "#ff7100": "#131d23",
+                                        tintColor:focused ? colors.baseColor: "#131d23",
                                         ... styles.navBarIconsStyle
                                     }}
 
@@ -137,14 +160,14 @@ export default function Tabs() {
                         </View>
                     )
                 }}/>
-                <Tab.Screen name="settings" component={Settings} options={{tabBarShowLabel:false,headerShown: true,
+                <Tab.Screen name="settings" component={settingsStack} options={{tabBarShowLabel:false,headerShown: false,
                     tabBarIcon:({focused})=>(
                         <View style={styles.iconsContainerStyle}>
                             <Image 
                                 source={require("../bottomNavBarIcons/settings.png")}
                                 resizeMode="contain"
                                 style={{
-                                    tintColor:focused ? "#01c9e3": "#131d23",
+                                    tintColor:focused ? colors.baseColor: "#131d23",
                                     ... styles.navBarIconsStyle
                                 }}
 
@@ -170,38 +193,22 @@ export default function Tabs() {
 
 const styles = StyleSheet.create({
     tabBarStyle: {
-        
-       // width:width/1.1,
-       //width:"100%",
-      // height:width,
-        //borderRadius:width/10,
-        marginTop:width/(width/1.1),
+        //marginTop:height/(height/2.2),
         width:width,
-        height:height/17,
+        height:height/15.1,
         position:"absolute",
-        //marginLeft:(width-(width/1.1))/2,
-       // paddingHorizontal:width/15,
         justifyContent:"center",
-        //marginBottom:height
-        
+
     },
     navBarIconsStyle:{
        
-        width:width/10,
-        height:width/10,
+        width:width/12,
+        height:width/12,
        // backgroundColor:"red",
     
        
     },
-    navBarIconsTextStyle:{
-        width:width/9,
-        height:width/20,
-        textAlign:"center",
-        fontSize:width/32.8,
-        justifyContent:"center"
-      
-    
-    },
+ 
     iconsContainerStyle:{
         alignItems:"center",
         justifyContent:"center"

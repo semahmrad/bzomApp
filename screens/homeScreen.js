@@ -1,10 +1,11 @@
 import React, { useState,useRef } from 'react'
-import { View, Dimensions,StyleSheet,Text ,BackHandler,Alert,} from 'react-native'
+import { View, Dimensions,StyleSheet,Text ,Image,Alert,} from 'react-native'
 import Card from "../components/ovivCard"
 import Users from "../testData/users.js"
 import ReactionButton from '../components/actionButton' 
 import Swiper from 'react-native-deck-swiper'
-import { useNavigation } from '@react-navigation/native';
+
+
 
 //for test 
 import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVisited'
@@ -48,7 +49,13 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
 
           <View style={{width:width,height:height}}>
 
-                <Text style={{position: 'absolute',}}>Bz0m</Text>           
+               
+                    <Image source={require('./../logo/bzomLogo.png')} 
+                        style={styles.homeLogo}
+                        resizeMode='contain'
+                    /> 
+
+                     
                 <View style={styles.container}>
 
 
@@ -79,36 +86,42 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
                         backgroundColor={'transparent'}
                         overlayLabels={{
                             left:{
-                                title:'NOPE',
+                                title:'nope',
                         
                                 style:{
                                     label:{
-                                        
-                                        backgroundColor: 'red',
+                                        marginTop:height/28,
+                                        backgroundColor: '#bfbfbf',
                                         color:'white',
-                                    // borderWidth: 1,
-                                        fontSize: 24
+                                        fontSize: 20,
+                                        height:height/16,
+                                        width:width/5.5,
+                                        transform: [{ rotate: '45deg'}]
+                                        
 
                                         },
                                     wrapper:{
-                                        flexDirection: 'column',
+                                       // flexDirection: 'column',
                                         alignItems: 'flex-end',
                                         justifyContent: 'flex-start',
+                                      
                                     
                                     }
                                 }
                             } ,
                             right:{
-                                title:'LIKE',
+                                title:'like',
                         
                                 style:{
                                     label:{
-                                        
-                                        backgroundColor: 'green',
+                                        marginTop:height/28,
+                                        backgroundColor: '#3bf7be',
                                         color:'white',
                                     // borderWidth: 1,
-                                        fontSize: 24
-
+                                        fontSize: 20,
+                                        height:height/16,
+                                        width:width/6,
+                                        transform: [{ rotate: '-45deg'}]
                                         },
                                     wrapper:{
                                         flexDirection: 'column',
@@ -170,8 +183,18 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        height:height/1.4,
+        height:height/1.35,
         alignContent:'center'
+    },
+
+    homeLogo:{
+        width:width/2.8,
+        height:height/14,
+        position:'absolute',
+        marginLeft:width/50,
+        marginTop:height/100
+        
+        
     },
     justBackground:{
         flex:1,
