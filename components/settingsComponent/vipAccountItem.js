@@ -14,7 +14,13 @@ export default memo(
             <TouchableOpacity style={styles.container}>
                 <View style={styles.contentsContainer}>
                     <Text style={styles.vipAccount}>VIP ACCOUNT</Text>
-                    <Text style={styles.purchase}>Purchase Vip Account</Text>
+                    <View style={styles.optionContainer}>
+                        <Image
+                            style={styles.vipIcon}
+                            source={require('./settingsIcons/vip.png')}
+                        />
+                        <Text style={styles.purchase}>Purchase Vip Account</Text>
+                    </View>
                 </View>
 
             </TouchableOpacity>
@@ -47,9 +53,20 @@ const styles = StyleSheet.create({
         textAlign:'center',
         fontWeight:'bold'
     },
+    optionContainer:{
+        flexDirection:'row',
+        marginTop:height/70,
+    },
+    vipIcon:{
+        width:width/12,
+        height:height/26,
+        tintColor:'#FFD700',
+      
+    },
     purchase:{
         fontSize:height/50,
-        marginTop:height/70,
+        marginTop:height/200,
+        marginLeft:width/50,
         color:'#0040d3',
       
     },

@@ -18,9 +18,14 @@ export default function personalInformation() {
             <TouchableOpacity style={styles.buttonPersonalInformation}
                 onPress={()=>{navigation.navigate('personalInformation')}}
             >
-                <Text style={styles.personalText}>
-                    Personal Information
-                </Text>
+                <View style={styles.optionContainer}>
+                    <Image
+                        style={styles.personalInfoIcon}
+                        source={require('./settingsIcons/personalInformation.png')}
+                    />
+                    <Text style={styles.personalText}>Personal Information</Text>
+        
+                </View>
             </TouchableOpacity>
             <View style={styles.separator}></View>
          
@@ -43,11 +48,22 @@ const styles = StyleSheet.create({
         height:height/12,
         marginTop:height/150
     },
-    personalText:{
+    optionContainer:{
+        flexDirection:'row',
+        marginTop:height/70,
         marginLeft:width/20,
+    },
+    personalInfoIcon:{
+        width:width/12,
+        height:height/26,
+        tintColor:'#0088ff',
+    },
+    personalText:{
         color:'#0040d3',
         fontSize:height/50,
-        marginTop:height/40
+        marginTop:height/200,
+        marginLeft:width/50,
+     
     },
     separator:{
        

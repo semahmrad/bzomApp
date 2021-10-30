@@ -7,7 +7,7 @@ import AgeSliderRang from './../components/settingsComponent/ageRang'
 import Separator from './../components/settingsComponent/separator'
 import VipItem from './../components/settingsComponent/vipAccountItem'
 import ChangePassword from './../components/settingsComponent/changePasswordComponent'
-import PersonalInformation from '../components/settingsComponent/personalInformationScreen'
+import PersonalInformation from '../components/settingsComponent/personalInformationComponent'
 import AboutBzom from './../components/settingsComponent/aboutBzom'
 
 let width =Dimensions.get("window").width
