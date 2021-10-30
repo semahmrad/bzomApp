@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     },
     optionContainer:{
         flexDirection:'row',
-        marginTop:height/70,
+        marginTop:height/50,
         marginLeft:width/20,
     },
     changePasswordIcon:{

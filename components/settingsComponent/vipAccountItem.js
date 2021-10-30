@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     vipIcon:{
         width:width/12,
         height:height/26,
-        tintColor:'#FFD700',
+        tintColor:'#00c4ff',
       
     },
     purchase:{

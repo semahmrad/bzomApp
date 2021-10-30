@@ -4,6 +4,9 @@ import { StyleSheet, Text, View, Image, ScrollView,Dimensions } from "react-nati
 import GetLocation from 'react-native-get-location'
 import Geocoder from 'react-native-geocoding';
 
+//colors 
+import colors from './../../projectColor/colors'
+
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 if(height>732){height=(732+height)/2}
@@ -63,7 +66,8 @@ const styles = StyleSheet.create({
         fontSize:width/23,
         //backgroundColor:'green',
         width:width/2.8,
-        fontWeight:'bold'
+        fontWeight:'bold',
+        color:colors.baseColor
 
     },
 

@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useCallback} from 'react';
-import { StyleSheet, TextInput, View,Text,Dimensions, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, TextInput, View,Text,Dimensions, TouchableOpacity, Image,BackHandler } from 'react-native';
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
@@ -10,8 +10,11 @@ if(height>732){height=(732+height)/2}
 
    
     const [msg,setMsg]=useState('');
-    //const {/*messages,setMessages*/partnairName}=props;
-    
+ 
+    BackHandler.addEventListener('hardwareBackPress',()=>{
+
+        setMsg('')
+    })
 
   
 

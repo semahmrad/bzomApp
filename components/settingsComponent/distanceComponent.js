@@ -1,7 +1,8 @@
 import React,{useState,useMemo,useEffect,useRef} from "react";
 import { StyleSheet, Text, View, Image, ScrollView,Dimensions } from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Slider from 'react-native-slider'
+//colors 
+import colors from './../../projectColor/colors'
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
@@ -74,7 +75,8 @@ const styles = StyleSheet.create({
         fontSize:width/23,
         //backgroundColor:'green',
         width:width/2.8,
-        fontWeight:'bold'
+        fontWeight:'bold',
+        color:colors.baseColor
 
     },
     distance:{
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     bikeIcon:{
         width:width/13,
         height:height/27,
-        tintColor:'#aaabab',
+        tintColor:'#e19684',
         marginLeft:width/20,
         marginTop:height/140,
     },
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     flayIcon:{
         width:width/13,
         height:height/27,
-        tintColor:'#aaabab',
+        tintColor:'#e19684',
         marginLeft:width/25,
         marginTop:height/120,
     },

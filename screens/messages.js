@@ -2,6 +2,8 @@
     import { View, Text,TextInput, Dimensions,StyleSheet,Image, FlatList, ScrollView, TouchableOpacity,SafeAreaView } from 'react-native'
     import users from '../testData/users';
     import descuChat from '../testData/chatData'
+    //colors 
+    import colors from './../projectColor/colors'
 
     let width =Dimensions.get("window").width
     let height =Dimensions.get("window").height
@@ -155,6 +157,7 @@
         height:height/28,
         marginTop:height/180,
         marginLeft:width/100,
+        tintColor:colors.baseColor
     },
     searchInput:{
         
@@ -170,15 +173,11 @@
         //width:"100%"
     },
     msgText:{
-        color:"#ff7100",
+        color:colors.baseColor,
         fontWeight:"500",
         fontSize:width/23,
-        //backgroundColor:'black',
-
         width:width,
         height:height/29,
-        //marginBottom:(width)/width/1.2,
-        //marginTop:(width)/width/1.2,
         marginLeft:width/40
 
         },

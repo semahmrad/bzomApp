@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, ScrollView,Dimensions } from "react-native";
 import ModalSelector from 'react-native-modal-selector'
-
+//colors 
+import colors from './../../projectColor/colors'
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 
@@ -49,7 +50,8 @@ const styles = StyleSheet.create({
         //backgroundColor:'green',
         width:width/2.8,
         fontWeight:'bold',
-        marginTop:height/90
+        marginTop:height/90,
+        color:colors.baseColor
 
     },
 

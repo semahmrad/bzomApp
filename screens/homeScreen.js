@@ -145,7 +145,7 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
                         swipeAnimationDuration={750}
                         disableTopSwipe={true}
                         disableBottomSwipe={true}
-                        inputRotationRange={[-width /1.1, 0, width /3]}
+                        inputRotationRange={[-width /2, 0, width /2]}
                         animateCardOpacity={true}
                         stackAnimationFriction={300}
                         onTapCard={(id)=>{

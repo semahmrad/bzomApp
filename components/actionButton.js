@@ -83,8 +83,8 @@ import { LinearGradient, RadialGradient } from 'rn-gradients';
                             tintColor:"#ff6266"
                         }}*/
                         style={{
-                            width:width/14,
-                            height:width/14,
+                            width:width/17,
+                            height:width/17,
                             tintColor:buttonStyleFuction(buttonStyleState).tintColorDislike,
                             
                             
@@ -126,8 +126,8 @@ import { LinearGradient, RadialGradient } from 'rn-gradients';
                           
                         }}*/
                         style={{
-                            width:width/14,
-                            height:width/14,
+                            width:width/16,
+                            height:width/16,
                             //tintColor:'#3bf7be',
                             tintColor: buttonStyleFuction(buttonStyleState).tintColorLike,
                            

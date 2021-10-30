@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     personalInfoIcon:{
         width:width/12,
         height:height/26,
-        tintColor:'#0088ff',
+        tintColor:'#00ffa1',
     },
     personalText:{
         color:'#0040d3',

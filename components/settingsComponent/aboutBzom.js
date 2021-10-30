@@ -1,7 +1,7 @@
 import React,{useState,useMemo,useEffect,useRef} from "react";
 import { StyleSheet, Text, View, Image, ScrollView,Dimensions, TouchableOpacity} from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import Slider from 'react-native-slider'
+//colors 
+import colors from './../../projectColor/colors'
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
@@ -41,8 +41,9 @@ const styles = StyleSheet.create({
     aboutBzomText:{
         
         fontSize:height/50,
-        marginTop:height/80,
+        marginTop:height/40,
         alignSelf:'center',
+        color:colors.baseColor,
     },
     
    
