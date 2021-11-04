@@ -75,7 +75,9 @@ const msgStack=()=>{
                             title:route.params?.partnair.name,
                         }
                     }
-                      }}
+                   
+                      }
+                    }
             />
         </msgTab.Navigator>
     )}

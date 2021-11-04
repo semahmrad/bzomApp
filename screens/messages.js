@@ -150,6 +150,7 @@
         alignSelf:'center',
         marginTop:height/100,
         borderRadius:width/10,
+        elevation:4
     },
 
     searchicon:{
@@ -164,7 +165,8 @@
         marginLeft:width/70,
         width:width/1.5,
         height:height/20,
-        color:'black'
+        color:'black',
+       
     },
     justBackground:{
     // padding:width/30,
@@ -230,8 +232,9 @@
         //borderWidth:width/500,
         flexDirection:'row',
        // backgroundColor:'#e7eaef',
-        borderRadius:width/18,
-        marginTop:width/80
+        borderRadius:width/25,
+        marginTop:width/80,
+        elevation:2
 
     },
     itemView:{
