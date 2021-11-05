@@ -2341,6 +2341,11 @@
   dependencies:
     "color-name" "~1.1.4"
 
+"color-convert@~0.5.0":
+  "integrity" "sha1-vbbGnOZg+t/+CwAHzER+G59ygr0="
+  "resolved" "https://registry.npmjs.org/color-convert/-/color-convert-0.5.3.tgz"
+  "version" "0.5.3"
+
 "color-name@^1.0.0", "color-name@~1.1.4":
   "integrity" "sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA=="
   "resolved" "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz"
@@ -5189,6 +5194,11 @@
   "resolved" "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz"
   "version" "2.6.2"
 
+"neumorphism-ui@^1.0.2":
+  "integrity" "sha512-QcPUly4cH/zP3COJeMC6PYrbogOwZvKZucdrTAA7xB1L1sGLgBzAeDYHS66yvFgFVQG6wcQWqWfrWxu06D9rvA=="
+  "resolved" "https://registry.npmjs.org/neumorphism-ui/-/neumorphism-ui-1.0.2.tgz"
+  "version" "1.0.2"
+
 "nice-try@^1.0.4":
   "integrity" "sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ=="
   "resolved" "https://registry.npmjs.org/nice-try/-/nice-try-1.0.5.tgz"
@@ -5518,6 +5528,13 @@
   "version" "1.0.1"
   dependencies:
     "callsites" "^3.0.0"
+
+"parse-color@^1.0.0":
+  "integrity" "sha1-e3SLlag/A/FqlPU15S1/PZRlhhk="
+  "resolved" "https://registry.npmjs.org/parse-color/-/parse-color-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "color-convert" "~0.5.0"
 
 "parse-json@^4.0.0":
   "integrity" "sha1-vjX1Qlvh9/bHRxhPmKeIy5lHfuA="
@@ -5864,6 +5881,13 @@
     "react-native-reanimated" "^1.7.0"
     "react-native-svg" "^11.0.1"
     "react-native-text-gradient" "^0.1.7"
+
+"react-native-neumorphism@^0.1.5":
+  "integrity" "sha512-LCx+LIiltx7SQxNgCcV70/nAcP9LjW/mUxJ/qXhetoHj6SgAqRo9yWQ9HBluTnOwRtRvecdai8CQD6JnQE0D5Q=="
+  "resolved" "https://registry.npmjs.org/react-native-neumorphism/-/react-native-neumorphism-0.1.5.tgz"
+  "version" "0.1.5"
+  dependencies:
+    "parse-color" "^1.0.0"
 
 "react-native-reanimated@^1.7.0":
   "integrity" "sha512-i714H24dv6ncpFO7/SZ0PfAMbvjgVbF8Ow2NPtowoZAz8osS54DmTMrkgJ9Za+uEku/s0AEaxqiXG2Xgntvv2g=="

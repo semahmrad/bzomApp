@@ -1,27 +1,11 @@
 import React, { memo } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView,Dimensions,TouchableOpacity, ViewBase } from "react-native";
 
-
+import Neumorphism from "react-native-neumorphism";
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 if(height>732){height=(732+height)/2}
 
-    const NeuMorphTextView=({children,size,style})=>{
-
-   
-        return (
-        
-              <View style={styles.topShadow}>
-                <View style={styles.buttomShodow}>
-                  <View style={styles.inner}>
-                      {children}
-                  </View>
-              </View>
-           
-          </View>
-        
-        )
-    }
 
     export default function personalInformation() {
 
@@ -30,9 +14,19 @@ if(height>732){height=(732+height)/2}
         <View style={styles.container}>
 
        
-
-      
-          
+              <Neumorphism
+                lightColor={'#ffffff'}
+                darkColor={'#b9b4b4'}
+                shapeType={'flat'}
+                radius={50}
+                style={{marginTop:20,borderWidth:2,borderRadius:50,borderColor:'#b9b4b4',width:100,alignItems: 'center'}}
+                disabled={false}
+                
+              >
+                
+                  <Text>TEST</Text>
+              
+              </Neumorphism>
 
         </View>
       );
@@ -42,7 +36,7 @@ const styles = StyleSheet.create({
     container:{
         width:width,
         height:height,
-        backgroundColor:'white',
+        backgroundColor:'#ebebeb',
         
       
     },
