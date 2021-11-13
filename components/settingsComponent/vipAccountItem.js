@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView,Dimensions,TouchableOpacity } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 import ModalSelector from 'react-native-modal-selector'
 let width =Dimensions.get("window").width
@@ -9,9 +10,16 @@ if(height>732){height=(732+height)/2}
 export default memo(
 
     function VipItem() {
+
+         //navigation
+    const navigation = useNavigation();
       return (
         <View>
-            <TouchableOpacity style={styles.container}>
+            <TouchableOpacity style={styles.container}
+                onPress={()=>{
+                    navigation.navigate('vip')
+                }}
+            >
                 <View style={styles.contentsContainer}>
                     <Text style={styles.vipAccount}>VIP ACCOUNT</Text>
                     <View style={styles.optionContainer}>
@@ -55,17 +63,18 @@ const styles = StyleSheet.create({
     },
     optionContainer:{
         flexDirection:'row',
-        marginTop:height/70,
+        marginTop:height/200,
     },
     vipIcon:{
         width:width/12,
-        height:height/26,
+        height:width/12,
         tintColor:'#00c4ff',
+        
       
     },
     purchase:{
         fontSize:height/50,
-        marginTop:height/200,
+        marginTop:height/100,
         marginLeft:width/50,
         color:'#0040d3',
       

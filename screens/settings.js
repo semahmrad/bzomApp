@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import { StyleSheet, Text, View, Image, ScrollView,Dimensions, } from "react-native";
+import { StyleSheet, Text, View, Image, ScrollView,Dimensions, SafeAreaView} from "react-native";
 import Location from './../components/settingsComponent/locationComponent'
 import DistanceSlider from './../components/settingsComponent/distanceComponent'
 import ShowMe from './../components/settingsComponent/showMeComponent'
@@ -13,6 +13,8 @@ import AboutBzom from './../components/settingsComponent/aboutBzom'
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 if(height>732){height=(732+height)/2}
+if(height<600){height=(800+height)/2}
+if(height<732){height=(732+height)/2}
 
 export default function settings() {
 
@@ -20,7 +22,7 @@ export default function settings() {
   
     
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
            
             <Location/>
             <DistanceSlider/>
@@ -31,7 +33,7 @@ export default function settings() {
             <ChangePassword/>
             <PersonalInformation/>
             <AboutBzom/>
-        </View>
+        </ScrollView>
     );
 }
 

@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
         marginLeft:width/20,
     },
     changePasswordIcon:{
-        width:width/12,
-        height:height/26,
+        width:width/14,
+        height:width/14,
         tintColor:'#0088ff',
     },
     changePasswordText:{

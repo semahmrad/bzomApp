@@ -9,8 +9,8 @@ let height=Dimensions.get("window").height
 if(height>732){height=(732+height)/2}
 
 
-    const validateVisibility=(oldPassword,newPassword,confNewPassword)=>{
-      if(oldPassword && newPassword && confNewPassword ){
+    const validateVisibility=(oldPassword,newPassword,confNewPassword,passValidate)=>{
+      if(oldPassword && newPassword && confNewPassword&&passValidate){
         return true
       }
       else {return false}
@@ -31,12 +31,19 @@ if(height>732){height=(732+height)/2}
       }
       else false
     }
+    const oldPasswordValidate=(oldPasswordInput,oldPassword)=>{
+      //recive password from database
+        if(oldPasswordInput==oldPasswordInput){
+          return true
+        }
+        else return false
+    }
     
     export default function ChangePassword() {
       const [oldPassword,setOldPassword]=useState('')
       const [newPassword,setNewPassword]=useState('')
       const [confNewPassword,setconfNewPassword]=useState('')
-
+      const passValidate=newPasswordValidate(newPassword,confNewPassword,passwordCondition(newPassword,confPass.numberOfChar))
 
       
       return (
@@ -83,7 +90,7 @@ if(height>732){height=(732+height)/2}
               }
           </View>
 
-          {validateVisibility(oldPassword,newPassword,confNewPassword)
+          {validateVisibility(oldPassword,newPassword,confNewPassword,passValidate)
           ?<TouchableOpacity
             onPress={()=>{ }}
             style={styles.validateButton}
@@ -137,7 +144,7 @@ const styles = StyleSheet.create({
       height:width/14,
       marginTop:height/55,
       marginLeft:width/25,
-      tintColor:'green',
+      tintColor:'#3dff30',
    
     },
     validateButton:{
@@ -160,6 +167,7 @@ const styles = StyleSheet.create({
     },
 
     errorView:{
+      position:'absolute',
       backgroundColor:'red',
       width:width/1.8,
       height:height/20,
@@ -167,7 +175,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       borderRadius:width/50,
       marginLeft:width/6,
-      marginTop:height/3,
+      marginTop:height/1.4,
       opacity:0.7,
       
     },

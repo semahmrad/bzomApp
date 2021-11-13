@@ -9,6 +9,9 @@
     let height =Dimensions.get("window").height
     if(height>732){height=(732+height)/2}
 
+    if(height<732){height=(732+height)/2}
+    
+
     const getLastMessageWithPartnair=(descuChat,searchInput)=>{
     const arrayMsgData=[]
 
@@ -54,6 +57,7 @@
     export default function messages({navigation}) {
         //const[msgArray,setMsgArray]=useState([])
         const [searchInput,setSearchInput]=useState('')
+        console.log('height===========>',height)
 
         
 
@@ -158,7 +162,8 @@
         height:height/28,
         marginTop:height/180,
         marginLeft:width/100,
-        tintColor:colors.baseColor
+        tintColor:colors.baseColor,
+       
     },
     searchInput:{
         
@@ -166,6 +171,7 @@
         width:width/1.5,
         height:height/20,
         color:'black',
+        fontSize:height/57
        
     },
     justBackground:{

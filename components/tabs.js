@@ -21,6 +21,7 @@ import ProfileWhenVisited from "./profileWhenVisited/profileWhenVisited"
 //settings stack
 import ChangePassword from "./settingsComponent/settingsScreens/changePassword"
 import PersonalInformation from "./settingsComponent/settingsScreens/personalInformation"
+import Vip from "./vipComponent/vip"
 
 
 
@@ -90,6 +91,7 @@ const msgStack=()=>{
             <settings.Screen name="settings" component={Settings} options={{tabBarShowLabel:false,headerShown: false}} />
             <settings.Screen name="changePassword" component={ChangePassword}options={{tabBarShowLabel:false,headerShown: true,title: 'Change Password'}} />
             <settings.Screen name="personalInformation" component={PersonalInformation}options={{tabBarShowLabel:false,headerShown: true,title: 'Personal Information'}} />
+            <settings.Screen name="vip" component={Vip}options={{tabBarShowLabel:false,headerShown: true,title: 'VIP'}} />
         </settings.Navigator>
 
 

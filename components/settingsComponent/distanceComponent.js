@@ -7,8 +7,10 @@ import colors from './../../projectColor/colors'
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 if(height>732){height=(732+height)/2}
-export default function DistanceSlider() {
 
+export default function DistanceSlider() {
+    console.log('height============>',height)
+    console.log('width============>',width)
     const [sliderVal,setSliderVal]=useState(10);
     const getDistanceValue=()=>{
         const value=(sliderVal/1)-(sliderVal%1);
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
     },
     bikeIcon:{
         width:width/13,
-        height:height/27,
+        height:width/13,
         tintColor:'#e19684',
         marginLeft:width/20,
         marginTop:height/140,
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     },
     flayIcon:{
         width:width/13,
-        height:height/27,
+        height:width/13,
         tintColor:'#e19684',
         marginLeft:width/25,
         marginTop:height/120,

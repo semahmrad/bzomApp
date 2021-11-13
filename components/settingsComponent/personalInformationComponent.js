@@ -50,12 +50,12 @@ const styles = StyleSheet.create({
     },
     optionContainer:{
         flexDirection:'row',
-        marginTop:height/70,
+        marginTop:height/100,
         marginLeft:width/20,
     },
     personalInfoIcon:{
         width:width/12,
-        height:height/26,
+        height:width/12,
         tintColor:'#00ffa1',
     },
     personalText:{
