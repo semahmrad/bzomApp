@@ -16,6 +16,7 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
  let width =Dimensions.get("window").width
  let height =Dimensions.get("window").height
  if(height>732){height=(732+height)/2}
+  if(height<732){height=(732+height)/2}
 
     const visitedProfileFn=(profileinfo,visibilityProfile,setVisbilityProfile)=>{
         if(visibilityProfile){

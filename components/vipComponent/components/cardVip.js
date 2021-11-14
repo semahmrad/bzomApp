@@ -7,7 +7,7 @@ import mounthVipPriceData from './../../../testData/vipAccountPrices'
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 if(height>732){height=(732+height)/2}
-if(height<732){height=(732+height)/2}
+if(height<700&&height>600){height=(732+height)/2}
 
 
     const choisOffre=(offreClicked)=>{
@@ -34,17 +34,19 @@ if(height<732){height=(732+height)/2}
         return offreStyle;
     }
 
-    export default function cardVip() {
+    export default function cardVip(props) {
         const threMonthPrcent=(mounthVipPriceData.month_price*3*(100-mounthVipPriceData.three_month_offre))/100;
         const sixMonthPrcent=(mounthVipPriceData.month_price*6*(100-mounthVipPriceData.six_month_offre))/100;
         const [offreClicked,setoffreClicked]=useState({six_month:'',threemonth:'ok',month:''})
-
+        const[visibilityTest,setVisibilityTest]=useState(true)
+        const{visibility,setVisibility}=props
+        console.log("height=============>",height)
   
       return (
         <ScrollView style={styles.container}>
            
-                
-                <View style={styles.swiperContainer}> 
+                {visibilityTest
+                ?<View style={styles.swiperContainer}> 
                     <Text style={styles.vipTitle}>Get VIP Bzom Account</Text>
                     <Swiper 
                         style={styles.swiper}
@@ -72,16 +74,19 @@ if(height<732){height=(732+height)/2}
                     
                     </Swiper>
                         <View style={styles.pricesContainer}>
+                            <Text style={styles.save}>-{mounthVipPriceData.six_month_offre}/month</Text>
                             <TouchableOpacity 
                                 style={{...styles.priceOffre,borderColor:choisOffre(offreClicked).sixMonthBorder}}
                                 onPress={()=>setoffreClicked({six_month:'ok',threemonth:'',month:''})}
                             >
+                                
                                 <Text style={styles.monthText}>6 Months</Text>
                                 <Text style={styles.pricePerMonth}>${(sixMonthPrcent/6).toFixed(2)}/moth</Text>
                                 <Text style={{...styles.price,backgroundColor:choisOffre(offreClicked).sixMonthBackground}}>
                                     ${sixMonthPrcent.toFixed(2)}
                                 </Text>
                             </TouchableOpacity>
+
                             <TouchableOpacity 
                                 style={{...styles.priceOffre,borderColor:choisOffre(offreClicked).threeMonthBorder}}
                                 onPress={()=>setoffreClicked({six_month:'',threemonth:'ok',month:''})}
@@ -106,11 +111,14 @@ if(height<732){height=(732+height)/2}
                         <TouchableOpacity style={styles.buttons}>
                             <Text style={styles.purchaseText}>Continue</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttons}>
+                        <TouchableOpacity 
+                            style={styles.buttons}
+                            onPress={()=>setVisibilityTest(false)}
+                        >
                             <Text style={styles.purchaseText}>Close</Text>
                         </TouchableOpacity>
                 </View>
-         
+         : null}
         
         </ScrollView>
       );
@@ -171,11 +179,12 @@ const styles = StyleSheet.create({
     pricesContainer:{
         backgroundColor:'white',
         width:width/1.05,
-        height:height/5,
+        height:height/4.85,
         alignSelf:'center',
         borderRadius:width/20,
         flexDirection:'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+    
     },
     priceOffre:{
         backgroundColor:'white',
@@ -185,9 +194,25 @@ const styles = StyleSheet.create({
         borderWidth:width/90,
         //borderColor:colors.baseColor,
         //borderColor:'#C0C0C0',
-        elevation:25,
+        elevation:20,
         alignItems:'center',
         paddingTop:width/50,
+        marginTop:height/90
+       
+    },
+    save:{
+        zIndex:10,
+        position:'absolute',
+        backgroundColor:'red',
+        elevation:21,
+        width:width/4.8,
+        fontSize:height/57,
+        borderRadius:width/50,
+        textAlign:'center',
+        marginBottom:height/30,
+        marginLeft:((width/3.6)-width/4.8)/2,
+        color:'white',
+        fontWeight:'bold',
     },
     monthText:{
         color :'black',

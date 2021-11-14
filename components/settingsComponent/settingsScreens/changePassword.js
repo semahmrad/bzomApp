@@ -1,12 +1,13 @@
 import React,{useState}  from 'react';
-import { StyleSheet, Text, View,Dimensions,TouchableOpacity,TextInput,Image } from "react-native";
+import { StyleSheet, Text, View,Dimensions,TouchableOpacity,TextInput,Image,ScrollView } from "react-native";
 
-import ModalSelector from 'react-native-modal-selector'
+import { Input } from 'react-native-elements';
 import colors from './../../../projectColor/colors'
 import confPass from './../../../confProject/passwordConf'
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 if(height>732){height=(732+height)/2}
+if(height<732){height=(732+height)/2}
 
 
     const validateVisibility=(oldPassword,newPassword,confNewPassword,passValidate)=>{
@@ -48,10 +49,11 @@ if(height>732){height=(732+height)/2}
       
       return (
       
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
           <Text style={styles.textChangePassword}>Old Password</Text>
-          <TextInput
+          <Input
             style={styles.input}
+            placeholder='Enter Password'
             onChangeText={setOldPassword}
             value={oldPassword}
             secureTextEntry={true}
@@ -59,8 +61,9 @@ if(height>732){height=(732+height)/2}
 
           <Text style={styles.textChangePassword}>New Password</Text>
           <View style={styles.newPasswordContainer}>
-              <TextInput
+              <Input
                 style={styles.input}
+                placeholder='Enter New Password'
                 onChangeText={setNewPassword}
                 value={newPassword}
                 secureTextEntry={true}
@@ -76,8 +79,9 @@ if(height>732){height=(732+height)/2}
 
           <Text style={styles.textChangePassword}>Confirme New Password</Text>
           <View style={styles.newPasswordContainer}>
-              <TextInput
+              <Input
                 style={styles.input}
+                placeholder='Confirme New Password'
                 onChangeText={setconfNewPassword}
                 value={confNewPassword}
                 secureTextEntry={true}
@@ -104,7 +108,7 @@ if(height>732){height=(732+height)/2}
             <Text style={styles.textError}>the old password is wrong</Text>
           </View>
 
-        </View>
+        </ScrollView>
          
 
       );
@@ -114,29 +118,30 @@ const styles = StyleSheet.create({
     container:{
         width:width,
         height:height,
-        marginLeft:width/15,
+       // marginLeft:width/15,
         marginTop:height/25,
     },
     textChangePassword:{
       fontSize:height/50,
       fontWeight:'400',
-      color :colors.baseColor
+      color :colors.baseColor,
+      marginLeft:width/15,
 
     },
     newPasswordContainer:{
       flexDirection:'row'
     },
     input:{
-      backgroundColor:'#dfdfdf',
-      height: height/20,
-      width: width/1.3,
-      marginBottom:height/70,
-      marginTop:height/100,
-      borderRadius:width/30,
-      borderWidth:0.1,
+      //backgroundColor:'#dfdfdf',
+     // height: height/20,
+     // width: width/2,
+      //marginBottom:height/70,
+      //marginTop:height/100,
+     // borderRadius:width/30,
+     // borderWidth:0.1,
       color:'#000',
-      fontSize:height/55,
-      elevation:20,
+      fontSize:height/40,
+      //elevation:20,
       zIndex:1
     },
     tickIcon:{
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       borderRadius:width/50,
       marginLeft:width/6,
-      marginTop:height/1.4,
+      marginTop:height/2,
       opacity:0.7,
       
     },
