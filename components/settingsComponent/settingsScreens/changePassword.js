@@ -12,11 +12,11 @@ if(height<732){height=(732+height)/2}
 
     const validateVisibility=(oldPassword,newPassword,confNewPassword,passValidate)=>{
       if(oldPassword && newPassword && confNewPassword&&passValidate){
-        return true
+        return false
       }
-      else {return false}
+      else {return true}
 
-    }
+    } 
 
     const newPasswordValidate=(password,newPassword,condtionPassword)=>{
         if(password==newPassword&&password&&condtionPassword){
@@ -69,12 +69,7 @@ if(height<732){height=(732+height)/2}
                 secureTextEntry={true}
               />
               
-              { passwordCondition(newPassword,confPass.numberOfChar)
-             ? <Image source={require('../settingsIcons/tick.png')}
-                style={styles.tickIcon}
-              />
-              : null
-              }
+       
           </View>
 
           <Text style={styles.textChangePassword}>Confirme New Password</Text>
@@ -86,27 +81,23 @@ if(height<732){height=(732+height)/2}
                 value={confNewPassword}
                 secureTextEntry={true}
               />
-              {newPasswordValidate(newPassword,confNewPassword,passwordCondition(newPassword,confPass.numberOfChar))
-              ?<Image source={require('../settingsIcons/tick.png')}
-                style={styles.tickIcon}
-              />
-              :null
-              }
+          
           </View>
 
-          {validateVisibility(oldPassword,newPassword,confNewPassword,passValidate)
-          ?<TouchableOpacity
-            onPress={()=>{ }}
+         
+          <TouchableOpacity
             style={styles.validateButton}
+            disabled={validateVisibility(oldPassword,newPassword,confNewPassword,passValidate)}
+            onPress={()=>{ }}
           >
             <Text style={styles.validateButtonText}>Update Password</Text>
-          </TouchableOpacity>
-          : null
-          }
+          </TouchableOpacity> 
+         
 
           <View style={styles.errorView}>
             <Text style={styles.textError}>the old password is wrong</Text>
           </View>
+          
 
         </ScrollView>
          
@@ -132,35 +123,23 @@ const styles = StyleSheet.create({
       flexDirection:'row'
     },
     input:{
-      //backgroundColor:'#dfdfdf',
-     // height: height/20,
-     // width: width/2,
-      //marginBottom:height/70,
-      //marginTop:height/100,
-     // borderRadius:width/30,
-     // borderWidth:0.1,
+
       color:'#000',
       fontSize:height/40,
       //elevation:20,
       zIndex:1
     },
-    tickIcon:{
-      width:width/14,
-      height:width/14,
-      marginTop:height/55,
-      marginLeft:width/25,
-      tintColor:'#3dff30',
    
-    },
     validateButton:{
       backgroundColor:colors.baseColor,
       height:height/20,
       width:width/2,
+      marginLeft:width/15,
       alignItems:'center',
       justifyContent:'center',
       borderRadius:width/30,
       borderWidth:0.1,
-      elevation:20,
+      elevation:15,
       marginTop:height/50,
     },
     validateButtonText:{
@@ -172,16 +151,17 @@ const styles = StyleSheet.create({
     },
 
     errorView:{
-      position:'absolute',
+      //position:'absolute',
       backgroundColor:'red',
       width:width/1.8,
       height:height/20,
       alignItems:'center',
       justifyContent: 'center',
-      borderRadius:width/50,
-      marginLeft:width/6,
-      marginTop:height/2,
+      borderRadius:width/30,
+      alignSelf:'center',
+      marginTop:height/14,
       opacity:0.7,
+      zIndex:30
       
     },
     textError:{
