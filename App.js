@@ -1,9 +1,10 @@
 
 
 import React from 'react';
-import { StyleSheet, Text, View,SafeAreaView,Dimensions } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import Tabs from "./components/tabs"
+import { } from 'react-native';
+import Navigation from './navigation'
+import Login from './components/loginComponents/login'
+import Register from './components/register/register'
 
 //const Stack = createStackNavigator();
 
@@ -12,13 +13,8 @@ import Tabs from "./components/tabs"
 export default function App() {
   return (
     
-    <NavigationContainer>
-
-        <Tabs/>
-
-    </NavigationContainer>
+    <Login/>
     
-   
 
   );
 }

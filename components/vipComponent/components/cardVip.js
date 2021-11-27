@@ -81,7 +81,7 @@ if(height<700&&height>600){height=(732+height)/2}
                             >
                                 
                                 <Text style={styles.monthText}>6 Months</Text>
-                                <Text style={styles.pricePerMonth}>${(sixMonthPrcent/6).toFixed(2)}/moth</Text>
+                                <Text style={styles.pricePerMonth}>${(sixMonthPrcent/6).toFixed(2)}/month</Text>
                                 <Text style={{...styles.price,backgroundColor:choisOffre(offreClicked).sixMonthBackground}}>
                                     ${sixMonthPrcent.toFixed(2)}
                                 </Text>
@@ -92,7 +92,7 @@ if(height<700&&height>600){height=(732+height)/2}
                                 onPress={()=>setoffreClicked({six_month:'',threemonth:'ok',month:''})}
                             >
                                 <Text style={styles.monthText}>3 Months</Text>
-                                <Text style={styles.pricePerMonth}>${(threMonthPrcent/3).toFixed(2)}/moth</Text>
+                                <Text style={styles.pricePerMonth}>${(threMonthPrcent/3).toFixed(2)}/month</Text>
                                 <Text style={{...styles.price,backgroundColor:choisOffre(offreClicked).threeMonthBackground}}>
                                     ${threMonthPrcent.toFixed(2)}
                                 </Text>
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     },
     priceOffre:{
         backgroundColor:'white',
-        width:width/3.6,
+        width:width/3.3,
         height:height/5.5,
         borderRadius:width/30,
         borderWidth:width/90,
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     },
     pricePerMonth:{
         color :'black',
-        fontSize:height/47,
+        fontSize:height/50,
         fontWeight:'400',
         marginTop:height/40,
         textAlign:'center',
@@ -235,10 +235,10 @@ const styles = StyleSheet.create({
         marginTop:height/39.5,
         textAlign:'center',
        // backgroundColor:colors.baseColor,
-        width:width/3.87,
-        height:height/21.6,
-        borderTopLeftRadius:width/35,
-       borderTopRightRadius:width/35,
+        width:width/3.56,
+        height:height/21.1,
+        borderTopLeftRadius:width/45,
+        borderTopRightRadius:width/45,
     },
     buttons:{
         backgroundColor:'red',
