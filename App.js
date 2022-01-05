@@ -13,7 +13,7 @@ import Register from './components/register/register'
 export default function App() {
   return (
     
-    <Login/>
+    <Navigation/>
     
 
   );

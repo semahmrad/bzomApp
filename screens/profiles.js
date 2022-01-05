@@ -8,7 +8,23 @@ import AlbumPic from './../components/profileComponent/albumComponent'
 import EditButton from './../components/profileComponent/editPicturebutton'
 import SpaceCloseImagePickButton from '../components/profileComponent/spaceCloseButtonImagePicker'
 import EditAlbum from './../components/profileComponent/editAlbum'
+let width =Dimensions.get("window").width
+let height=Dimensions.get("window").height
+const scale=(numberOfscale)=>{
+    var relation=0;
+    if(height>732){
+        relation =height/732;
+       
+    }
+    else{
+        relation =732/height;
+    
+    }
+    console.warn("scale=>",numberOfscale*(height/relation))
+    return numberOfscale*(height/relation);
+    
 
+}
 
 const imgSrc=profileData.profile_Pic;
 const userName=profileData.user_name;
@@ -28,7 +44,7 @@ const [editGalaryVisibility,setEditGalaryVisibility]=useState(false)
 const [imagePath,setImagePath]=useState(albumImg[0].img_path)
 
     return (
-        <View>
+        <View style={styles.container}>
             <EditAlbum
                 albumImg={albumImg}
                 editGalaryVisibility={editGalaryVisibility}
@@ -43,7 +59,7 @@ const [imagePath,setImagePath]=useState(albumImg[0].img_path)
 
            
 
-             <EditButton
+            <EditButton
              setButtonVisibilty={setButtonVisibilty}
              buttonVisibilty={buttonVisibilty}
           
@@ -74,4 +90,12 @@ const [imagePath,setImagePath]=useState(albumImg[0].img_path)
         </View>
     );
 }
+const styles = StyleSheet.create({
+    container:{
+      height:scale(1)
 
+    },
+   
+ 
+  
+})

@@ -1,12 +1,11 @@
 import React,{useEffect,useState} from "react";
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity,Dimensions } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView,ScrollView, TouchableOpacity,Dimensions } from "react-native";
 import ImagePicker from 'react-native-image-crop-picker';
 import picConfig from '../imagePickerConfiguration'
-let width =Dimensions.get("window").width
-let height=Dimensions.get("window").height
-if(height>732){height=(732+height)/2}
-
-
+import ExtraDimensions from 'react-native-extra-dimensions-android';
+import sizes from  '../../screenSizes/screenOfSizes'
+let width =sizes.width
+let height=sizes.height
 
 const changeProfilePic=(setImagePath)=>{
     ImagePicker.openPicker({
@@ -32,47 +31,46 @@ const openCamer=(setImagePath)=>{
 }
 
 export default function profilePickerButton(props){
-    console.log(height)
+  
+    console.warn('height buttons',height)
     const {buttonVisibilty,setButtonVisibilty,setImagePath}=props
-
-    return (
-        <SafeAreaView>
-        <View>
-        { buttonVisibilty?
-           
-            <View style={styles.profilePicPiker}>
-               
-                <TouchableOpacity
-                    onPress={()=>{
-                        changeProfilePic(setImagePath);
-                        setButtonVisibilty(false);
-                    }}
-                >
-                    <Text style={styles.buttonUploadOpenCamerText}>Upload Picture</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={()=>{
-                        openCamer(setImagePath);
-                        setButtonVisibilty(false);
-                    }}
-                >
-                    <Text style={styles.buttonUploadOpenCamerText}>Open Camera</Text>
-                </TouchableOpacity>
    
-                <TouchableOpacity
-                    onPress={()=>{
-                        setButtonVisibilty(false)
-                    }}
-                >
-                    <Text style={styles.buttonUploadOpenCamerText}>Cancel</Text>
-                </TouchableOpacity>
+    return (
+            <View>
+                { buttonVisibilty?
+                    
+                    <ScrollView style={styles.profilePicPiker}>
+                    
+                        <TouchableOpacity
+                            onPress={()=>{
+                                changeProfilePic(setImagePath);
+                                setButtonVisibilty(false);
+                            }}
+                        >
+                            <Text style={styles.buttonUploadOpenCamerText}>Upload Picture</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress={()=>{
+                                openCamer(setImagePath);
+                                setButtonVisibilty(false);
+                            }}
+                        >
+                            <Text style={styles.buttonUploadOpenCamerText}>Open Camera</Text>
+                        </TouchableOpacity>
+        
+                        <TouchableOpacity
+                            onPress={()=>{
+                                setButtonVisibilty(false)
+                            }}
+                        >
+                            <Text style={styles.buttonUploadOpenCamerText}>Cancel</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
+            
+                :null
+                }
             </View>
-     
-        :null
-        }
-        </View>
-        </SafeAreaView>
     );
 }
 const styles = StyleSheet.create({
@@ -81,25 +79,26 @@ const styles = StyleSheet.create({
         zIndex:5,
         backgroundColor:'white',
         width:width,
-        height:height/5,
+        height:height/5.4,
         //flex:1,
         alignSelf:'center',
-        marginTop:height/1.35,
+        marginTop:height/1.54,
         paddingTop:height/65,
         //borderRadius:width/25,
-        alignItems:'center',
+        //alignItems:'center',
     },
   
     buttonUploadOpenCamerText:{
         
         textAlign:'center',
-        marginBottom:height/45,
+        marginBottom:height/55,
         fontSize:height/40,
         color:'white',
         backgroundColor:'#ff7100',
         width:width/1.2,
         height:height/25,
         borderRadius:width/36,
+        alignSelf:'center',
 
     },
     openCamerText:{}

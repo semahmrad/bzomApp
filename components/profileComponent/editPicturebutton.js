@@ -5,7 +5,21 @@ import { StyleSheet, Text, View, Image, Modal,Dimensions,TouchableOpacity } from
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
-if(height>732){height=(732+height)/2}
+const scale=(numberOfscale)=>{
+    var relation=0;
+    if(height>732){
+        relation =height/732;
+       
+    }
+    else{
+        relation =732/height;
+    
+    }
+    console.warn("scale=>",numberOfscale*(height/relation))
+    return numberOfscale*(height/relation);
+    
+
+}
 export default function Picture(props){
     //const [popupVisibility,setPopupVisibility]=useState(false)
     const {setButtonVisibilty,buttonVisibilty}=props
@@ -32,6 +46,7 @@ export default function Picture(props){
 
 const styles = StyleSheet.create({
     container:{
+      
 
     },
     editProfilePicButton:{
