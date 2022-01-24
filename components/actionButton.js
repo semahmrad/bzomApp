@@ -93,7 +93,7 @@ import { LinearGradient, RadialGradient } from 'rn-gradients';
                 </TouchableOpacity>
 
                     
-                <TouchableOpacity style={{...styles.undoIcon,borderColor:"#ffc06a"}} 
+                {/*<TouchableOpacity style={{...styles.undoIcon,borderColor:"#ffc06a"}} 
                     onPress={()=>{swipeRef.current.swipeBack()}}
                >
                     <Image 
@@ -107,7 +107,7 @@ import { LinearGradient, RadialGradient } from 'rn-gradients';
                             height:width/15,
                         }}
                     />
-                </TouchableOpacity>    
+                    </TouchableOpacity>    */}
                
 
                 <TouchableOpacity style={{...styles.buttonIconLike,borderColor:"#3bf7be",backgroundColor:buttonStyleFuction(buttonStyleState).backgroundColorLike,}} 
@@ -149,8 +149,8 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         padding:width/18,
         position:'absolute',
-        marginTop:height/1.27,
-        alignSelf:'center'
+        marginTop:height/1.25,
+        alignSelf:'center',
 
         
     },
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         borderWidth:width/300,
-        marginLeft:width/5,
+        marginLeft:width/2,
         height:height/24.5,
         width:width/6,
         

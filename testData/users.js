@@ -5,7 +5,7 @@ export default [
     id: '0',
     name: 'Zuck',
     image:'https://media.vanityfair.com/photos/5ab2db78ccfbfe6fa35ecabd/9:16/w_747,h_1328,c_limit/Mark-Zuckerberg-Cambridge-Analytica.jpg',
-    bio: 'No need to send me your nudes, I already saw them',
+    bio: 'No need to send me your nudes, I already saw them No need to send me your nudes, I already saw them No need to send me your nudes, I already saw them No need to send me your nudes, I already saw them No need to send me your nudes, I already saw them No need to send me your nudes, I already saw them No need to send me your nudes, I already saw them',
     album:[
       {
         img_id:'1',

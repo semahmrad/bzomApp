@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { View, Text, Dimensions,StyleSheet , ImageBackground,Image} from 'react-native'
+import { View, Text, Dimensions,StyleSheet ,ScrollView, ImageBackground,Image} from 'react-native'
 
-import LinearGradient from 'react-native-linear-gradient';
+
 
 //import LinearGradient from 'react-native-linear-gradient'
  let width =Dimensions.get("window").width
@@ -21,16 +21,14 @@ import LinearGradient from 'react-native-linear-gradient';
                         resizeMode="stretch"
                     >
                        
-                    
-                    <View style={styles.textCardContainer}>
-                            <Text style={styles.name}>{user.name}</Text>
-                            <Text style={styles.bio}>{user.bio}</Text>
-                    </View>
-                      
-                        
-                
-                       
+         
                     </ImageBackground >
+                    <View style={styles.textCardContainer}>
+                        <ScrollView>
+                            <Text style={styles.name}>{user.name}</Text>
+                            <Text numberOfLines={3} style={styles.bio}>{user.bio}</Text>
+                        </ScrollView>
+                     </View>
                 </View>
                 
             </View>
@@ -40,51 +38,61 @@ import LinearGradient from 'react-native-linear-gradient';
 
 
 const styles = StyleSheet.create({
-  
+
     card:{
         flex:1,
-        //width:width/1.02,
-        //height:height/1.4,
+        width:width/1.05,
+        height:height/1.32,
         alignSelf:"center",
         alignItems:"center",
-        borderRadius:width/30,
+        borderRadius:width/57,
         resizeMode:'contain',
         position:'absolute',
-        marginBottom:height,
+        marginTop:height/30,
+        backgroundColor:'white',
+        //borderWidth:3,
+        //borderColor:'#f1491f',
+        borderRadius:width/20,
     
     },
     userPicStyle:{
-        flex:0.97,
-        width:width/1.01,
-        height:height/1.3,
+        //flex:0.97,
+        width:width/1.06,
+        height:height/1.9,
         overflow:"hidden",
-        borderRadius:width/30,
+        borderRadius:width/20,
         borderWidth:width/150,
         borderColor:"#131d23",
-        marginTop:height/65,
+        //marginTop:height/65,
         justifyContent:"flex-end",
         //position:"absolute",
         resizeMode: 'cover'
     },
-  
-    cardTexetStyle:{
-        position:'absolute',
-    },
+
     textCardContainer:{
-        //position:'absolute',
-        marginBottom:height/10,
-        marginLeft:width/25
+       
+        height:height/6.5,
+        width:width/1.1,
+        marginTop:height/100,
+        //backgroundColor:'red',
+       // borderWidth:1,
+       
 
     },
     name:{
         fontStyle:'italic',
-        fontSize:width/15,
-        color:'white',
+        fontSize:width/20,
+        color:'black',
+        fontWeight:'600',
+  
+
         //marginLeft:width/45,
     },
     bio:{
         fontSize:width/27,
-        color:'white',
+        color:'black',
+        fontWeight:'400',
+      
 
     },
 

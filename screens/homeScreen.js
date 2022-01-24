@@ -1,5 +1,5 @@
 import React, { useState,useRef } from 'react'
-import { View, Dimensions,StyleSheet,Text ,Image,Alert,} from 'react-native'
+import { View, Dimensions,StyleSheet,Text ,Image,Alert,ScrollView} from 'react-native'
 import Card from "../components/ovivCard"
 import Users from "../testData/users.js"
 import ReactionButton from '../components/actionButton' 
@@ -12,11 +12,11 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
 
 
 
+
 //import LinearGradient from 'react-native-linear-gradient'
  let width =Dimensions.get("window").width
  let height =Dimensions.get("window").height
- if(height>732){height=(732+height)/2}
-  if(height<732){height=(732+height)/2}
+
 
     const visitedProfileFn=(profileinfo,visibilityProfile,setVisbilityProfile)=>{
         if(visibilityProfile){
@@ -50,13 +50,19 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
 
           <View style={{width:width,height:height}}>
 
-               
-                    <Image source={require('./../logo/bzomLogo.png')} 
+               <View style={styles.logoSettingIconConatiner}>
+                    <Image source={require('./../home_imgs_icons/bzom_logo_home.png')} 
                         style={styles.homeLogo}
                         resizeMode='contain'
                     /> 
+                     <Image source={require('./../home_imgs_icons/settings.png')} 
+                        style={styles.settings}
+                        resizeMode='contain'
+                    /> 
+               </View>
+                   
 
-                     
+            
                 <View style={styles.container}>
 
 
@@ -85,54 +91,8 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
                     // stackScale={10}
                     // stackSeparation={14}
                         backgroundColor={'transparent'}
-                        overlayLabels={{
-                            left:{
-                                title:'nope',
-                        
-                                style:{
-                                    label:{
-                                        marginTop:height/28,
-                                        backgroundColor: '#bfbfbf',
-                                        color:'white',
-                                        fontSize: 20,
-                                        height:height/16,
-                                        width:width/5.5,
-                                        transform: [{ rotate: '45deg'}]
-                                        
-
-                                        },
-                                    wrapper:{
-                                       // flexDirection: 'column',
-                                        alignItems: 'flex-end',
-                                        justifyContent: 'flex-start',
-                                      
-                                    
-                                    }
-                                }
-                            } ,
-                            right:{
-                                title:'like',
-                        
-                                style:{
-                                    label:{
-                                        marginTop:height/28,
-                                        backgroundColor: '#3bf7be',
-                                        color:'white',
-                                    // borderWidth: 1,
-                                        fontSize: 20,
-                                        height:height/16,
-                                        width:width/6,
-                                        transform: [{ rotate: '-45deg'}]
-                                        },
-                                    wrapper:{
-                                        flexDirection: 'column',
-                                        alignItems: 'flex-start',
-                                        justifyContent: 'flex-start',
-                                    
-                                    }
-                                }
-                            } 
-                        }}
+                      
+                  
                         //buton style when swiping
                         onSwiping={(x,y)=>{
                             setButtonStyleState(x)
@@ -166,12 +126,12 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
                     </Swiper>
                     
                 </View>
-            
                 <ReactionButton
                     swipeRef={swipeRef}
                     buttonStyleState={buttonStyleState}
                     
                 />
+               
           </View>
    
         </View>
@@ -183,22 +143,44 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
-        height:height/1.35,
-        alignContent:'center'
+       // flex:1,
+        height:height,
+        alignContent:'center',
+        //backgroundColor:'red'
+    },
+    justBackground:{
+        height:height,
+    },
+    logoSettingIconConatiner:{
+        width:width/1.1,
+        alignSelf:'center',
+        flexDirection:'row',
+        position:'absolute',
+      
     },
 
     homeLogo:{
-        width:width/2.8,
-        height:height/14,
+        width:width/3.6,
+        height:height/20,
         position:'absolute',
-        marginLeft:width/50,
-        marginTop:height/100
-        
-        
+        marginTop:height/35,
+        zIndex:10,
+       // marginBottom:50,
+       
     },
-    justBackground:{
-        flex:1,
+    settings:{
+        width:width/9.5,
+        height:height/27,
+        position:'absolute',
+        marginTop:height/23,
+        zIndex:10,
+        //backgroundColor:'red',
+        marginLeft:width/1.20
+       
+  
     },
+ 
+  
+  
   
   });
