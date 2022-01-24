@@ -1,6 +1,5 @@
 # bzomApp
- bzomApp dating app 
- dating app 
+ bzomApp dating-app 
  love 
  react-native 
  
