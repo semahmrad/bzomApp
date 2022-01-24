@@ -1,2 +1,6 @@
 # bzomApp
- bzomApp is a dating app with react-native
+ bzomApp dating app 
+ dating app 
+ love 
+ react-native 
+ 
