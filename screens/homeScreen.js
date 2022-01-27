@@ -40,10 +40,10 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
     }
     }*/
  
- export default function home(/*{navigation}*/) {
+ export default function home({route}) {
     const navigation = useNavigation();
     
-    
+  
     const [buttonStyleState,setButtonStyleState]=useState(0)
     const [leftOrRight,setLeftOrRight]=useState('1')
     const swipeRef=useRef()
@@ -58,7 +58,7 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
          
   <View style={styles.justBackground}>
   
-       
+
           <ScrollView style={{width:width,height:(height)-height/15.1}}>
 
                <View style={styles.logoSettingIconConatiner}>

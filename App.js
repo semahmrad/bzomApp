@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { } from 'react-native';
-import Navigation from './navigation'
+//import Navigation from './navigation'
 import Login from './components/loginComponents/login'
 import Register from './components/register/register'
-
+import Navigation from './navigation/navigationScreen'
 //const Stack = createStackNavigator();
 
 

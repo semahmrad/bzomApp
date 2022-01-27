@@ -3,6 +3,7 @@ import * as React from 'react';
 import colors from './../projectColor/colors'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, Text,Image, View,SafeAreaView,Dimensions } from 'react-native';
 //screens
@@ -35,7 +36,7 @@ const msgTab = createBottomTabNavigator();
 const imageDisplayStack = createBottomTabNavigator();
 const homeProfile = createBottomTabNavigator();
 const settings = createBottomTabNavigator();
-const sing = createBottomTabNavigator();
+const sing = createNativeStackNavigator();
 
 const imgSrc=profileData.profile_Pic;
 let width =Dimensions.get("window").width
@@ -57,7 +58,7 @@ const homeandProfileStack=()=>{
  
     return(
         <homeProfile.Navigator>
-            <homeProfile.Screen name="Profile" component={Home} options={{tabBarShowLabel:false,headerShown: false}} />
+            <homeProfile.Screen name="home" component={Home} options={{tabBarShowLabel:false,headerShown: false}} />
             <homeProfile.Screen name="profileWhenVisited" component={ProfileWhenVisited}options={{tabBarShowLabel:false,headerShown: false}} />
         </homeProfile.Navigator>
     )}
@@ -116,7 +117,7 @@ const msgStack=()=>{
 
 export default function Tabs() {
  
-   const[signIn,setSignIn]=React.useState(false)
+   const[signIn,setSignIn]=React.useState(true)
 
 
     return (
@@ -208,9 +209,10 @@ export default function Tabs() {
 
             </Tab.Navigator>
 
-        :<Tab.Navigator>
-         <settings.Screen name="sign" component={singStack} options={{tabBarShowLabel:false,headerShown: false,}}/>
-        </Tab.Navigator>}
+        :<sing.Navigator>
+         <sing.Screen name="sign" component={singStack} options={{tabBarShowLabel:false,headerShown: false,}}/>
+         <sing.Screen name="home" component={Home} options={{tabBarShowLabel:false,headerShown: false,}}/>
+        </sing.Navigator>}
         </View>
        
         

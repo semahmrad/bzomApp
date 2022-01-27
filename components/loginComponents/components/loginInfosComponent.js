@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import { StyleSheet, Text, View, BackHandler, ScrollView,Dimensions,TouchableOpacity, ViewBase,TextInput } from "react-native";
 import { Input } from 'react-native-elements';
 import colors from './../../../projectColor/colors'
+import { useNavigation } from '@react-navigation/native';
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
@@ -12,7 +13,8 @@ export default function loginInfos(props) {
     const [username,setUsername]=useState('');
     const [password,setPssword]=useState('');
 
-
+    const navigation = useNavigation();
+    const [a,setA]=useState(1)
 
   return (
       
@@ -45,7 +47,7 @@ export default function loginInfos(props) {
         </View>  
         <TouchableOpacity
             style={styles.loginButton}
-            onPress={()=>{}}
+            onPress={()=>{navigation.navigate('home')}}
         >
             <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
