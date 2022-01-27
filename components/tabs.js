@@ -23,6 +23,9 @@ import ChangePassword from "./settingsComponent/settingsScreens/changePassword"
 import PersonalInformation from "./settingsComponent/settingsScreens/personalInformation"
 import Vip from "./vipComponent/vip"
 
+//singin and signup componenets
+import sigin from './loginComponents/login'
+
 
 
 import profileData from './../testData/profile.json'
@@ -32,12 +35,22 @@ const msgTab = createBottomTabNavigator();
 const imageDisplayStack = createBottomTabNavigator();
 const homeProfile = createBottomTabNavigator();
 const settings = createBottomTabNavigator();
+const sing = createBottomTabNavigator();
 
 const imgSrc=profileData.profile_Pic;
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
 if(height>732){height=(732+height)/2}
 if(height<732){height=(732+height)/2}
+
+const singStack=()=>{
+    
+ 
+    return(
+        <sing.Navigator  screenOptions={{headerShown: false}}>
+            <sing.Screen name="Sign in" component={sigin} />
+        </sing.Navigator>
+    )}
 
 const homeandProfileStack=()=>{
     
@@ -64,6 +77,7 @@ const msgStack=()=>{
  
     return(
         <msgTab.Navigator>
+
             <msgTab.Screen name="messages" component={Messages} options={{tabBarShowLabel:true,headerShown: false}} />
             <msgTab.Screen name="chat" component={Chat}
                   options={({route})=>{
@@ -102,17 +116,23 @@ const msgStack=()=>{
 
 export default function Tabs() {
  
-   
+   const[signIn,setSignIn]=React.useState(false)
 
 
     return (
+        <View style={{width:width,height:height}}>
+
+        {signIn?
+
+       
             <Tab.Navigator
             screenOptions={{
                 tabBarStyle: styles.tabBarStyle,
               }}
             >
 
-                
+         
+              
                 
 
                 <Tab.Screen name="homeandProfileStack" component={homeandProfileStack} options={{tabBarShowLabel:false,headerShown: false,
@@ -165,7 +185,8 @@ export default function Tabs() {
                         </View>
                     )
                 }}/>
-                <Tab.Screen name="settings" component={settingsStack} options={{tabBarShowLabel:false,headerShown: false,
+
+               <Tab.Screen name="settings" component={settingsStack} options={{tabBarShowLabel:false,headerShown: false,
                     tabBarIcon:({focused})=>(
                         <View style={styles.iconsContainerStyle}>
                             <Image 
@@ -187,8 +208,10 @@ export default function Tabs() {
 
             </Tab.Navigator>
 
-         
-
+        :<Tab.Navigator>
+         <settings.Screen name="sign" component={singStack} options={{tabBarShowLabel:false,headerShown: false,}}/>
+        </Tab.Navigator>}
+        </View>
        
         
     );

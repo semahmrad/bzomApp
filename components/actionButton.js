@@ -17,8 +17,8 @@ import { LinearGradient, RadialGradient } from 'rn-gradients';
             opacityBackgroundLike:(buttonStyleState/500),
             opacityTintColorLike:1,
             //dislike
-            backgroundColorDislike:'#080808a6',
-            tintColorDislike:'#bfbfbf',
+            backgroundColorDislike:'white',
+            tintColorDislike:'#ff485b',
             opacityBackgroundDislike:1,
             opacityTintColorDislike:1,
             }
@@ -27,12 +27,12 @@ import { LinearGradient, RadialGradient } from 'rn-gradients';
      else if(buttonStyleState<-30){
         return {
             //like
-            backgroundColorLike:'#080808a6',
+            backgroundColorLike:'white',
             tintColorLike:'#3bf7be',
             opacityBackgroundLike:1,
             opacityTintColorLike:1,
             //dislike
-            backgroundColorDislike:'#bfbfbf',
+            backgroundColorDislike:'#ff485b',
             tintColorDislike:'white',
             opacityBackgroundDislike:buttonStyleState/200,
             opacityTintColorDislike:1-(buttonStyleState/200),
@@ -40,10 +40,10 @@ import { LinearGradient, RadialGradient } from 'rn-gradients';
      }
      else {
          return {
-            backgroundColorLike:'#080808a6',
+            backgroundColorLike:'white',
             tintColorLike:'#3bf7be',
-            backgroundColorDislike:'#080808a6',
-            tintColorDislike:'#bfbfbf',
+            backgroundColorDislike:'white',
+            tintColorDislike:'#ff485b',
             //like
             opacityBackgroundLike:1,
             opacityTintColorLike:1,
@@ -59,7 +59,7 @@ import { LinearGradient, RadialGradient } from 'rn-gradients';
  export default function reactionButton(props) {
      const {swipeRef,buttonStyleState}=props;
 
-    const [color,setColor]=useState("#01c9e3");
+
     console.log('buttonStyleState==>',buttonStyleState)
 
     
@@ -69,7 +69,7 @@ import { LinearGradient, RadialGradient } from 'rn-gradients';
            
 
             <View style={styles.iconsReact}>
-                <TouchableOpacity style={{...styles.buttonIconDisLike,borderColor:"#bfbfbf",backgroundColor:buttonStyleFuction(buttonStyleState).backgroundColorDislike,}} 
+                <TouchableOpacity style={{...styles.buttonIconDisLike,borderColor:"#ff485b",backgroundColor:buttonStyleFuction(buttonStyleState).backgroundColorDislike,}} 
                 onPress={()=>{swipeRef.current.swipeLeft()}}>
                     <Image 
                         source={require("./../reactIcons/cross.png")}
@@ -149,8 +149,13 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         padding:width/18,
         position:'absolute',
-        marginTop:height/1.25,
+        //marginTop:height/1.235,
         alignSelf:'center',
+    
+        //backgroundColor:'red',
+        height:height/13,
+        marginTop:height/13.5,
+
 
         
     },
@@ -162,9 +167,9 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         borderWidth:width/300,
-        marginLeft:width/2,
-        height:height/24.5,
-        width:width/6,
+        marginLeft:width/1.3,
+        height:width/9.5,
+        width:width/9.5,
         
     },
     buttonIconDisLike:{
@@ -174,8 +179,8 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         borderWidth:width/300,
-        height:height/24.5,
-        width:width/6,
+        height:width/9.5,
+        width:width/9.5,
       
         
     },

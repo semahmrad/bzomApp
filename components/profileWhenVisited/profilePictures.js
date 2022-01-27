@@ -1,10 +1,27 @@
 import React,{useEffect,useState} from "react";
-import {Text, View, Image, StyleSheet,Dimensions } from "react-native";
+import {Text, View, Image, StyleSheet,Dimensions,ScrollView,TouchableOpacity } from "react-native";
 
+import dimension from  './../../screenSizes/screenOfSizes'
 
+/*
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
-if(height>732){height=(732+height)/2}
+*/
+//if(height>732){height=(732+height)/2}
+
+
+let width =dimension.width
+let height=dimension.height
+
+const resizeProfilePic=(height,width,div)=>{
+    if(width*2>=height){
+       return  height/(div*2);
+    }
+    else if(width*2<height){
+       return width/div
+    }
+
+}
 
 export default function pictureProfileVisited(props){
 
@@ -12,55 +29,116 @@ export default function pictureProfileVisited(props){
 
     return (
         <View style={styles.container}>
-            <Image
-                style={styles.picProfile}
-                source={{uri:profilePic}}
-            />
+            <View style={styles.profilePicSendMessageContainer}>
+                <Image
+                    style={styles.picProfile}
+                    source={{uri:profilePic}}
+                />
+                <TouchableOpacity
+                    style={styles.sendMessageButton}
+                    onPress={()=>console.warn('hhhh')}
+                >
+
+                    <Image
+                        style={styles.sendMessageIcon}
+                        source={require('./profileVisitedIcons/sendmessage.png')}
+                        tintColor={'white'}
+                    />
+                </TouchableOpacity>
+            </View>
+            
+            
              <Text style={styles.nameText}>{nameProfile}</Text>
-             <View style={styles.bioContainer}>
+             <Image style={styles.positionIcon}
+                source={require('./profileVisitedIcons/position.png')}
+                tintColor={'white'}
+             />
+             <Text style={styles.positionText}>Italy</Text>
+             <ScrollView style={styles.bioContainer}>
                 <Text style={styles.bioText}>{bio} </Text>
-             </View>
+             </ScrollView>
         </View>
     );
 }
 const styles = StyleSheet.create({
     container:{
         width:width,
-        height:height/4,
-        backgroundColor:'#ff7100'
+        height:height/4.3,
+        backgroundColor:'#ff6d62'
+    },
+    profilePicSendMessageContainer:{
+        flexDirection:'row'
     },
     picProfile:{
         backgroundColor:'green',
-        width:width/4.5,
-        height:width/4.5,
+        width:resizeProfilePic(height,width,6),
+        height:resizeProfilePic(height,width,6),
         borderRadius:width,
-        alignSelf:'center',
+        //alignSelf:'center',
         marginTop:height/60,
+        marginLeft:width/30,
        borderWidth:width/200,
        borderColor:'white'
         
     },
+    sendMessageButton:{
+        width:width/12,
+        height:width/12,
+        marginLeft:width/1.5,
+        marginTop:height/50,
+  
+    },
+    sendMessageIcon:{
+        //position:'absolute',
+        //marginLeft:width/1.15,
+       // marginTop:height/50,
+        width:width/12,
+        height:width/12,
+    },
     nameText:{
-        alignSelf:'center',
+       
         marginTop:height/60,
         color:'white',
-        fontSize:height/40,
-        fontWeight:'500',
+        fontSize:height/50,
+        fontWeight:'600',
+        position:"absolute",
+        marginLeft:width/4.5
      
+    },
+    positionIcon:{
+        width:width/18,
+        height:height/36,
+        marginTop:height/22,
+        color:'white',
+        fontSize:height/55,
+       
+        position:"absolute",
+        marginLeft:width/4.5
+    },
+    positionText:{
+        position:'absolute',
+        fontSize:height/55,
+        fontStyle:'italic',
+        marginLeft:width/3.4,
+        marginTop:height/22,
+        color:'white'
     },
     bioContainer:{
 
-        maxWidth:width/1.1,
-        alignSelf:'center',
-        marginTop:height/150,
-
-       
-
+       // maxWidth:width/1.1,
+       position:'absolute',
+        //alignSelf:'center',
+        marginTop:height/9,
+        width:width/1.2,
+        height:height/12,
+        marginLeft:width/25,
     },
     bioText:{
         color:'white',
         fontSize:height/60,
-        fontWeight:'300'
+        fontWeight:'300',
+       
+       
 
     }
 

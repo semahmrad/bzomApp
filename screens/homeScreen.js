@@ -1,12 +1,17 @@
 import React, { useState,useRef } from 'react'
-import { View, Dimensions,StyleSheet,Text ,Image,Alert,ScrollView} from 'react-native'
+import { View, Dimensions,StyleSheet,Text ,Image,TouchableOpacity,ScrollView,alert} from 'react-native'
 import Card from "../components/ovivCard"
 import Users from "../testData/users.js"
 import ReactionButton from '../components/actionButton' 
-import Swiper from 'react-native-deck-swiper'
-
-
-
+import Swiper from 'react-native-deck-swiper';
+//import settings from "../screens/settings"
+import { useNavigation } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+//import setting stack dependencies
+import Settings from "../screens/settings"
+import ChangePassword from "./../components/settingsComponent/settingsScreens/changePassword"
+import PersonalInformation from "./../components/settingsComponent/settingsScreens/personalInformation"
+import Vip from "./../components/vipComponent/vip"
 //for test 
 import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVisited'
 
@@ -18,7 +23,7 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
  let height =Dimensions.get("window").height
 
 
-    const visitedProfileFn=(profileinfo,visibilityProfile,setVisbilityProfile)=>{
+    /*const visitedProfileFn=(profileinfo,visibilityProfile,setVisbilityProfile)=>{
         if(visibilityProfile){
             console.log("profileinfo===========>",profileinfo.profilePic)
         return(
@@ -33,32 +38,44 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
             />
         )
     }
-    }
+    }*/
  
- export default function home({navigation}) {
-
+ export default function home(/*{navigation}*/) {
+    const navigation = useNavigation();
     
     
     const [buttonStyleState,setButtonStyleState]=useState(0)
     const [leftOrRight,setLeftOrRight]=useState('1')
     const swipeRef=useRef()
+    //init the settings stack navihgation
+    const settings = createBottomTabNavigator();
 
+
+        
+        
 
      return(     
+         
   <View style={styles.justBackground}>
-     
-
-          <View style={{width:width,height:height}}>
+  
+       
+          <ScrollView style={{width:width,height:(height)-height/15.1}}>
 
                <View style={styles.logoSettingIconConatiner}>
                     <Image source={require('./../home_imgs_icons/bzom_logo_home.png')} 
                         style={styles.homeLogo}
                         resizeMode='contain'
                     /> 
-                     <Image source={require('./../home_imgs_icons/settings.png')} 
+                    <TouchableOpacity
+                        onPress={()=>{navigation.navigate('settings')}}
                         style={styles.settings}
-                        resizeMode='contain'
-                    /> 
+                    >
+                        <Image source={require('./../home_imgs_icons/settings.png')} 
+                            //style={styles.settings}
+                            resizeMode='contain'
+                        /> 
+                    </TouchableOpacity>
+                 
                </View>
                    
 
@@ -78,7 +95,15 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
                         backgroundColor={'transport'}
                         verticalSwipe={true}
                         cards={Users}
-                        renderCard={card=> <Card user={card}/>}
+                        renderCard={(card,id)=> 
+                        <Card 
+                            user={card}
+                            profilePic={card.image}
+                            nameProfile={card.name}
+                            bio={card.bio}
+                            pictures={card.album}
+                            
+                        />}
                     // cardIndex={index}
                         infinite={true}
                         showSecondCard={true}
@@ -109,7 +134,7 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
                         inputRotationRange={[-width /2, 0, width /2]}
                         animateCardOpacity={true}
                         stackAnimationFriction={300}
-                        onTapCard={(id)=>{
+                        /*onTapCard={(id)=>{
 
                             navigation.navigate('profileWhenVisited',
                                 {
@@ -120,7 +145,7 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
                                 });
                                
                        
-                        }}
+                        }}*/
                         >
                             
                     </Swiper>
@@ -132,7 +157,7 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
                     
                 />
                
-          </View>
+          </ScrollView>
    
         </View>
         
@@ -169,13 +194,14 @@ const styles = StyleSheet.create({
        
     },
     settings:{
-        width:width/9.5,
-        height:height/27,
+        width:width/10,
+        height:height/23,
         position:'absolute',
         marginTop:height/23,
         zIndex:10,
         //backgroundColor:'red',
-        marginLeft:width/1.20
+        marginLeft:width/1.20,
+        alignContent:'center'
        
   
     },

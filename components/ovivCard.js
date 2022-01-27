@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { View, Text, Dimensions,StyleSheet ,ScrollView, ImageBackground,Image} from 'react-native'
+import { View, Text, Dimensions,StyleSheet ,ScrollView, TouchableOpacity,ImageBackground,Image} from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -9,8 +10,8 @@ import { View, Text, Dimensions,StyleSheet ,ScrollView, ImageBackground,Image} f
  if(height>732){height=(732+height)/2}
 
  export default function login(props) {
-     
-     const {user}=props;
+    const navigation = useNavigation();
+     const {user,profilePic,nameProfile,bio,pictures}=props;
      return(
       
             <View style={styles.container}>
@@ -20,14 +21,34 @@ import { View, Text, Dimensions,StyleSheet ,ScrollView, ImageBackground,Image} f
                         source={{uri:user.image}} style={styles.userPicStyle} 
                         resizeMode="stretch"
                     >
-                       
+                    <View style={styles.signStartAndPositionContainer}>
+                        <Text style={styles.position}>In Italy</Text>
+                        <Text style={styles.startSign}>Cancer</Text>
+                    </View>
+                     
          
                     </ImageBackground >
                     <View style={styles.textCardContainer}>
-                        <ScrollView>
-                            <Text style={styles.name}>{user.name}</Text>
-                            <Text numberOfLines={3} style={styles.bio}>{user.bio}</Text>
-                        </ScrollView>
+                       
+                            <TouchableOpacity
+                            
+                            onPress={()=>{
+                                navigation.navigate('profileWhenVisited',
+                                {
+                                    profilePic:profilePic,
+                                    nameProfile:nameProfile,
+                                    bio:bio,
+                                    pictures:pictures
+                                });
+                            }}
+                            >
+                                <Text style={styles.name}>{user.name}</Text>
+                            </TouchableOpacity>
+                            <ScrollView>
+                                <Text numberOfLines={3} style={styles.bio}>{user.bio}</Text>
+                            </ScrollView>
+                            
+                       
                      </View>
                 </View>
                 
@@ -42,7 +63,7 @@ const styles = StyleSheet.create({
     card:{
         flex:1,
         width:width/1.05,
-        height:height/1.32,
+        height:height/1.3,
         alignSelf:"center",
         alignItems:"center",
         borderRadius:width/57,
@@ -58,7 +79,7 @@ const styles = StyleSheet.create({
     userPicStyle:{
         //flex:0.97,
         width:width/1.06,
-        height:height/1.9,
+        height:height/1.8,
         overflow:"hidden",
         borderRadius:width/20,
         borderWidth:width/150,
@@ -67,6 +88,37 @@ const styles = StyleSheet.create({
         justifyContent:"flex-end",
         //position:"absolute",
         resizeMode: 'cover'
+    },
+    signStartAndPositionContainer:{
+        flexDirection:'row',
+        width:width/1.08,
+        marginBottom:height/100,
+        marginTop:height/150,
+        //backgroundColor:'red',
+        justifyContent:'space-between',
+       
+      
+    },
+    position:{
+        color:'white',
+        fontStyle:'italic',
+        fontSize:height/45,
+        fontWeight:'600',
+        marginLeft:width/30
+      
+
+    },
+    startSign:{
+        color:'white',
+        
+        fontSize:height/45,
+        fontWeight:'600',
+        //marginLeft:width/1.6,
+        maxWidth:width/4,
+        marginRight:width/30,
+        backgroundColor:'#0000009e',
+        borderRadius:width/55
+       
     },
 
     textCardContainer:{
@@ -82,7 +134,7 @@ const styles = StyleSheet.create({
     name:{
         fontStyle:'italic',
         fontSize:width/20,
-        color:'black',
+        color:'#1a0dab',
         fontWeight:'600',
   
 
