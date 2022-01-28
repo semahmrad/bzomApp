@@ -1,10 +1,10 @@
 import React,{useEffect,useState} from "react";
 import { FlatList, View, Image, StyleSheet,Dimensions } from "react-native";
+import dimension from '../../screenSizes/screenOfSizes'
 
+let width =dimension.width
+let height=dimension.height
 
-let width =Dimensions.get("window").width
-let height=Dimensions.get("window").height
-if(height>732){height=(732+height)/2}
 
 
 export default function pictures(props){

@@ -13,7 +13,7 @@ let height=dimensions.height;
 let width=dimensions.width
 
 export default function profileWhenVisited({route,navigation}){
-
+console.log('profileWhen vios',height)
     useEffect(()=>{
         navigation.setOptions({ tabBarVisible: false })
     },[])
@@ -22,7 +22,6 @@ export default function profileWhenVisited({route,navigation}){
     const bio=route.params?.bio
     const pictures=route.params?.pictures
 
-    console.log("params===========================>",route.params);
 
     return (
     

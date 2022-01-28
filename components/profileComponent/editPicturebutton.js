@@ -3,23 +3,10 @@ import { StyleSheet, Text, View, Image, Modal,Dimensions,TouchableOpacity } from
 
 
 
-let width =Dimensions.get("window").width
-let height=Dimensions.get("window").height
-const scale=(numberOfscale)=>{
-    var relation=0;
-    if(height>732){
-        relation =height/732;
-       
-    }
-    else{
-        relation =732/height;
-    
-    }
-    console.warn("scale=>",numberOfscale*(height/relation))
-    return numberOfscale*(height/relation);
-    
+import dimension from '../../screenSizes/screenOfSizes'
+let width =dimension.width
+let height=dimension.heightWhenNavBar
 
-}
 export default function Picture(props){
     //const [popupVisibility,setPopupVisibility]=useState(false)
     const {setButtonVisibilty,buttonVisibilty}=props

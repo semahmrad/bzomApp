@@ -1,5 +1,5 @@
 import React, { useState,useRef } from 'react'
-import { View, Dimensions,StyleSheet,Text ,Image,TouchableOpacity,ScrollView,alert} from 'react-native'
+import { View,StatusBar, Dimensions,StyleSheet,Text ,SafeAreaView,Image,TouchableOpacity,ScrollView,alert} from 'react-native'
 import Card from "../components/ovivCard"
 import Users from "../testData/users.js"
 import ReactionButton from '../components/actionButton' 
@@ -7,43 +7,23 @@ import Swiper from 'react-native-deck-swiper';
 //import settings from "../screens/settings"
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-//import setting stack dependencies
-import Settings from "../screens/settings"
-import ChangePassword from "./../components/settingsComponent/settingsScreens/changePassword"
-import PersonalInformation from "./../components/settingsComponent/settingsScreens/personalInformation"
-import Vip from "./../components/vipComponent/vip"
-//for test 
-import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVisited'
 
+import ButtomTabs from './../navigation/buttomNavigationOptions'
 
-
+import dimension from '../screenSizes/screenOfSizes';
 
 //import LinearGradient from 'react-native-linear-gradient'
- let width =Dimensions.get("window").width
- let height =Dimensions.get("window").height
+
+let height=dimension.heightWhenNavBar;
+let width=dimension.width;
 
 
-    /*const visitedProfileFn=(profileinfo,visibilityProfile,setVisbilityProfile)=>{
-        if(visibilityProfile){
-            console.log("profileinfo===========>",profileinfo.profilePic)
-        return(
-            < ProfileWhenVisited
-                profilePic={profileinfo.profilePic}
-                nameProfile={profileinfo.nameProfile}
-                bio={profileinfo.bio}
-                pictures={profileinfo.pictures}
-                setVisbilityProfile={setVisbilityProfile}
-                
-
-            />
-        )
-    }
-    }*/
  
  export default function home({route}) {
     const navigation = useNavigation();
-    
-  
+
+    console.log("height===home======>",height)
+
     const [buttonStyleState,setButtonStyleState]=useState(0)
     const [leftOrRight,setLeftOrRight]=useState('1')
     const swipeRef=useRef()
@@ -51,7 +31,7 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
     const settings = createBottomTabNavigator();
 
 
-        
+
         
 
      return(     
@@ -156,9 +136,9 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
                     buttonStyleState={buttonStyleState}
                     
                 />
-               
+                
           </ScrollView>
-   
+          <ButtomTabs/>
         </View>
         
       
@@ -169,9 +149,9 @@ import ProfileWhenVisited from './../components/profileWhenVisited/profileWhenVi
 const styles = StyleSheet.create({
     container: {
        // flex:1,
-        height:height,
+        height:height/1.1,
         alignContent:'center',
-        //backgroundColor:'red'
+       // backgroundColor:'white'
     },
     justBackground:{
         height:height,

@@ -2,13 +2,16 @@ import React,{useEffect,useState} from "react";
 import { StyleSheet, Modal , View, Image, FlatList,Dimensions,text,TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
-let width =Dimensions.get("window").width
-let height=Dimensions.get("window").height
-if(height>732){height=(732+height)/2}
+import dimension from '../../screenSizes/screenOfSizes'
+let width =dimension.width
+let height=dimension.heightWhenNavBar
+
 
 
 
 export default function album(props,){
+
+  
 
     const {albumImg,}=props
     const navigation = useNavigation();
@@ -56,8 +59,10 @@ const styles = StyleSheet.create({
     container:{
         //backgroundColor:'red',
         width:width,
-        height:height/2.4,
+        //height:height/2.7,
         alignSelf:'center',
+        backgroundColor:"red",
+        marginBottom:height/20
             
     },
     flatList:{

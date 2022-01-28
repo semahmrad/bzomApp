@@ -10,7 +10,7 @@ let width =sizes.width
 let height=sizes.height
 
 export default function spaceCloseButtonImagePicker(props){
-    console.warn('height space',height);
+
     
     const{setButtonVisibilty,buttonVisibilty}=props
    

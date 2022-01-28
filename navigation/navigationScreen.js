@@ -21,8 +21,9 @@ const Navigation=()=>{
     return(
         <NavigationContainer>
             <Stack.Navigator sccreenOption={{headerShown:false}}>
+            <Stack.Screen name='home' component={Home}  options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='signIn' component={Login} options={{tabBarShowLabel:true,headerShown: false}}/>
-                <Stack.Screen name='home' component={Home}  options={{tabBarShowLabel:true,headerShown: false}}/>
+
                 <Stack.Screen name='profileWhenVisited' component={ProfileVisited}  options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='message' component={Message}  options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='chat' component={Chat}  options={({route})=>{

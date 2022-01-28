@@ -2,7 +2,7 @@ import React,{useEffect,useState} from "react";
 import {Text, View, Image, StyleSheet,Dimensions,ScrollView,TouchableOpacity } from "react-native";
 
 import dimension from  './../../screenSizes/screenOfSizes'
-
+import usedMethodes from '../../usedMethods/usedMethods'
 /*
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
@@ -13,15 +13,6 @@ let height=Dimensions.get("window").height
 let width =dimension.width
 let height=dimension.height
 
-const resizeProfilePic=(height,width,div)=>{
-    if(width*2>=height){
-       return  height/(div*2);
-    }
-    else if(width*2<height){
-       return width/div
-    }
-
-}
 
 export default function pictureProfileVisited(props){
 
@@ -71,8 +62,8 @@ const styles = StyleSheet.create({
     },
     picProfile:{
         backgroundColor:'green',
-        width:resizeProfilePic(height,width,6),
-        height:resizeProfilePic(height,width,6),
+        width:usedMethodes.circleObject(6),
+        height:usedMethodes.circleObject(6),
         borderRadius:width,
         //alignSelf:'center',
         marginTop:height/60,

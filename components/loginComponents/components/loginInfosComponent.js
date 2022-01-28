@@ -6,8 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 let width =Dimensions.get("window").width
 let height=Dimensions.get("window").height
-if(height>732){height=(732+height)/2}
-if(height<732){height=(732+height)/2}
+
 export default function loginInfos(props) {
     const{setVisibility,visibility}=props;
     const [username,setUsername]=useState('');

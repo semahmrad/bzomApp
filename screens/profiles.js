@@ -8,23 +8,11 @@ import AlbumPic from './../components/profileComponent/albumComponent'
 import EditButton from './../components/profileComponent/editPicturebutton'
 import SpaceCloseImagePickButton from '../components/profileComponent/spaceCloseButtonImagePicker'
 import EditAlbum from './../components/profileComponent/editAlbum'
-let width =Dimensions.get("window").width
-let height=Dimensions.get("window").height
-const scale=(numberOfscale)=>{
-    var relation=0;
-    if(height>732){
-        relation =height/732;
-       
-    }
-    else{
-        relation =732/height;
-    
-    }
-    console.warn("scale=>",numberOfscale*(height/relation))
-    return numberOfscale*(height/relation);
-    
+import ButtomTabs from './../navigation/buttomNavigationOptions'
+import dimension from '../screenSizes/screenOfSizes'
+let width =dimension.width
+let height=dimension.heightWhenNavBar
 
-}
 
 const imgSrc=profileData.profile_Pic;
 const userName=profileData.user_name;
@@ -86,15 +74,17 @@ const [imagePath,setImagePath]=useState(albumImg[0].img_path)
             <AlbumPic
                 albumImg={albumImg}
             />
-      
+            <ButtomTabs
+                style={styles.buttomComponent}
+            />
         </View>
     );
 }
 const styles = StyleSheet.create({
     container:{
-      height:scale(1)
-
+      height:height,
     },
+   
    
  
   

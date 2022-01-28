@@ -4,11 +4,11 @@
     import descuChat from '../testData/chatData'
     //colors 
     import colors from './../projectColor/colors'
-
-    let width =Dimensions.get("window").width
-    let height =Dimensions.get("window").height
-    if(height>732){height=(732+height)/2}
-    if(height<732){height=(732+height)/2}
+    import ButtomTabs from './../navigation/buttomNavigationOptions'
+    import dimension from '../screenSizes/screenOfSizes'
+    let height=dimension.heightWhenNavBar;
+    let width=dimension.width;
+   
     
 
     const getLastMessageWithPartnair=(descuChat,searchInput)=>{
@@ -56,12 +56,13 @@
     export default function messages({navigation}) {
         //const[msgArray,setMsgArray]=useState([])
         const [searchInput,setSearchInput]=useState('')
-        console.log('height===========>',height)
+        console.log('height====message=======>',height)
 
         
 
     return(
-        <SafeAreaView style={styles.container} >
+        <View style={styles.container} >
+            <ButtomTabs/>
             <View style={styles.searchZone}>
                 <Image
                     source={require('./../components/messagesComponents/messagesIcons/search.png')}
@@ -104,7 +105,7 @@
                 
             
                     
-                        <View style={{width:width,height:height/1.44,marginBottom:width/7.2,backgroundColor:'#efefef',}}>
+                        <View style={{width:width,height:height/1.37,backgroundColor:'#efefef',}}>
                             <FlatList
                             
                                 data={getLastMessageWithPartnair(descuChat,searchInput)}
@@ -126,24 +127,22 @@
                                     </TouchableOpacity>
                                 )}}
                             />
+                             
                         </View>
-                    
-                    
-                
-                
-            
-        </SafeAreaView>
+                   
+         
+        </View>
     );
     }
 
 
     const styles = StyleSheet.create({
     container: {
-        backgroundColor:'white',
-        width:width,
-        height:height
-        
-        //marginTop:width/15
+       
+      //  width:width,
+      // height:height/1.1,
+      //elevation:110
+       
     },
     searchZone:{
         flexDirection:'row',

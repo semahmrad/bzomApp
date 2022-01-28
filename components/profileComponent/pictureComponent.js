@@ -4,15 +4,15 @@ import { ImageBackground, Text, View, Image, TouchableOpacity,Dimensions } from 
 import styles from './profileStyles/profilePicStyle.js'
 import ButtonPickerProfilePicture from './profilePicturePickerButtons'
 
+import dimension from '../../screenSizes/screenOfSizes'
+let width =dimension.width
+let height=dimension.heightWhenNavBar
 
-let width =Dimensions.get("window").width
-let height=Dimensions.get("window").height
-if(height>732){height=(732+height)/2}
 
 export default function Picture(props){
     const {imgSrc,userName,bio,buttonVisibilty,setButtonVisibilty,imagePath,setImagePath}=props
     //const [imagePath,setImagePath]=useState(imgSrc)
-   
+ 
 
     return (
         <View style={styles.container}>

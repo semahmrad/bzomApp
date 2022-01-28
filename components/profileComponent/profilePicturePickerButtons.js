@@ -32,7 +32,6 @@ const openCamer=(setImagePath)=>{
 
 export default function profilePickerButton(props){
   
-    console.warn('height buttons',height)
     const {buttonVisibilty,setButtonVisibilty,setImagePath}=props
    
     return (

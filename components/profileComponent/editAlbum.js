@@ -3,9 +3,9 @@ import { StyleSheet, FlatList, View,  Dimensions,Image,TouchableOpacity,Text } f
 import ImagePicker from 'react-native-image-crop-picker';
 
 
-let width =Dimensions.get("window").width
-let height=Dimensions.get("window").height
-if(height>732){height=(732+height)/2}
+import dimension from '../../screenSizes/screenOfSizes'
+let width =dimension.width
+let height=dimension.heightWhenNavBar
 
 const saveTheNewGalaryChange=(setEditGalaryVisibility)=>{
     setEditGalaryVisibility(false)
