@@ -7,17 +7,26 @@ import{useNavigation} from "@react-navigation/native"
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
-const emailVerifyAndButtonColor=(email)=>{
-   
-    if((email.includes('@gmail.com')||email.includes('@hotmail')||email.includes('@yahoo'))&&email){
-        return false
+const codeVerif=(code)=>{
+    let ok=false;
+    if(code.length==6){
+        for (i=0;i<6;i++){
+            if(code[i]>-1){
+                ok=true
+            }
+            else {
+                ok=false
+                break;
+            }
+        }
+        if(ok){return false}
+        else{return true}
     }
-    else {
-        return true
-    }
+    else return true
 }
-const backgroundButton=(buttonEnable)=>{
-    if(!buttonEnable){
+
+const backgroundButton=(codeValidity)=>{
+    if(!codeValidity){
         return '#dc412b'
     }
     else{
@@ -26,17 +35,14 @@ const backgroundButton=(buttonEnable)=>{
 }
 
 
-export default function restPassword() {
- const navigation=useNavigation();
- const [email,setEmail]=useState('');
- const [buttonEnable,setButtonEnable]=useState(emailVerifyAndButtonColor(email))
-
- console.log('emailVerifyAndButtonColor=(email)',buttonEnable)
+export default function codeRestPassword() {
+    const navigation=useNavigation();
+    const [code,setCode]=useState("")
 
   return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
-            onPress={()=>{navigation.navigate('signIn')}}
+            onPress={()=>{navigation.navigate('resetPassword')}}
         >
             <Image
                 style={styles.backIcon}
@@ -44,23 +50,22 @@ export default function restPassword() {
             />
         </TouchableOpacity>
        
-        <Text style={styles.restPassworTitle}>Reset password</Text>
+        <Text style={styles.restPassworTitle}>My code is</Text>
           
         <TextInput
            style={styles.restPasswordInput}
-           placeholder='Your email address'
+           placeholder='Code'
            placeholderTextColor="#6f6e6e"
-           onChangeText={setEmail}
-           value={email}
+           onChangeText={setCode}
+           value={code}
 
         />
-        <Text style={styles.explicationText}>We'll send you a code to instantly recover your account</Text>
         <TouchableOpacity
-        onPress={()=>{navigation.navigate('codeResetPassword')}}
-            disabled={emailVerifyAndButtonColor(email)}
-            style={{...styles.sendButton,backgroundColor:backgroundButton(emailVerifyAndButtonColor(email))}}
+            onPress={()=>{alert('code')}}
+            disabled={codeVerif(code)}
+            style={{...styles.sendButton,backgroundColor:backgroundButton(codeVerif(code))}}
         >
-            <Text style={styles.sendText}>Send email</Text>
+            <Text style={styles.sendText}>Continue</Text>
         </TouchableOpacity>
          
       </ScrollView>    
@@ -93,12 +98,7 @@ const styles = StyleSheet.create({
       borderBottomWidth:1,
       color:'#000'
   },
-  explicationText:{
-      color:'#6f6e6e',
-      fontSize:height/60,
-      textAlign:'center',
-      marginTop:height/150
-  },
+
   sendButton:{
       width:width/1.2,
       //backgroundColor:'#a9a2a1',

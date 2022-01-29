@@ -23,12 +23,12 @@ export default function login() {
             
             style={styles.inputLogin}
           />
-          <Text style={styles.textForInput}>PASSWORD</Text>
+          <Text style={styles.textForInput}>Password</Text>
           <TextInput
             style={styles.inputLogin}
           />
           <TouchableOpacity
-            onPress={()=>{alert('reset password Button')}}
+            onPress={()=>{navigation.navigate('resetPassword')}}
           >
             <Text style={styles.resetPassword}>Recover password?</Text>
           </TouchableOpacity>

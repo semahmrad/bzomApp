@@ -7,17 +7,17 @@ import{useNavigation} from "@react-navigation/native"
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
-const emailVerifyAndButtonColor=(email)=>{
-   
-    if((email.includes('@gmail.com')||email.includes('@hotmail')||email.includes('@yahoo'))&&email){
+const passwordValidty=(newPassword,confNewPassword)=>{
+    if(newPassword.length>7 && newPassword==confNewPassword){
         return false
     }
-    else {
+    else{
         return true
     }
 }
-const backgroundButton=(buttonEnable)=>{
-    if(!buttonEnable){
+
+const backgroundButton=(newPassword)=>{
+    if(!newPassword){
         return '#dc412b'
     }
     else{
@@ -25,18 +25,16 @@ const backgroundButton=(buttonEnable)=>{
     }
 }
 
-
-export default function restPassword() {
- const navigation=useNavigation();
- const [email,setEmail]=useState('');
- const [buttonEnable,setButtonEnable]=useState(emailVerifyAndButtonColor(email))
-
- console.log('emailVerifyAndButtonColor=(email)',buttonEnable)
+export default function newPassword() {
+    const navigation=useNavigation();
+    const [newPassword,setNewPassword]=useState("")
+    const [confNewPassword,setConfNewPassword]=useState("")
+    console.log('passwordValidty=====>',passwordValidty(newPassword,confNewPassword))
 
   return (
       <ScrollView style={styles.container}>
         <TouchableOpacity
-            onPress={()=>{navigation.navigate('signIn')}}
+            onPress={()=>{navigation.navigate('resetPassword')}}
         >
             <Image
                 style={styles.backIcon}
@@ -44,23 +42,31 @@ export default function restPassword() {
             />
         </TouchableOpacity>
        
-        <Text style={styles.restPassworTitle}>Reset password</Text>
+        <Text style={styles.restPassworTitle}>New password</Text>
           
         <TextInput
            style={styles.restPasswordInput}
-           placeholder='Your email address'
+           placeholder='Password'
            placeholderTextColor="#6f6e6e"
-           onChangeText={setEmail}
-           value={email}
+           onChangeText={setNewPassword}
+           value={newPassword}
+           secureTextEntry
 
         />
-        <Text style={styles.explicationText}>We'll send you a code to instantly recover your account</Text>
+          <TextInput
+           style={styles.restPasswordInput}
+           placeholder='Password'
+           placeholderTextColor="#6f6e6e"
+           onChangeText={setConfNewPassword}
+           value={confNewPassword}
+           secureTextEntry
+        />
         <TouchableOpacity
-        onPress={()=>{navigation.navigate('codeResetPassword')}}
-            disabled={emailVerifyAndButtonColor(email)}
-            style={{...styles.sendButton,backgroundColor:backgroundButton(emailVerifyAndButtonColor(email))}}
+            onPress={()=>{navigation.navigate('signIn')}}
+            disabled={passwordValidty(newPassword,confNewPassword)}
+            style={{...styles.sendButton,backgroundColor:backgroundButton(passwordValidty(newPassword,confNewPassword))}}
         >
-            <Text style={styles.sendText}>Send email</Text>
+            <Text style={styles.sendText}>Change password</Text>
         </TouchableOpacity>
          
       </ScrollView>    
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
   },
   restPassworTitle:{
       alignSelf:'center',
-      marginTop:height/20,
+      marginTop:height/50,
       fontSize:height/30,
       fontWeight:'700'
   },
@@ -89,22 +95,17 @@ const styles = StyleSheet.create({
       width:width/1.1,
       alignSelf:'center',
       //backgroundColor:'red',
-      marginTop:height/10,
+      marginTop:height/20,
       borderBottomWidth:1,
       color:'#000'
   },
-  explicationText:{
-      color:'#6f6e6e',
-      fontSize:height/60,
-      textAlign:'center',
-      marginTop:height/150
-  },
+
   sendButton:{
       width:width/1.2,
       //backgroundColor:'#a9a2a1',
       height:height/17,
       alignSelf:'center',
-      marginTop:height/10,
+      marginTop:height/20,
       borderRadius:width/25,
       elevation:width/25,
       borderWidth:width/(width*2),

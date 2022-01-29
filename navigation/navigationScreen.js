@@ -16,12 +16,19 @@ import PersonalInformation from '../components/settingsComponent/settingsScreens
 import Vip from '../components/vipComponent/vip'
 import Signup from './../components/loginComponents/signup'
 import ResetPassword from './../components/resetPassword/resetPassword'
+import CodeResetPassword from './../components/resetPassword/codeResetpassword'
+import NewPassword from './../components/resetPassword/newPassword'
 
 const Stack=createNativeStackNavigator();
 const Navigation=()=>{
     return(
         <NavigationContainer>
             <Stack.Navigator sccreenOption={{headerShown:false}}>
+                
+                <Stack.Screen name='newPassword' component={NewPassword} options={{tabBarShowLabel:true,headerShown: false}}/>
+
+                <Stack.Screen name='codeResetPassword' component={CodeResetPassword} options={{tabBarShowLabel:true,headerShown: false}}/>
+
                 <Stack.Screen name='resetPassword' component={ResetPassword} options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='signup' component={Signup} options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='signIn' component={Login} options={{tabBarShowLabel:true,headerShown: false}}/>
