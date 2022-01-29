@@ -22,7 +22,7 @@ let width=dimension.width;
  export default function home({route}) {
     const navigation = useNavigation();
 
-    console.log("height===home======>",height)
+    console.log("heightaaaaa===home======>",height)
 
     const [buttonStyleState,setButtonStyleState]=useState(0)
     const [leftOrRight,setLeftOrRight]=useState('1')
@@ -40,7 +40,7 @@ let width=dimension.width;
   
 
           <ScrollView style={{width:width,height:(height)-height/15.1}}>
-
+     
                <View style={styles.logoSettingIconConatiner}>
                     <Image source={require('./../home_imgs_icons/bzom_logo_home.png')} 
                         style={styles.homeLogo}

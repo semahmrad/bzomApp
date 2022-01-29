@@ -26,6 +26,7 @@ const albumImg=profileData.album;
 
 export default function profile(){
 
+    console.log("height========profile=======>",height)
 
 const [buttonVisibilty,setButtonVisibilty]=useState(false)
 const [editGalaryVisibility,setEditGalaryVisibility]=useState(false)

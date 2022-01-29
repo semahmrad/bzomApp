@@ -14,16 +14,18 @@ import Setting from '../screens/settings'
 import ChangePassword from '../components/settingsComponent/settingsScreens/changePassword'
 import PersonalInformation from '../components/settingsComponent/settingsScreens/personalInformation'
 import Vip from '../components/vipComponent/vip'
-
+import Signup from './../components/loginComponents/signup'
+import ResetPassword from './../components/resetPassword/resetPassword'
 
 const Stack=createNativeStackNavigator();
 const Navigation=()=>{
     return(
         <NavigationContainer>
             <Stack.Navigator sccreenOption={{headerShown:false}}>
-            <Stack.Screen name='home' component={Home}  options={{tabBarShowLabel:true,headerShown: false}}/>
+                <Stack.Screen name='resetPassword' component={ResetPassword} options={{tabBarShowLabel:true,headerShown: false}}/>
+                <Stack.Screen name='signup' component={Signup} options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='signIn' component={Login} options={{tabBarShowLabel:true,headerShown: false}}/>
-
+                <Stack.Screen name='home' component={Home}  options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='profileWhenVisited' component={ProfileVisited}  options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='message' component={Message}  options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='chat' component={Chat}  options={({route})=>{

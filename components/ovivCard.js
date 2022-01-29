@@ -3,11 +3,15 @@ import { View, Text, Dimensions,StyleSheet ,ScrollView, TouchableOpacity,ImageBa
 import { useNavigation } from '@react-navigation/native';
 
 
+import dimension from '../screenSizes/screenOfSizes';
 
 //import LinearGradient from 'react-native-linear-gradient'
- let width =Dimensions.get("window").width
- let height=Dimensions.get("window").height
- if(height>732){height=(732+height)/2}
+
+let height=dimension.heightWhenNavBar;
+let width=dimension.width;
+
+//import LinearGradient from 'react-native-linear-gradient'
+
 
  export default function login(props) {
     const navigation = useNavigation();
@@ -63,7 +67,7 @@ const styles = StyleSheet.create({
     card:{
         flex:1,
         width:width/1.05,
-        height:height/1.3,
+        height:height/1.35,
         alignSelf:"center",
         alignItems:"center",
         borderRadius:width/57,

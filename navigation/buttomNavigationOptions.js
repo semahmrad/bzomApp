@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         borderTopEndRadius:width/15,
         borderTopStartRadius:width/15,
         position:'absolute',
-        marginTop:height/1.06,
+        bottom: 0,
         elevation:100,
         zIndex:100
        

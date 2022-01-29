@@ -7,7 +7,7 @@ import{useNavigation} from "@react-navigation/native"
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
-export default function login() {
+export default function signUp() {
  const navigation=useNavigation();
 
   return (
@@ -17,27 +17,28 @@ export default function login() {
           source={require('./loginIcons/logo_login.png')}
         />
         <View style={styles.signContainer}>
-          <Text style={styles.loginTextTitle}>Login to your account</Text>
-          <Text style={styles.textForInput}>Email or Username</Text>
-          <TextInput
-            
-            style={styles.inputLogin}
-          />
-          <Text style={styles.textForInput}>PASSWORD</Text>
+          <Text style={styles.loginTextTitle}>Create your account</Text>
+          <Text style={styles.textForInput}>Email</Text>
           <TextInput
             style={styles.inputLogin}
           />
-          <TouchableOpacity
-            onPress={()=>{alert('reset password Button')}}
-          >
-            <Text style={styles.resetPassword}>Recover password?</Text>
-          </TouchableOpacity>
+
+          <Text style={styles.textForInput}>Username</Text>
+          <TextInput
+            style={styles.inputLogin}
+          />
+
+          <Text style={styles.textForInput}>Password</Text>
+          <TextInput
+            style={styles.inputLogin}
+          />
+
           
           <TouchableOpacity
             style={styles.loginButton}
             onPress={()=>{navigation.navigate('Profile')}}
           >
-            <Text style={styles.loginText}>PROCEED</Text>
+            <Text style={styles.loginText}>GET STARTED</Text>
           </TouchableOpacity>
             <Text style={styles.or}>--- OR ---</Text>
             <View style={styles.otherLoginMethode}>
@@ -66,12 +67,12 @@ export default function login() {
             <View style={styles.changePageContainer}>
                
                     <View style={styles.changePageTextContainer}>
-                        <Text style={styles.explicationPageChange}>Don't have an account? </Text>
+                        <Text style={styles.explicationPageChange}>Have an account? </Text>
                         <TouchableOpacity
-                            onPress={()=>{navigation.navigate('signup')}}
+                            onPress={()=>{navigation.navigate('signIn')}}
                             style={styles.changePagButton}
                             >
-                        <Text style={styles.signInText}>Sign Up</Text>
+                        <Text style={styles.signInText}>Sign In </Text>
                         </TouchableOpacity>
                     </View>
 
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     color:'black',
     alignSelf:'center',
     fontSize:height/28,
-    marginTop:height/30,
+    marginTop:height/50,
     fontWeight:'bold'
   },
   inputLogin:{
@@ -117,16 +118,16 @@ const styles = StyleSheet.create({
     color:'black',
     alignSelf:'center',
     width:width/1.08,
-    height:height/17,
+    height:height/20,
     backgroundColor:'#f5f9fc',
-    marginTop:height/100,
+    marginTop:height/150,
     borderRadius:width/15,
     borderWidth:1,
     borderColor:'#838080',
     elevation:width/50,
   },
   textForInput:{
-    marginTop:height/50,
+    marginTop:height/60,
     marginLeft:(width-(width/1.08))/2,
     fontSize:height/57,
     fontWeight:"400",
@@ -134,19 +135,19 @@ const styles = StyleSheet.create({
     
   },
   resetPassword:{
-    fontSize:height/55,
+    fontSize:height/62,
     //marginLeft:width/1.55,
-    marginTop:height/55,
+    marginTop:height/70,
     alignSelf:'flex-end',
     marginRight:(width-(width/1.08))/2,
-    color:'#3228b4'
+    color:'#585151'
   },
   loginButton:{
     width:width/1.1,
-    height:height/14,
+    height:height/16,
     backgroundColor:'#e24731',
     alignSelf:'center',
-    marginTop:height/35,
+    marginTop:height/25,
     borderRadius:width/15,
     justifyContent:'center',
     elevation:width/50,
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
   },
   or:{
     textAlign:'center',
-    marginTop:height/60,
+    marginTop:height/80,
     fontWeight:'bold',
     fontSize:height/40,
     color:'#b6b6b6',
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
     width:width/1.08,
     height:height/20,
     alignSelf:'center',
-    marginTop:height/35,
+    marginTop:height/40,
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'space-between',
@@ -212,44 +213,44 @@ const styles = StyleSheet.create({
     fontSize:height/45
   },
   changePageContainerBackground:{
-    backgroundColor:'white',
+      backgroundColor:'white',
+      height:height-(width/4.5+height/1.7+height/50+height/25),
+      
+    
+     //borderTopEndRadius:width/10
+  },
+ changePageContainer:{
     height:height-(width/4.5+height/1.7+height/50+height/25),
+    width:width,
+    backgroundColor:'#e24731',
+    borderTopEndRadius:width/7,
+    alignItems:'center',
     
-  
-   //borderTopEndRadius:width/10
-},
-changePageContainer:{
-  height:height-(width/4.5+height/1.7+height/50+height/25),
-  width:width,
-  backgroundColor:'#e24731',
-  borderTopEndRadius:width/7,
-  alignItems:'center',
-  
-},
-changePagButton:{
-    //alignSelf:'center',
-   // width:width/1.1,
-    //height:height/20,
-    marginTop:height/25,
-    
-},
-changePageTextContainer:{
- 
-  flexDirection:'row',
-},
-explicationPageChange:{
+  },
+  changePagButton:{
+      //alignSelf:'center',
+     // width:width/1.1,
+      //height:height/20,
+      marginTop:height/25,
+      
+  },
+  changePageTextContainer:{
+   
+    flexDirection:'row',
+  },
+  explicationPageChange:{
+      color:'white',
+      textAlign:'center',
+      fontSize:height/30,
+      fontWeight:'400',
+      marginTop:height/25,
+     
+  },
+  signInText:{
     color:'white',
     textAlign:'center',
-    fontSize:height/35,
-    fontWeight:'400',
-    marginTop:height/25,
-   
-},
-signInText:{
-  color:'white',
-  textAlign:'center',
-  fontSize:height/35,
-  fontWeight:'bold'
-},
+    fontSize:height/30,
+    fontWeight:'bold'
+  },
 
 });
