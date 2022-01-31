@@ -35,7 +35,7 @@ export default function signUp() {
 
           
           <TouchableOpacity
-            style={styles.loginButton}
+            style={styles.signUpButton}
             onPress={()=>{navigation.navigate('Profile')}}
           >
             <Text style={styles.loginText}>GET STARTED</Text>
@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
     height:height/20,
     backgroundColor:'#f5f9fc',
     marginTop:height/150,
-    borderRadius:width/15,
-    borderWidth:1,
+    //borderRadius:width/15,
+    borderBottomWidth:1,
     borderColor:'#838080',
     elevation:width/50,
   },
@@ -134,23 +134,17 @@ const styles = StyleSheet.create({
     color:'#525050',
     
   },
-  resetPassword:{
-    fontSize:height/62,
-    //marginLeft:width/1.55,
-    marginTop:height/70,
-    alignSelf:'flex-end',
-    marginRight:(width-(width/1.08))/2,
-    color:'#585151'
-  },
-  loginButton:{
+
+  signUpButton:{
     width:width/1.1,
-    height:height/16,
+    height:height/14,
     backgroundColor:'#e24731',
     alignSelf:'center',
-    marginTop:height/25,
-    borderRadius:width/15,
+    marginTop:height/35,
+    borderRadius:width/45,
     justifyContent:'center',
-    elevation:width/50,
+    elevation:width/25,
+    borderWidth:width/width
   },
   loginText:{
     color:'white',

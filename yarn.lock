@@ -1729,6 +1729,13 @@
   "resolved" "https://registry.npmjs.org/atob/-/atob-2.1.2.tgz"
   "version" "2.1.2"
 
+"axios@^0.25.0":
+  "integrity" "sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-0.25.0.tgz"
+  "version" "0.25.0"
+  dependencies:
+    "follow-redirects" "^1.14.7"
+
 "babel-core@^7.0.0-bridge.0":
   "integrity" "sha512-poPX9mZH/5CSanm50Q+1toVci6pv5KSRv/5TWCwtzQS5XEwn40BcCrgIeMFWP9CKKIniKXNxoIOnOq4VVlGXhg=="
   "resolved" "https://registry.npmjs.org/babel-core/-/babel-core-7.0.0-bridge.0.tgz"
@@ -3422,6 +3429,11 @@
   "integrity" "sha512-IBlEM3MCdZfb2gC3QSS5tHdlziVPFwmuz+4Oy+IYaZdRvZZnsoDE3Z4uUmC0xqZwLNk2X6v7M7R++G1V3fgsRA=="
   "resolved" "https://registry.npmjs.org/flow-parser/-/flow-parser-0.160.0.tgz"
   "version" "0.160.0"
+
+"follow-redirects@^1.14.7":
+  "integrity" "sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ=="
+  "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.7.tgz"
+  "version" "1.14.7"
 
 "for-in@^1.0.2":
   "integrity" "sha1-gQaNKVqBQuwKxybG4iAMMPttXoA="
@@ -5930,6 +5942,11 @@
     "flow-parser" "^0.121.0"
     "jscodeshift" "^0.11.0"
     "nullthrows" "^1.1.1"
+
+"react-native-datefield@^0.3.5":
+  "integrity" "sha512-bQ/HFKTjbF0sBcMxLSJcxixi1jsaKBQqVnxUSRLJG75DZZtKqoST5hjelTn8c+YHzmcLvZKttrvW4YT9rE5IQw=="
+  "resolved" "https://registry.npmjs.org/react-native-datefield/-/react-native-datefield-0.3.5.tgz"
+  "version" "0.3.5"
 
 "react-native-deck-swiper@^2.0.5":
   "integrity" "sha512-PRDsdgAYUogMMwPWChEL/XsEpSob8CFNd9ThsvoyMV2lXd2bR4VZsHSuyVgXvqiHspGb3modbvogBpiSOZ3oHQ=="

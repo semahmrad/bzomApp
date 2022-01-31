@@ -18,13 +18,15 @@ import Signup from './../components/loginComponents/signup'
 import ResetPassword from './../components/resetPassword/resetPassword'
 import CodeResetPassword from './../components/resetPassword/codeResetpassword'
 import NewPassword from './../components/resetPassword/newPassword'
+import GetStarted from '../components/getStarted/getStarted'
 
 const Stack=createNativeStackNavigator();
 const Navigation=()=>{
     return(
         <NavigationContainer>
             <Stack.Navigator sccreenOption={{headerShown:false}}>
-                
+                <Stack.Screen name='getStarted' component={GetStarted} options={{tabBarShowLabel:true,headerShown: false}}/>
+     
                 <Stack.Screen name='newPassword' component={NewPassword} options={{tabBarShowLabel:true,headerShown: false}}/>
 
                 <Stack.Screen name='codeResetPassword' component={CodeResetPassword} options={{tabBarShowLabel:true,headerShown: false}}/>

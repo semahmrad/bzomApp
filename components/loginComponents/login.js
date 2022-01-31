@@ -4,12 +4,42 @@ import { Input } from 'react-native-elements';
 import dimension from '../../screenSizes/screenOfSizes'
 import methods from './../../usedMethods/usedMethods'
 import{useNavigation} from "@react-navigation/native"
+import axios from 'axios'
+import client from '../../confProject/config_server'
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
+const  testApiConsumize = async (email,password,setLoading,setErrorMessage)=>{
+  
+  await client.post('sign/in',
+
+    {
+        authenticator:email,
+        password:password
+    }
+    
+  ).then((result)=>{
+    console.log(result.data.code,"<<<<=======================<<<<<")
+    if(result.data.code==200) setLoading(true);
+    else{
+      setErrorMessage(result.data.msg)
+    }
+    
+    
+  }).catch(err=>{  
+      setErrorMessage('conexion ...')
+      console.log('err ....!',JSON.stringify(err));
+  });
+}
+
 export default function login() {
  const navigation=useNavigation();
+ const [email,setEmail]=useState();
+ const [password,setPassword]=useState();
+ const [loading,setLoading]=useState(false);
+ const [errorMessage,setErrorMessage]=useState("");
 
+ 
   return (
       <View style={styles.container} >
         <Image
@@ -22,20 +52,39 @@ export default function login() {
           <TextInput
             
             style={styles.inputLogin}
+            placeholderTextColor="#6f6e6e"
+            placeholder='Email or Username'
+            onChangeText={setEmail}
+            value={email}
+           
           />
           <Text style={styles.textForInput}>Password</Text>
           <TextInput
             style={styles.inputLogin}
+            placeholderTextColor="#6f6e6e"
+            placeholder='Password'
+            secureTextEntry
+            onChangeText={setPassword}
+            value={password}
+            
           />
           <TouchableOpacity
-            onPress={()=>{navigation.navigate('resetPassword')}}
+            onPress={()=>{
+              
+              navigation.navigate('resetPassword')
+            }}
           >
             <Text style={styles.resetPassword}>Recover password?</Text>
           </TouchableOpacity>
           
           <TouchableOpacity
             style={styles.loginButton}
-            onPress={()=>{navigation.navigate('Profile')}}
+            onPress={()=>{
+              testApiConsumize(email,password,setLoading,setErrorMessage);
+              if(loading){
+                navigation.navigate('Profile')
+              }
+            }}
           >
             <Text style={styles.loginText}>PROCEED</Text>
           </TouchableOpacity>
@@ -120,8 +169,8 @@ const styles = StyleSheet.create({
     height:height/17,
     backgroundColor:'#f5f9fc',
     marginTop:height/100,
-    borderRadius:width/15,
-    borderWidth:1,
+    //borderRadius:width/15,
+    borderBottomWidth:1,
     borderColor:'#838080',
     elevation:width/50,
   },
@@ -147,9 +196,10 @@ const styles = StyleSheet.create({
     backgroundColor:'#e24731',
     alignSelf:'center',
     marginTop:height/35,
-    borderRadius:width/15,
+    borderRadius:width/45,
     justifyContent:'center',
-    elevation:width/50,
+    elevation:width/25,
+    borderWidth:width/width
   },
   loginText:{
     color:'white',
