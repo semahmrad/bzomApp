@@ -2,9 +2,10 @@ import React,{useState} from 'react';
 import { StyleSheet, Text, View, Image, ScrollView,Dimensions,TouchableOpacity, ViewBase,TextInput } from "react-native";
 import { Input } from 'react-native-elements';
 import dimension from '../../screenSizes/screenOfSizes'
-import methods from '../../usedMethods/usedMethods'
+
 import{useNavigation} from "@react-navigation/native"
-import DateField from 'react-native-datefield';
+import DatePicker from 'react-native-datepicker';
+import { RadioButton } from 'react-native-paper';
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
@@ -13,12 +14,13 @@ export default function getStarted() {
 
  const [firstName,setFirstName]=useState();
  const [lastName,setLastName]=useState();
- const [birthDay,setBirtDay]=useState();
+ const [birthDay,setBirtDay]=useState('01-01-1990');
  const [gender,setGender]=useState();
  const [phone,setPhone]=useState();
 
+
   return (
-        <View style={styles.container} >
+        <ScrollView style={styles.container} >
             <Text style={styles.getStartedTitle}>Get Started</Text>
             <Text style={styles.textForInput}>First name</Text>
             <TextInput
@@ -36,23 +38,67 @@ export default function getStarted() {
                 onChangeText={setLastName}
                 value={lastName}
             />
-            <Text style={styles.textForInput}>Birthday</Text>
-            <DateField
-                labelDate="Input date"
-                labelMonth="Input month"
-                labelYear="Input year"
-                onSubmit={(value) => console.log(value)}
-                containerStyle={{ backgroundColor: 'red',width:250, marginLeft:(width-(width/1.08))/2,color:'pink'}}
-                styleInput={{color:'pink'}}
-                style={{color:'red'}}
+            <Text style={styles.textForInput}>birthday</Text>
+            <DatePicker
+                style={styles.datePickerStyle}
+                date={birthDay} // Initial date from state
+                mode="date" // The enum of date, datetime and time
+                placeholder="select date"
+                format="DD-MM-YYYY"
+                minDate="01-01-1970"
+                maxDate="01-01-2005"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    //display: 'none',
+                    position: 'absolute',
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0,
+                  },
+                  dateInput: {
+                    marginLeft: 36,
+                  },
+                }}
+                onDateChange={(date) => {
+                  setBirtDay(date);
+                }}
             />
-            <TextInput
-                style={styles.inputs}
-                placeholderTextColor="#6f6e6e"
-                placeholder='Email or Username'
-                onChangeText={setGender}
-                value={gender}
-            />
+            
+            <View style={styles.radioButtonConatiner}>
+              <View style={styles.oneRadioButtonContainer}>
+                <RadioButton
+                  value="M"
+                  status={ gender === 'Male' ? 'checked' : 'unchecked' }
+                  onPress={() => setGender('Male')}
+                  color='black'
+                />
+                <Text style={styles.RadioButtonText}>Male</Text>
+              </View>
+
+              <View style={styles.oneRadioButtonContainer}>
+                  <RadioButton
+                    value="F"
+                    status={ gender === 'Female' ? 'checked' : 'unchecked' }
+                    onPress={() => setGender('Female')}
+                    color='black'
+                  />
+                  <Text style={styles.RadioButtonText}>Femele</Text>
+              </View>
+
+              <View style={styles.oneRadioButtonContainer}>
+                  <RadioButton
+                    value="O"
+                    status={ gender === 'Other' ? 'checked' : 'unchecked' }
+                    onPress={() => setGender('Other')}
+                    color='black'
+                 />
+                 <Text style={styles.RadioButtonText}>Other</Text>
+              </View>
+
+            </View>
+            
             <Text style={styles.textForInput}>Phone number</Text>
             <TextInput
                 style={styles.inputs}
@@ -61,8 +107,13 @@ export default function getStarted() {
                 onChangeText={setPhone}
                 value={phone}
             />
-
-        </View>
+            <TouchableOpacity
+                style={styles.nextButton}
+                onPress={()=>{navigation.navigate('getStartedProfilePick')}}
+            >
+                <Text style={styles.nextText}>Next</Text>
+            </TouchableOpacity>
+        </ScrollView>
         
   );
 }
@@ -93,13 +144,51 @@ inputs:{
     color:'black',
     alignSelf:'center',
     width:width/1.08,
-    height:height/20,
+    height:height/18,
     backgroundColor:'#f5f9fc',
     marginTop:height/150,
     //borderRadius:width/15,
     borderBottomWidth:1,
     borderColor:'#838080',
     elevation:width/50,
+  },
+  datePickerStyle:{
+    marginLeft:(width-(width/1.08))/2,
+    marginTop:height/50,
+    
+  },
+  radioButtonConatiner:{
+    marginTop:height/50,
+    marginLeft:(width-(width/1.08))/2,
+  },
+
+  oneRadioButtonContainer:{
+    flexDirection:'row',
+    alignContent:'center',
+    
+  },
+  RadioButtonText:{
+    textAlignVertical:'center',
+    fontWeight:"400",
+    color:'#525050',
+    fontSize:height/52,
+  },
+  nextText:{
+    color:'white',
+    textAlign:'center',
+    fontSize:height/32,
+    fontWeight:'bold'
+  },
+  nextButton:{
+    width:width/1.1,
+    height:height/16,
+    backgroundColor:'#e24731',
+    alignSelf:'center',
+    marginTop:height/35,
+    borderRadius:width/30,
+    justifyContent:'center',
+    elevation:width/25,
+    //borderWidth:width/width
   },
 
   

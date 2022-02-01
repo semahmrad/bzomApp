@@ -7,8 +7,42 @@ import{useNavigation} from "@react-navigation/native"
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
+const champsValidator=(username,email,password)=>{
+  if(username&&email&&password){
+        if(username.length>5&&email.length>15&&password.length>7){
+            if(email.includes('@gmail.com')||email.includes('@hotmail')||email.includes('@yahoo')){
+              return "OK";
+            }
+            else return "Wrong email";
+        }
+        else if(username.length<6){
+          return "Short username";
+        }
+        else if(email.length<16){
+          return "Wrong email";
+        }
+        else return "Short password";
+  }
+  /*else{
+        if(username==null){
+          return "Username null";
+        }
+        else if(email==null){
+          return "Email null";
+        }
+        else if(password==null){
+          return "Password null";
+        }
+  }*/
+}
+
 export default function signUp() {
  const navigation=useNavigation();
+ const [username,setUsername]=useState("");
+ const [email,setEmail]=useState("");
+ const [password,setPassword]=useState("");
+
+console.log('username============>length',username.length)
 
   return (
       <View style={styles.container} >
@@ -18,25 +52,43 @@ export default function signUp() {
         />
         <View style={styles.signContainer}>
           <Text style={styles.loginTextTitle}>Create your account</Text>
-          <Text style={styles.textForInput}>Email</Text>
-          <TextInput
-            style={styles.inputLogin}
-          />
-
+         
           <Text style={styles.textForInput}>Username</Text>
           <TextInput
             style={styles.inputLogin}
+            placeholderTextColor="#6f6e6e"
+            placeholder='Username'
+            onChangeText={setUsername}
+            value={username}
+          />
+         
+         <Text style={styles.textForInput}>Email</Text>
+          <TextInput
+          style={styles.inputLogin}
+          placeholderTextColor="#6f6e6e"
+          placeholder='Email'
+          onChangeText={setEmail}
+          value={email}
           />
 
           <Text style={styles.textForInput}>Password</Text>
           <TextInput
             style={styles.inputLogin}
+            placeholderTextColor="#6f6e6e"
+            placeholder='Password'
+            secureTextEntry
+            onChangeText={setPassword}
+            value={password}
           />
 
-          
+          <Text style={styles.errorText}>{champsValidator(username,email,password)!='OK'?champsValidator(username,email,password):""}</Text>
           <TouchableOpacity
             style={styles.signUpButton}
-            onPress={()=>{navigation.navigate('Profile')}}
+            onPress={()=>{
+              if(champsValidator(username,email,password)=='OK'){
+                navigation.navigate('getStarted')
+              }
+            }}
           >
             <Text style={styles.loginText}>GET STARTED</Text>
           </TouchableOpacity>
@@ -134,13 +186,18 @@ const styles = StyleSheet.create({
     color:'#525050',
     
   },
+  errorText:{
+    color:'red',
+    textAlign:'center',
+    marginTop:height/100,
+  },
 
   signUpButton:{
     width:width/1.1,
     height:height/14,
     backgroundColor:'#e24731',
     alignSelf:'center',
-    marginTop:height/35,
+    marginTop:height/100,
     borderRadius:width/45,
     justifyContent:'center',
     elevation:width/25,

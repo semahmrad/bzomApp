@@ -19,12 +19,18 @@ import ResetPassword from './../components/resetPassword/resetPassword'
 import CodeResetPassword from './../components/resetPassword/codeResetpassword'
 import NewPassword from './../components/resetPassword/newPassword'
 import GetStarted from '../components/getStarted/getStarted'
+import GetStartedProfilePick from '../components/getStarted/getStartedProfilePic'
 
 const Stack=createNativeStackNavigator();
 const Navigation=()=>{
     return(
         <NavigationContainer>
             <Stack.Navigator sccreenOption={{headerShown:false}}>
+                <Stack.Screen name='signIn' component={Login} options={{tabBarShowLabel:true,headerShown: false}}/>
+                <Stack.Screen name='signup' component={Signup} options={{tabBarShowLabel:true,headerShown: false}}/>
+
+                <Stack.Screen name='getStartedProfilePick' component={GetStartedProfilePick} options={{tabBarShowLabel:true,headerShown: false}}/>
+
                 <Stack.Screen name='getStarted' component={GetStarted} options={{tabBarShowLabel:true,headerShown: false}}/>
      
                 <Stack.Screen name='newPassword' component={NewPassword} options={{tabBarShowLabel:true,headerShown: false}}/>
@@ -32,8 +38,6 @@ const Navigation=()=>{
                 <Stack.Screen name='codeResetPassword' component={CodeResetPassword} options={{tabBarShowLabel:true,headerShown: false}}/>
 
                 <Stack.Screen name='resetPassword' component={ResetPassword} options={{tabBarShowLabel:true,headerShown: false}}/>
-                <Stack.Screen name='signup' component={Signup} options={{tabBarShowLabel:true,headerShown: false}}/>
-                <Stack.Screen name='signIn' component={Login} options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='home' component={Home}  options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='profileWhenVisited' component={ProfileVisited}  options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='message' component={Message}  options={{tabBarShowLabel:true,headerShown: false}}/>
