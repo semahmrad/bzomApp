@@ -4,36 +4,48 @@ import { Input } from 'react-native-elements';
 import dimension from '../../screenSizes/screenOfSizes'
 import methods from './../../usedMethods/usedMethods'
 import{useNavigation} from "@react-navigation/native"
+import axios from 'axios'
+import client from '../../confProject/config_server'
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
-const champsValidator=(username,email,password)=>{
-  if(username&&email&&password){
-        if(username.length>5&&email.length>15&&password.length>7){
-            if(email.includes('@gmail.com')||email.includes('@hotmail')||email.includes('@yahoo')){
-              return "OK";
-            }
-            else return "Wrong email";
-        }
-        else if(username.length<6){
-          return "Short username";
-        }
-        else if(email.length<16){
-          return "Wrong email";
-        }
-        else return "Short password";
+
+const serverValidator=async(username,email,password,setErrorMsg)=>{
+  client.post("signUpValidator/emailAndUsername",{
+    username:username,
+    email:email,
+  }).then(res=>{
+    if(signUpChampsValidator(username,email,password)==''){
+    setErrorMsg(res.data.msg)
+  }else {
+    setErrorMsg(signUpChampsValidator(username,email,password))
   }
-  /*else{
-        if(username==null){
-          return "Username null";
+  });
+}
+
+
+const signUpChampsValidator=(username,email,password)=>{
+  let mail_format = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  let username_format=  /^[a-zA-Z0-9]{5,}$/;
+  let password_format=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+  if(username&&email&&password){
+    if(username.toLowerCase().match(username_format)){
+      if(email.toLowerCase().match(mail_format)){
+        console.log('valid email')
+        if(password.toLowerCase().match(password_format)){
+          return ''
+        }else{
+          return 'password not valid !!'
         }
-        else if(email==null){
-          return "Email null";
-        }
-        else if(password==null){
-          return "Password null";
-        }
-  }*/
+
+      }else{
+        console.log('invalide email')
+        return 'email not valid !!'
+      }
+    }else {
+      return'username not valid !!'
+    }
+  }
 }
 
 export default function signUp() {
@@ -41,8 +53,12 @@ export default function signUp() {
  const [username,setUsername]=useState("");
  const [email,setEmail]=useState("");
  const [password,setPassword]=useState("");
+ const [erroMsg,setErrorMsg]=useState("");
 
-console.log('username============>length',username.length)
+ console.log("===>",erroMsg)
+
+ serverValidator(username,email,password,setErrorMsg)
+ 
 
   return (
       <View style={styles.container} >
@@ -61,6 +77,8 @@ console.log('username============>length',username.length)
             onChangeText={setUsername}
             value={username}
           />
+          <Text style={styles.conditionInput}>Minimum five characters</Text>
+
          
          <Text style={styles.textForInput}>Email</Text>
           <TextInput
@@ -80,13 +98,14 @@ console.log('username============>length',username.length)
             onChangeText={setPassword}
             value={password}
           />
+          <Text style={styles.conditionInput}>Minimum eight characters, at least one letter and one number</Text>
 
-          <Text style={styles.errorText}>{champsValidator(username,email,password)!='OK'?champsValidator(username,email,password):""}</Text>
+          <Text style={styles.errorText}>{erroMsg}</Text>
           <TouchableOpacity
             style={styles.signUpButton}
             onPress={()=>{
-              if(champsValidator(username,email,password)=='OK'){
-                navigation.navigate('getStarted')
+              if(erroMsg==''){
+                navigation.navigate('getStarted',{username:username,email:email,password:password})
               }
             }}
           >
@@ -166,20 +185,25 @@ const styles = StyleSheet.create({
     fontWeight:'bold'
   },
   inputLogin:{
-    fontSize:height/67,
+    fontSize:height/77,
     color:'black',
     alignSelf:'center',
     width:width/1.08,
     height:height/20,
     backgroundColor:'#f5f9fc',
-    marginTop:height/150,
+    marginTop:height/200,
     //borderRadius:width/15,
     borderBottomWidth:1,
     borderColor:'#838080',
     elevation:width/50,
   },
+  conditionInput:{
+    fontSize:height/75,
+    color:'#6f6e6e',
+    marginLeft:(width-(width/1.08))/2,
+  },
   textForInput:{
-    marginTop:height/60,
+    marginTop:height/150,
     marginLeft:(width-(width/1.08))/2,
     fontSize:height/57,
     fontWeight:"400",
@@ -211,7 +235,7 @@ const styles = StyleSheet.create({
   },
   or:{
     textAlign:'center',
-    marginTop:height/80,
+    marginTop:height/120,
     fontWeight:'bold',
     fontSize:height/40,
     color:'#b6b6b6',

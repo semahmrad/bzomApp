@@ -9,7 +9,35 @@ import { RadioButton } from 'react-native-paper';
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
-export default function getStarted() {
+const verifchamps=(firstName,lastName,phone)=>{
+  let name_format = /^[a-zA-Z]{3,}$/;
+  let phone_format=/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
+  if(firstName&&lastName&&phone){
+    if(firstName.toLowerCase().match(name_format)){
+      if(lastName.toLowerCase().match(name_format)){
+        console.log('valid email')
+        if(phone.toLowerCase().match(phone_format)){
+          console.log('ok')
+          return ''
+        }else{
+          console.log('phone not valid !!')
+          return 'phone not valid !!'
+        }
+
+      }else{
+        console.log('lastName not valid !!')
+        return 'lastName not valid !!'
+      }
+    }else {
+      console.log('firstName not valid !!')
+      return'firstName not valid !!'
+    }
+  }
+}
+
+
+
+export default function getStarted({route}) {
  const navigation=useNavigation();
 
  const [firstName,setFirstName]=useState();
@@ -18,10 +46,12 @@ export default function getStarted() {
  const [gender,setGender]=useState();
  const [phone,setPhone]=useState();
 
-
+ const [eroorMsg,setEroorMsg]=useState();
+ verifchamps(firstName,lastName,phone)
   return (
         <ScrollView style={styles.container} >
             <Text style={styles.getStartedTitle}>Get Started</Text>
+
             <Text style={styles.textForInput}>First name</Text>
             <TextInput
                 style={styles.inputs}
@@ -106,6 +136,7 @@ export default function getStarted() {
                 placeholder='Phone number'
                 onChangeText={setPhone}
                 value={phone}
+                keyboardType = 'numeric'
             />
             <TouchableOpacity
                 style={styles.nextButton}
@@ -144,7 +175,7 @@ inputs:{
     color:'black',
     alignSelf:'center',
     width:width/1.08,
-    height:height/18,
+    height:height/17,
     backgroundColor:'#f5f9fc',
     marginTop:height/150,
     //borderRadius:width/15,
