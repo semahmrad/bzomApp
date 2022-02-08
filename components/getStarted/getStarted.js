@@ -1,36 +1,35 @@
 import React,{useState} from 'react';
 import { StyleSheet, Text, View, Image, ScrollView,Dimensions,TouchableOpacity, ViewBase,TextInput } from "react-native";
-import { Input } from 'react-native-elements';
 import dimension from '../../screenSizes/screenOfSizes'
-
 import{useNavigation} from "@react-navigation/native"
 import DatePicker from 'react-native-datepicker';
 import { RadioButton } from 'react-native-paper';
+import PhoneInput from "react-native-phone-number-input";
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
-const verifchamps=(firstName,lastName,phone)=>{
-  let name_format = /^[a-zA-Z]{3,}$/;
+const verifchamps=(firstName,lastName,birthDay,gender,phone)=>{
+  let name_format = /^[a-zA-Z]{4,}$/;
   let phone_format=/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
-  if(firstName&&lastName&&phone){
+  if(firstName&&lastName&&phone&&birthDay&&gender){
     if(firstName.toLowerCase().match(name_format)){
       if(lastName.toLowerCase().match(name_format)){
         console.log('valid email')
         if(phone.toLowerCase().match(phone_format)){
           console.log('ok')
-          return ''
+          return 'ok'
         }else{
           console.log('phone not valid !!')
-          return 'phone not valid !!'
+          return 'phone not valid !!';
         }
 
       }else{
         console.log('lastName not valid !!')
-        return 'lastName not valid !!'
+        return 'lastName not valid !!';
       }
     }else {
       console.log('firstName not valid !!')
-      return'firstName not valid !!'
+      return 'firstName not valid !!';
     }
   }
 }
@@ -45,9 +44,14 @@ export default function getStarted({route}) {
  const [birthDay,setBirtDay]=useState('01-01-1990');
  const [gender,setGender]=useState();
  const [phone,setPhone]=useState();
+ const [codePhone,setCodePhone]=useState();
 
  const [eroorMsg,setEroorMsg]=useState();
- verifchamps(firstName,lastName,phone)
+
+ console.log('route',route.params)
+
+
+
   return (
         <ScrollView style={styles.container} >
             <Text style={styles.getStartedTitle}>Get Started</Text>
@@ -130,17 +134,25 @@ export default function getStarted({route}) {
             </View>
             
             <Text style={styles.textForInput}>Phone number</Text>
-            <TextInput
-                style={styles.inputs}
-                placeholderTextColor="#6f6e6e"
-                placeholder='Phone number'
-                onChangeText={setPhone}
-                value={phone}
-                keyboardType = 'numeric'
+            <PhoneInput
+              defaultCode="TN"
+              defaultValue={phone}
+              onChangeText={(text) => {
+                setPhone(text);
+              }}
+              onChangeFormattedText={(text) => {
+                setCodePhone(text);
+              }}
+              containerStyle={{marginTop:height/50,marginLeft:(width-(width/1.08))/2,borderBottomWidth:0.5}}
             />
+             <Text style={styles.errorText}>{verifchamps(firstName,lastName,birthDay,gender,phone)!="ok"?verifchamps(firstName,lastName,birthDay,gender,phone):""}</Text>
             <TouchableOpacity
                 style={styles.nextButton}
-                onPress={()=>{navigation.navigate('getStartedProfilePick')}}
+                onPress={()=>{
+                  if(verifchamps(firstName,lastName,birthDay,gender,phone)){
+                    navigation.navigate('getStartedProfilePick',{signUp:route.params,firstName:firstName,lastName:lastName,birthDay:birthDay,gender:gender,phone:phone})
+                }
+                }}
             >
                 <Text style={styles.nextText}>Next</Text>
             </TouchableOpacity>
@@ -210,6 +222,12 @@ inputs:{
     fontSize:height/32,
     fontWeight:'bold'
   },
+  errorText:{
+    color:'red',
+    textAlign:'center',
+    marginTop:height/100,
+  },
+
   nextButton:{
     width:width/1.1,
     height:height/16,

@@ -4,36 +4,121 @@ import dimension from '../../screenSizes/screenOfSizes'
 import methods from './../../usedMethods/usedMethods'
 import{useNavigation} from "@react-navigation/native"
 import ImagePicker from 'react-native-image-crop-picker';
+import client from '../../confProject/config_server'
+import axios from 'axios'
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
-const changeProfilePic=(setImagePath)=>{
+const justTest=async (imagePath)=>{
+    const data= new FormData();
+    data.append('email',"nativeTest@gmail.com",)
+    data.append('username',"react-nativeTest",);
+    data.append('newPic',imagePath);
+    console.log('data===========================>',(imagePath))
+    await client.post(
+        "sign/uploadPicTest",
+        {data},
+        {
+            headers:{
+                Accept: 'application/json',
+                'Content-Type':'multipart/form-data'
+              }
+          },
+    ).then(respense=>{
+        console.log('resp====>',respense);
+    }).catch(err=>{console.log('axios err=>',err)});
+
+    console.log('imagePath.type,',JSON.stringify(imagePath))
+}
+
+
+const testt=async (image)=>{
+    const myForm= new FormData();
+    //myForm.append('pic',image);
+    myForm.append('pic',image);
+    myForm.append('String',"image");
+
+    console.log('data ===>',image.uri)
+   await fetch('http://192.168.1.253:3000/sign/uploadPicTestt',{
+        method:'post',
+        data:myForm,
+        headers:{
+            //'accept': 'type/json',
+            'Content-Type': `multipart/form-data boundary=${myForm._boundary}`,
+           //'Content-Type': `text/html`,
+        }
+        //; boundary=${myForm._boundary}
+        
+    }).then(res=>res.json()).then(resp=>{console.log(resp.val)})
+    .catch(err=>{console.log('err===>',err)})
+}
+
+
+
+
+
+
+const changeProfilePic=(setImagePath,setImage)=>{
     ImagePicker.openPicker({
         //freeStyleCropEnabled:true,
          width:methods.circleObject(0.1),
          height: methods.circleObject(0.1),
          cropping: true,
          
-       }).then(image => {
-         console.log('image.path========>',image.path);
-         setImagePath(image.path)
+       }).then(picture => {
+        //console.log('image.path========>',image.path);
+         setImagePath(picture.path);
+         setImage(picture);
+         uploadProfilePicture(picture)
        }).catch(e=>{console.warn(error)})
 }
-const openCamer=(setImagePath)=>{
+const openCamer=(setImagePath,setImage)=>{
     ImagePicker.openCamera({
         width:methods.circleObject(0.1),
         height: methods.circleObject(0.1),
         cropping: true,
-      }).then(image => {
-        console.log(image);
-        setImagePath(image.path)
+      }).then(picture => {
+      
+        setImagePath(picture.path)
+        setImage(picture)
       });
 }
 
 
-export default function getStartedProfilePick() {
+
+const uploadProfilePicture=(imagePath)=>{
+    const imageData=new FormData();
+    /*imageData.append("pic",{
+        uri:imagePath,
+        name:'image.jpg',
+        fileName:'image',
+        type:'image/jpg',
+    });*/
+    imageData.append("pic",imagePath)
+    console.log('forma data =>',JSON.stringify(imageData));
+    axios({
+        method:'post',
+        url:'http://192.168.1.253:3000/sign/uploadPicTestt',
+        data:imageData,
+    }).then(function(response){
+        console.log('image upload successfuly',response.data);
+    }).then(err=>{console.log('error riased', err)})
+}
+
+const pictureRequire=(imagePath)=>{
+    if(imagePath==''){
+        return 'profile picture is required'
+    }else return 'ok'
+
+}
+
+export default function getStartedProfilePick({route}) {
  const navigation=useNavigation();
- const [imagePath,setImagePath]=useState();
+ const [imagePath,setImagePath]=useState('');
+ const [image,setImage]=useState();
+
+
+
 
   return (
         <ScrollView style={styles.container} >
@@ -45,24 +130,30 @@ export default function getStartedProfilePick() {
            />
            <TouchableOpacity 
                 style={styles.pickerButton}
-                onPress={()=>{openCamer(setImagePath)}}
+                onPress={()=>{openCamer(setImagePath,setImage)}}
             >
                <Text style={styles.pickerText}>Take Picture</Text>
            </TouchableOpacity>
 
            <TouchableOpacity 
                 style={styles.pickerButton}
-                onPress={()=>{changeProfilePic(setImagePath)}}
+                onPress={()=>{changeProfilePic(setImagePath,setImage)}}
            >
                <Text style={styles.pickerText}>Upload Picture</Text>
            </TouchableOpacity>
            
            <TouchableOpacity 
-                onPress={()=>{navigation.navigate('Profile')}}
+                onPress={()=>{
+                     testt (image)
+                    
+                   // otherTest(imagePath)
+                }}
+            
                 style={styles.pickerButton}
             >
                 <Text style={styles.pickerText}>Next</Text>
            </TouchableOpacity>
+           <Text style={styles.errorText}>{pictureRequire(imagePath)!='ok'?pictureRequire(imagePath):''}</Text>
 
         </ScrollView>
   );
@@ -93,7 +184,7 @@ titlePage:{
         borderColor:'black',
         borderWidth:1,
         padding:width/25,
-        elevation:width/25,
+        //elevation:width/25,
     },
     pickerButton:{
         backgroundColor:'#e24731',
@@ -112,5 +203,9 @@ titlePage:{
         fontWeight:'500',
         elevation:width/25,
     },  
-  
+    errorText:{
+        color:'red',
+        textAlign:'center',
+        marginTop:height/100,
+      },
 });
