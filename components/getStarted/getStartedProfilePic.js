@@ -6,31 +6,12 @@ import{useNavigation} from "@react-navigation/native"
 import ImagePicker from 'react-native-image-crop-picker';
 import client from '../../confProject/config_server'
 import axios from 'axios'
+import RNFetchBlob from 'rn-fetch-blob'
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
+
 let width =dimension.width
 let height=dimension.heightWhenNavBar
-
-const justTest=async (imagePath)=>{
-    const data= new FormData();
-    data.append('email',"nativeTest@gmail.com",)
-    data.append('username',"react-nativeTest",);
-    data.append('newPic',imagePath);
-    console.log('data===========================>',(imagePath))
-    await client.post(
-        "sign/uploadPicTest",
-        {data},
-        {
-            headers:{
-                Accept: 'application/json',
-                'Content-Type':'multipart/form-data'
-              }
-          },
-    ).then(respense=>{
-        console.log('resp====>',respense);
-    }).catch(err=>{console.log('axios err=>',err)});
-
-    console.log('imagePath.type,',JSON.stringify(imagePath))
-}
-
 
 const testt=async (image)=>{
     const myForm= new FormData();
@@ -54,10 +35,6 @@ const testt=async (image)=>{
 }
 
 
-
-
-
-
 const changeProfilePic=(setImagePath,setImage)=>{
     ImagePicker.openPicker({
         //freeStyleCropEnabled:true,
@@ -69,8 +46,8 @@ const changeProfilePic=(setImagePath,setImage)=>{
         //console.log('image.path========>',image.path);
          setImagePath(picture.path);
          setImage(picture);
-         uploadProfilePicture(picture)
-       }).catch(e=>{console.warn(error)})
+        // uploadProfilePicture(picture)
+       }).catch(e=>{console.warn(e)})
 }
 const openCamer=(setImagePath,setImage)=>{
     ImagePicker.openCamera({
@@ -86,23 +63,29 @@ const openCamer=(setImagePath,setImage)=>{
 
 
 
-const uploadProfilePicture=(imagePath)=>{
+const uploadProfilePicture=async(image)=>{
+    
     const imageData=new FormData();
-    /*imageData.append("pic",{
-        uri:imagePath,
-        name:'image.jpg',
-        fileName:'image',
-        type:'image/jpg',
-    });*/
-    imageData.append("pic",imagePath)
-    console.log('forma data =>',JSON.stringify(imageData));
-    axios({
+   
+    imageData.append("pic",{
+        name:'bd29bd6b-6b01-4a60-aceb-c46a52c6156f.jpg',
+        type:image.mime,
+        uri:image.path
+    })
+   
+    console.log('forma data =>',imageData);
+    await axios({
         method:'post',
         url:'http://192.168.1.253:3000/sign/uploadPicTestt',
-        data:imageData,
+        body:imageData,
+        headers: {
+            Accept: "/*/",
+            //"Content-Type": 'multipart/form-data '
+          },
+        
     }).then(function(response){
         console.log('image upload successfuly',response.data);
-    }).then(err=>{console.log('error riased', err)})
+    }).catch(err=>{console.log('error riased', err)})
 }
 
 const pictureRequire=(imagePath)=>{
@@ -119,6 +102,11 @@ export default function getStartedProfilePick({route}) {
 
 
 
+if(imagePath!=''){
+ RNFetchBlob.fs.readFile(imagePath,'base64').then(res=>{
+     console.log(res.length)
+
+    })}
 
   return (
         <ScrollView style={styles.container} >
@@ -144,7 +132,7 @@ export default function getStartedProfilePick({route}) {
            
            <TouchableOpacity 
                 onPress={()=>{
-                     testt (image)
+                    uploadProfilePicture(image)
                     
                    // otherTest(imagePath)
                 }}
