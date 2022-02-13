@@ -13,30 +13,10 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
-const testt=async (image)=>{
-    const myForm= new FormData();
-    //myForm.append('pic',image);
-    myForm.append('pic',image);
-    myForm.append('String',"image");
 
-    console.log('data ===>',image.uri)
-   await fetch('http://192.168.1.253:3000/sign/uploadPicTestt',{
-        method:'post',
-        data:myForm,
-        headers:{
-            //'accept': 'type/json',
-            'Content-Type': `multipart/form-data boundary=${myForm._boundary}`,
-           //'Content-Type': `text/html`,
-        }
-        //; boundary=${myForm._boundary}
-        
-    }).then(res=>res.json()).then(resp=>{console.log(resp.val)})
-    .catch(err=>{console.log('err===>',err)})
-}
-
-
-const changeProfilePic=(setImagePath,setImage)=>{
-    ImagePicker.openPicker({
+const openGallary=async(setImagePath,setImage)=>{
+    //console.log("event.target.files[0] = "+event.target.files[0])
+    await ImagePicker.openPicker({
         //freeStyleCropEnabled:true,
          width:methods.circleObject(0.1),
          height: methods.circleObject(0.1),
@@ -45,12 +25,13 @@ const changeProfilePic=(setImagePath,setImage)=>{
        }).then(picture => {
         //console.log('image.path========>',image.path);
          setImagePath(picture.path);
+         // we can upload this var yes that what i do lock to upload function her i set image var with image  value and 
          setImage(picture);
-        // uploadProfilePicture(picture)
+         console.log("image in open galary",JSON.stringify(picture))//returned the line
        }).catch(e=>{console.warn(e)})
 }
-const openCamer=(setImagePath,setImage)=>{
-    ImagePicker.openCamera({
+const openCamer=async(setImagePath,setImage)=>{
+    await ImagePicker.openCamera({
         width:methods.circleObject(0.1),
         height: methods.circleObject(0.1),
         cropping: true,
@@ -60,32 +41,46 @@ const openCamer=(setImagePath,setImage)=>{
         setImage(picture)
       });
 }
-
+C:\Users\semah\OneDrive\Desktop\bzomApp\.flowconfig
 
 
 const uploadProfilePicture=async(image)=>{
-    
+
     const imageData=new FormData();
+    imageData.append('pic',{
+      uri:image.path,
+      name:'image',
+      type:image.mime
+    });
+//then this function upload a image   
+// wait
+// hm my result is different then your result
+// my result is 
+    console.log('image',image)
+    console.log('image.size',image.size)
+    
+    //imageData.append('name', 'avatar');
    
-    imageData.append("pic",{
-        name:'bd29bd6b-6b01-4a60-aceb-c46a52c6156f.jpg',
-        type:image.mime,
-        uri:image.path
-    })
-   
-    console.log('forma data =>',imageData);
-    await axios({
-        method:'post',
-        url:'http://192.168.1.253:3000/sign/uploadPicTestt',
-        body:imageData,
+    console.log("imageData",imageData)
+    var config = {
+        method: 'post',
+        url: 'http://192.168.1.253:3000/sign/uploadPicTestt',
         headers: {
-            Accept: "/*/",
-            //"Content-Type": 'multipart/form-data '
-          },
+        'content-type': 'multipart/form-data;',
+        'accept':'application/json'
+           
+           },
+        data : imageData
+      };
+    console.log("imageData=",JSON.stringify(imageData))
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
         
-    }).then(function(response){
-        console.log('image upload successfuly',response.data);
-    }).catch(err=>{console.log('error riased', err)})
 }
 
 const pictureRequire=(imagePath)=>{
@@ -97,22 +92,25 @@ const pictureRequire=(imagePath)=>{
 
 export default function getStartedProfilePick({route}) {
  const navigation=useNavigation();
- const [imagePath,setImagePath]=useState('');
- const [image,setImage]=useState();
+ const [imagePath,setImagePath]=useState('file:///storage/emulated/0/Android/data/com.bzom/files/Pictures/1168b1f1-1f42-47b2-88cc-56fac656e713.jpg');
+ const [image,setImage]=useState('file:///storage/emulated/0/Android/data/com.bzom/files/Pictures/1168b1f1-1f42-47b2-88cc-56fac656e713.jpg');
+
 
 
 
 if(imagePath!=''){
  RNFetchBlob.fs.readFile(imagePath,'base64').then(res=>{
      console.log(res.length)
-
+//just for test the RNFetchBlob library okey
     })}
 
   return (
         <ScrollView style={styles.container} >
             <Text style={styles.titlePage}>Profile picture</Text>
+            
            <Image
                 style={styles.profilePic}
+                
                 source={{uri:imagePath}}
                 resizeMethod='scale'
            />
@@ -125,15 +123,15 @@ if(imagePath!=''){
 
            <TouchableOpacity 
                 style={styles.pickerButton}
-                onPress={()=>{changeProfilePic(setImagePath,setImage)}}
+                onPress={()=>{openGallary(setImagePath,setImage)}}
            >
                <Text style={styles.pickerText}>Upload Picture</Text>
            </TouchableOpacity>
            
            <TouchableOpacity 
-                onPress={()=>{
+                onPress={ ()=>{
                     uploadProfilePicture(image)
-                    
+                    //testt(image);
                    // otherTest(imagePath)
                 }}
             
