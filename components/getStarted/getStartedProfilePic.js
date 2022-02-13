@@ -6,9 +6,6 @@ import{useNavigation} from "@react-navigation/native"
 import ImagePicker from 'react-native-image-crop-picker';
 import client from '../../confProject/config_server'
 import axios from 'axios'
-import RNFetchBlob from 'rn-fetch-blob'
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-
 
 let width =dimension.width
 let height=dimension.heightWhenNavBar
@@ -41,7 +38,7 @@ const openCamer=async(setImagePath,setImage)=>{
         setImage(picture)
       });
 }
-C:\Users\semah\OneDrive\Desktop\bzomApp\.flowconfig
+
 
 
 const uploadProfilePicture=async(image)=>{
@@ -95,14 +92,6 @@ export default function getStartedProfilePick({route}) {
  const [imagePath,setImagePath]=useState('file:///storage/emulated/0/Android/data/com.bzom/files/Pictures/1168b1f1-1f42-47b2-88cc-56fac656e713.jpg');
  const [image,setImage]=useState('file:///storage/emulated/0/Android/data/com.bzom/files/Pictures/1168b1f1-1f42-47b2-88cc-56fac656e713.jpg');
 
-
-
-
-if(imagePath!=''){
- RNFetchBlob.fs.readFile(imagePath,'base64').then(res=>{
-     console.log(res.length)
-//just for test the RNFetchBlob library okey
-    })}
 
   return (
         <ScrollView style={styles.container} >
