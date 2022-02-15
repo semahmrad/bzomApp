@@ -6,21 +6,27 @@ import methods from './../../usedMethods/usedMethods'
 import{useNavigation} from "@react-navigation/native"
 import axios from 'axios'
 import client from '../../confProject/config_server'
+import NetInfo from "@react-native-community/netinfo";
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
 
 const serverValidator=async(username,email,password,setErrorMsg)=>{
-  client.post("signUpValidator/emailAndUsername",{
-    username:username,
-    email:email,
-  }).then(res=>{
-    if(signUpChampsValidator(username,email,password)==''){
-    setErrorMsg(res.data.msg)
-  }else {
+  if(signUpChampsValidator(username,email,password)!=''){
     setErrorMsg(signUpChampsValidator(username,email,password))
   }
-  });
+  else{
+    await client.post("signUpValidator/emailAndUsername",{
+      username:username,
+      email:email,
+      }).then(res=>{
+    setErrorMsg(signUpChampsValidator(username,email,password))
+  
+    }).catch(err=>{
+      console.log('i m here ========>')
+      setErrorMsg("verify your connexion....!")
+  });}
+
 }
 
 
@@ -55,10 +61,14 @@ export default function signUp() {
  const [password,setPassword]=useState("");
  const [erroMsg,setErrorMsg]=useState("");
 
- console.log("===>",erroMsg)
+ NetInfo.addEventListener(networkState => {
+  console.log("Connection type - ", networkState.type);
+  console.log("Is connected? - ", networkState.isConnected);
+  console.warn("isInternetReachable? - ", networkState.isInternetReachable);
+});
 
- serverValidator(username,email,password,setErrorMsg)
- 
+
+
 
   return (
       <View style={styles.container} >
@@ -103,7 +113,8 @@ export default function signUp() {
           <Text style={styles.errorText}>{erroMsg}</Text>
           <TouchableOpacity
             style={styles.signUpButton}
-            onPress={()=>{
+            onPress={async ()=>{
+               serverValidator(username,email,password,setErrorMsg)
               if(erroMsg==''){
                 navigation.navigate('getStarted',{username:username,email:email,password:password})
               }

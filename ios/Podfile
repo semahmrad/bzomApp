@@ -24,6 +24,8 @@ target 'bzom' do
 
   pod 'RNReactNativeZlib', :path => '../node_modules/@klarna/react-native-zlib'
 
+  pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+
   target 'bzomTests' do
     inherit! :complete
     # Pods for testing
