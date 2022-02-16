@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { StyleSheet, Text, View, Image, ScrollView,Dimensions,TouchableOpacity, ViewBase,TextInput } from "react-native";
 import { Input } from 'react-native-elements';
 import dimension from '../../screenSizes/screenOfSizes'
@@ -7,24 +7,29 @@ import{useNavigation} from "@react-navigation/native"
 import axios from 'axios'
 import client from '../../confProject/config_server'
 import NetInfo from "@react-native-community/netinfo";
+import { measureConnectionSpeed } from 'react-native-network-bandwith-speed';
 let width =dimension.width
 let height=dimension.heightWhenNavBar
+import ConxionModal from '../../internetConxion/modalOffLine'
 
 
-const serverValidator=async(username,email,password,setErrorMsg)=>{
+const serverValidator=async(username,email,password,setErrorMsg,setIsOfline)=>{
+  console.log("fn2")
   if(signUpChampsValidator(username,email,password)!=''){
     setErrorMsg(signUpChampsValidator(username,email,password))
   }
   else{
+    setErrorMsg('connecting ...')
     await client.post("signUpValidator/emailAndUsername",{
-      username:username,
-      email:email,
+      username:username.toLowerCase(),
+      email:email.toLowerCase(),
       }).then(res=>{
-    setErrorMsg(signUpChampsValidator(username,email,password))
+    setErrorMsg(res.data.msg)
   
     }).catch(err=>{
       console.log('i m here ========>')
-      setErrorMsg("verify your connexion....!")
+      setErrorMsg("verify your connexion....!");
+      setIsOfline(true)
   });}
 
 }
@@ -34,6 +39,7 @@ const signUpChampsValidator=(username,email,password)=>{
   let mail_format = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   let username_format=  /^[a-zA-Z0-9]{5,}$/;
   let password_format=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+  console.log("fn3")
   if(username&&email&&password){
     if(username.toLowerCase().match(username_format)){
       if(email.toLowerCase().match(mail_format)){
@@ -53,6 +59,32 @@ const signUpChampsValidator=(username,email,password)=>{
     }
   }
 }
+getNetworkBandwidth = async (setIsOfline) => {
+  try {
+    const networkSpeed = await measureConnectionSpeed();
+    //console.log(networkSpeed); // Network bandwidth speed 
+    //console.log('networkSpeed===========>',networkSpeed); 
+    if(networkSpeed.speed>2){
+      setIsOfline(false);
+    }
+    else{
+      setIsOfline(true);
+    }
+    
+  } catch (err) {
+    console.log(err);  
+    setIsOfline(true);
+  }
+}
+const connectedWithServer=async(setServerContion)=>{
+  await client.post("signUpValidator/concting")
+   .then(resultat=>{
+    setServerContion(resultat.data)
+   // console.log('resultat.data',resultat.data);
+  
+   })
+}
+
 
 export default function signUp() {
  const navigation=useNavigation();
@@ -60,18 +92,35 @@ export default function signUp() {
  const [email,setEmail]=useState("");
  const [password,setPassword]=useState("");
  const [erroMsg,setErrorMsg]=useState("");
+ const [isOfline,setIsOfline]=useState(false);
+ //try Connexion 
+ const [tryAgain,setTryAgain]=useState(0);
+ //serverConnexionTes
+ const [serverContion,setServerContion]=useState("wait");
+ 
+ 
+ 
 
- NetInfo.addEventListener(networkState => {
-  console.log("Connection type - ", networkState.type);
-  console.log("Is connected? - ", networkState.isConnected);
-  console.warn("isInternetReachable? - ", networkState.isInternetReachable);
-});
 
+useEffect(()=>{
+  getNetworkBandwidth(setIsOfline);
+  setTryAgain(0);
+
+  serverValidator(username,email,password,setErrorMsg,setIsOfline);
+  console.log("1")
+},[username,email,password])
 
 
 
   return (
       <View style={styles.container} >
+        {isOfline?
+        <ConxionModal
+          setTryAgain={setTryAgain}
+          tryAgain={tryAgain}
+        />
+        :null}
+      
         <Image
           style={styles.logo}
           source={require('./loginIcons/logo_login.png')}
@@ -114,10 +163,12 @@ export default function signUp() {
           <TouchableOpacity
             style={styles.signUpButton}
             onPress={async ()=>{
-               serverValidator(username,email,password,setErrorMsg)
-              if(erroMsg==''){
+              await connectedWithServer(setServerContion);
+            
+               if(erroMsg==''&&serverContion=='connected'){
                 navigation.navigate('getStarted',{username:username,email:email,password:password})
               }
+             
             }}
           >
             <Text style={styles.loginText}>GET STARTED</Text>
