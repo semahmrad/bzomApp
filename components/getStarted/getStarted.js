@@ -5,9 +5,18 @@ import{useNavigation} from "@react-navigation/native"
 import DatePicker from 'react-native-datepicker';
 import { RadioButton } from 'react-native-paper';
 import PhoneInput from "react-native-phone-number-input";
+import client from '../../confProject/config_server'
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
+const connectedWithServer=async(setServerContion)=>{
+  await client.post("signUpValidator/concting")
+   .then(resultat=>{
+    setServerContion(resultat.data)
+   // console.log('resultat.data',resultat.data);
+  
+   })
+}
 const verifchamps=(firstName,lastName,birthDay,gender,phone)=>{
   let name_format = /^[a-zA-Z]{4,}$/;
   let phone_format=/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
@@ -45,10 +54,10 @@ export default function getStarted({route}) {
  const [gender,setGender]=useState();
  const [phone,setPhone]=useState();
  const [codePhone,setCodePhone]=useState();
+ //verif connexion Withserver
+ const [serverContion,setServerContion]=useState("wait");
 
- const [eroorMsg,setEroorMsg]=useState();
-
- console.log('route',route.params)
+ console.log('route===============>',birthDay)
 
 
 
@@ -148,9 +157,10 @@ export default function getStarted({route}) {
              <Text style={styles.errorText}>{verifchamps(firstName,lastName,birthDay,gender,phone)!="ok"?verifchamps(firstName,lastName,birthDay,gender,phone):""}</Text>
             <TouchableOpacity
                 style={styles.nextButton}
-                onPress={()=>{
-                  if(verifchamps(firstName,lastName,birthDay,gender,phone)){
-                    navigation.navigate('getStartedProfilePick',{signUp:route.params,firstName:firstName,lastName:lastName,birthDay:birthDay,gender:gender,phone:phone})
+                onPress={async ()=>{
+                  await connectedWithServer(setServerContion);
+                  if(verifchamps(firstName,lastName,birthDay,gender,phone)&&serverContion=='connected'){
+                    navigation.navigate('getStartedProfilePick',{signUp:route.params,firstName:firstName,lastName:lastName,birthday:birthDay,gender:gender,phone:phone,phoneWithCode:codePhone})
                 }
                 }}
             >

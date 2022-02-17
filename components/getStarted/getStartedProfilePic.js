@@ -7,24 +7,21 @@ import ImagePicker from 'react-native-image-crop-picker';
 import client from '../../confProject/config_server'
 import axios from 'axios'
 
+
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
 
 const openGallary=async(setImagePath,setImage)=>{
-    //console.log("event.target.files[0] = "+event.target.files[0])
     await ImagePicker.openPicker({
-        //freeStyleCropEnabled:true,
          width:methods.circleObject(0.1),
          height: methods.circleObject(0.1),
          cropping: true,
          
        }).then(picture => {
-        //console.log('image.path========>',image.path);
+      
          setImagePath(picture.path);
-         // we can upload this var yes that what i do lock to upload function her i set image var with image  value and 
          setImage(picture);
-         console.log("image in open galary",JSON.stringify(picture))//returned the line
        }).catch(e=>{console.warn(e)})
 }
 const openCamer=async(setImagePath,setImage)=>{
@@ -33,7 +30,6 @@ const openCamer=async(setImagePath,setImage)=>{
         height: methods.circleObject(0.1),
         cropping: true,
       }).then(picture => {
-      
         setImagePath(picture.path)
         setImage(picture)
       });
@@ -41,27 +37,27 @@ const openCamer=async(setImagePath,setImage)=>{
 
 
 
-const uploadProfilePicture=async(image)=>{
+const uploadProfilePicture=async(image,username,firstName,lastName,email,birthday,password,gender)=>{
 
     const imageData=new FormData();
-    imageData.append('pic',{
+    imageData.append('profilePic',{
       uri:image.path,
       name:'image',
       type:image.mime
     });
-//then this function upload a image   
-// wait
-// hm my result is different then your result
-// my result is 
-    console.log('image',image)
-    console.log('image.size',image.size)
+    imageData.append('username',username);
+    imageData.append('firstName',firstName);
+    imageData.append('lastName',lastName);
+    imageData.append('email',email);
+    imageData.append('birthday',birthday);
+    imageData.append('age',calculateAge(birthday,new Date()));
+    imageData.append('password',password);
+    imageData.append('gender',gender);
     
-    //imageData.append('name', 'avatar');
-   
-    console.log("imageData",imageData)
+  
     var config = {
         method: 'post',
-        url: 'http://192.168.1.253:3000/sign/uploadPicTestt',
+        url: 'http://192.168.1.253:3000/sign/up',
         headers: {
         'content-type': 'multipart/form-data;',
         'accept':'application/json'
@@ -69,13 +65,14 @@ const uploadProfilePicture=async(image)=>{
            },
         data : imageData
       };
-    console.log("imageData=",JSON.stringify(imageData))
-    axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
+
+    await axios(config)
+    .then(function (resp) {
+      console.log('resp',resp.data)
+
     })
     .catch(function (error) {
-      console.log(error);
+      console.log('error==>',error);
     });
         
 }
@@ -87,11 +84,48 @@ const pictureRequire=(imagePath)=>{
 
 }
 
+const convertBirthdayDate=(birthday)=>{
+  //01-01-1990
+  let arrSplit=birthday.split('-');
+  let day=parseInt(arrSplit[0])+1;
+  let month=arrSplit[1];
+  let year=arrSplit[2];
+  return  month+'/'+day+'/'+year
+}
+const calculateAge=(birth,dateNow)=>{
+  let arrayBirth=birth.split('/');
+
+  //split the birthday
+  let birthDay=arrayBirth[0];
+  let birthMonth=arrayBirth[1];
+  let birthYear=arrayBirth[2];
+  //split date now
+  let nowDay=dateNow.getDate();
+  let nowMonth=dateNow.getMonth()+1;
+  let nowYear=dateNow.getFullYear();
+  //calc the diff
+  console.log('nowYear',nowYear)
+  console.log('birthYear',birthYear)
+  let age=parseInt(nowYear)-parseInt(birthYear);
+
+  return age;
+}
+
 export default function getStartedProfilePick({route}) {
  const navigation=useNavigation();
  const [imagePath,setImagePath]=useState('file:///storage/emulated/0/Android/data/com.bzom/files/Pictures/1168b1f1-1f42-47b2-88cc-56fac656e713.jpg');
  const [image,setImage]=useState('file:///storage/emulated/0/Android/data/com.bzom/files/Pictures/1168b1f1-1f42-47b2-88cc-56fac656e713.jpg');
 
+ let username =route.params.signUp.username;
+ let email =route.params.signUp.email;
+ let password =route.params.signUp.password;
+ let firstName  =route.params.firstName;
+ let lastName  =route.params.lastName ;
+ let birthday =convertBirthdayDate(route.params.birthday);
+ let gender=route.params.gender ;
+ console.log('birthday',birthday)
+ var today = new Date();  
+ console.log("ddd",calculateAge(birthday,new Date()))
 
   return (
         <ScrollView style={styles.container} >
@@ -118,8 +152,8 @@ export default function getStartedProfilePick({route}) {
            </TouchableOpacity>
            
            <TouchableOpacity 
-                onPress={ ()=>{
-                    uploadProfilePicture(image)
+                onPress={async()=>{
+                   await uploadProfilePicture(image,username,firstName,lastName,email,birthday,password,gender)
                     //testt(image);
                    // otherTest(imagePath)
                 }}
