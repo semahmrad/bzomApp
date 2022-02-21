@@ -20,15 +20,16 @@ import CodeResetPassword from './../components/resetPassword/codeResetpassword'
 import NewPassword from './../components/resetPassword/newPassword'
 import GetStarted from '../components/getStarted/getStarted'
 import GetStartedProfilePick from '../components/getStarted/getStartedProfilePic'
-
+import ValidationByEmail from './../components/welcome/emailValidation'
 const Stack=createNativeStackNavigator();
 const Navigation=()=>{
     return(
         <NavigationContainer>
             <Stack.Navigator sccreenOption={{headerShown:false}}>
+                <Stack.Screen name='validation' component={ValidationByEmail} options={{tabBarShowLabel:true,headerShown: false}}/>
+
                 <Stack.Screen name='signIn' component={Login} options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='signup' component={Signup} options={{tabBarShowLabel:true,headerShown: false}}/>
-
                 <Stack.Screen name='getStartedProfilePick' component={GetStartedProfilePick} options={{tabBarShowLabel:true,headerShown: false}}/>
 
                 <Stack.Screen name='getStarted' component={GetStarted} options={{tabBarShowLabel:true,headerShown: false}}/>

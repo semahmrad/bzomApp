@@ -58,6 +58,7 @@ export default function codeRestPassword() {
            placeholderTextColor="#6f6e6e"
            onChangeText={setCode}
            value={code}
+           keyboardType = 'number-pad'
 
         />
         <TouchableOpacity

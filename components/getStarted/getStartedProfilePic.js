@@ -57,7 +57,7 @@ const userPayloadWhenSignUp=(image,username,firstName,lastName,email,gender)=>{
 
 }
 
-const signUp=async(image,username,firstName,lastName,email,birthday,password,gender)=>{
+const signUp=async(image,username,firstName,lastName,email,birthday,password,gender,navigation)=>{
 
     const imageData=new FormData();
     imageData.append('profilePic',{
@@ -92,9 +92,11 @@ const signUp=async(image,username,firstName,lastName,email,birthday,password,gen
               try {
                   await AsyncStorage.setItem('token', resp.data.token);
                   await AsyncStorage.setItem('userPayloadSignUp',JSON.stringify(userPayloadWhenSignUp(image,username,firstName,lastName,email,gender)));
+
               }catch (e) {
                   console.log('error',e)
               }
+              navigation.navigate('validation',{email:email});
           }
          
     })
@@ -192,15 +194,7 @@ export default function getStartedProfilePick({route}) {
            
            <TouchableOpacity 
                 onPress={async()=>{
-                  await connectedWithServer(setServerContion)
-                  if(!imagePath){
-                    alert('profile picture is required')
-                  }
-                  else if(serverContion=='connected'){
-                    await signUp(image,username,firstName,lastName,email,birthday,password,gender)
-                    //testt(image);
-                   // otherTest(imagePath)
-                  }
+                 await signUp(image,username,firstName,lastName,email,birthday,password,gender,navigation);
                 }}
             
                 style={styles.pickerButton}
