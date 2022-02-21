@@ -12,8 +12,10 @@ let width =dimension.width
 let height=dimension.heightWhenNavBar
 import ConxionModal from '../../internetConxion/modalOffLine'
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const serverValidator=async(username,email,password,setErrorMsg,setIsOfline)=>{
+
+const serverValidator=async(username,email,password,setErrorMsg,navigation)=>{
   console.log("fn2")
   if(signUpChampsValidator(username,email,password)!=''){
     setErrorMsg(signUpChampsValidator(username,email,password))
@@ -24,12 +26,16 @@ const serverValidator=async(username,email,password,setErrorMsg,setIsOfline)=>{
       username:username.toLowerCase(),
       email:email.toLowerCase(),
       }).then(res=>{
-    setErrorMsg(res.data.msg)
+        
+        if(res.data.msg==''){
+        navigation.navigate('getStarted',{username:username,email:email,password:password})
+        }
+        setErrorMsg(res.data.msg);
   
     }).catch(err=>{
       console.log('i m here ========>')
       setErrorMsg("verify your connexion....!");
-      setIsOfline(true)
+      //setIsOfline(true)
   });}
 
 }
@@ -76,15 +82,6 @@ getNetworkBandwidth = async (setIsOfline) => {
     setIsOfline(true);
   }
 }
-const connectedWithServer=async(setServerContion)=>{
-  await client.post("signUpValidator/concting")
-   .then(resultat=>{
-    setServerContion(resultat.data)
-   // console.log('resultat.data',resultat.data);
-  
-   })
-}
-
 
 export default function signUp() {
  const navigation=useNavigation();
@@ -95,8 +92,7 @@ export default function signUp() {
  const [isOfline,setIsOfline]=useState(false);
  //try Connexion 
  const [tryAgain,setTryAgain]=useState(0);
- //serverConnexionTes
- const [serverContion,setServerContion]=useState("wait");
+
  
  
  
@@ -106,7 +102,7 @@ useEffect(()=>{
   getNetworkBandwidth(setIsOfline);
   setTryAgain(0);
 
-  serverValidator(username,email,password,setErrorMsg,setIsOfline);
+ 
   console.log("1")
 },[username,email,password])
 
@@ -163,11 +159,7 @@ useEffect(()=>{
           <TouchableOpacity
             style={styles.signUpButton}
             onPress={async ()=>{
-              await connectedWithServer(setServerContion);
-            
-               if(erroMsg==''&&serverContion=='connected'){
-                navigation.navigate('getStarted',{username:username,email:email,password:password})
-              }
+              await serverValidator(username,email,password,setErrorMsg,navigation);
              
             }}
           >

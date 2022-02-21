@@ -6,12 +6,21 @@ import{useNavigation} from "@react-navigation/native"
 import ImagePicker from 'react-native-image-crop-picker';
 import client from '../../confProject/config_server'
 import axios from 'axios'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
 
+
+const connectedWithServer=async(setServerContion)=>{
+  await client.post("signUpValidator/concting")
+   .then(resultat=>{
+    setServerContion(resultat.data)
+   // console.log('resultat.data',resultat.data);
+  
+   })
+}
 const openGallary=async(setImagePath,setImage)=>{
     await ImagePicker.openPicker({
          width:methods.circleObject(0.1),
@@ -36,8 +45,19 @@ const openCamer=async(setImagePath,setImage)=>{
 }
 
 
+const userPayloadWhenSignUp=(image,username,firstName,lastName,email,gender)=>{
+    return {
+      profileImage:image,
+      username,
+      firstName,
+      lastName,
+      email,
+      gender
+    }
 
-const uploadProfilePicture=async(image,username,firstName,lastName,email,birthday,password,gender)=>{
+}
+
+const signUp=async(image,username,firstName,lastName,email,birthday,password,gender)=>{
 
     const imageData=new FormData();
     imageData.append('profilePic',{
@@ -45,14 +65,14 @@ const uploadProfilePicture=async(image,username,firstName,lastName,email,birthda
       name:'image',
       type:image.mime
     });
-    imageData.append('username',username);
-    imageData.append('firstName',firstName);
-    imageData.append('lastName',lastName);
-    imageData.append('email',email);
+    imageData.append('username',username.toLowerCase());
+    imageData.append('firstName',firstName.toLowerCase());
+    imageData.append('lastName',lastName.toLowerCase());
+    imageData.append('email',email.toLowerCase());
     imageData.append('birthday',birthday);
     imageData.append('age',calculateAge(birthday,new Date()));
     imageData.append('password',password);
-    imageData.append('gender',gender);
+    imageData.append('gender',gender.toLowerCase());
     
   
     var config = {
@@ -67,21 +87,28 @@ const uploadProfilePicture=async(image,username,firstName,lastName,email,birthda
       };
 
     await axios(config)
-    .then(function (resp) {
-      console.log('resp',resp.data)
-
+    .then(async(resp)=> {
+          if(resp.data.msg='user created'){
+              try {
+                  await AsyncStorage.setItem('token', resp.data.token);
+                  await AsyncStorage.setItem('userPayloadSignUp',JSON.stringify(userPayloadWhenSignUp(image,username,firstName,lastName,email,gender)));
+              }catch (e) {
+                  console.log('error',e)
+              }
+          }
+         
     })
     .catch(function (error) {
       console.log('error==>',error);
     });
-        
 }
 
 const pictureRequire=(imagePath)=>{
-    if(imagePath==''){
-        return 'profile picture is required'
-    }else return 'ok'
-
+    if(!imagePath){
+      return 'profile picture is required'
+    }else{
+      return ''
+    }
 }
 
 const convertBirthdayDate=(birthday)=>{
@@ -113,8 +140,13 @@ const calculateAge=(birth,dateNow)=>{
 
 export default function getStartedProfilePick({route}) {
  const navigation=useNavigation();
- const [imagePath,setImagePath]=useState('file:///storage/emulated/0/Android/data/com.bzom/files/Pictures/1168b1f1-1f42-47b2-88cc-56fac656e713.jpg');
- const [image,setImage]=useState('file:///storage/emulated/0/Android/data/com.bzom/files/Pictures/1168b1f1-1f42-47b2-88cc-56fac656e713.jpg');
+ const [imagePath,setImagePath]=useState(null);
+ const [image,setImage]=useState(null);
+
+ //verif connexion Withserver
+ const [serverContion,setServerContion]=useState("wait");
+ 
+ console.log('route params',route.params)
 
  let username =route.params.signUp.username;
  let email =route.params.signUp.email;
@@ -130,13 +162,20 @@ export default function getStartedProfilePick({route}) {
   return (
         <ScrollView style={styles.container} >
             <Text style={styles.titlePage}>Profile picture</Text>
-            
-           <Image
+            {imagePath
+           ?<Image
                 style={styles.profilePic}
                 
                 source={{uri:imagePath}}
                 resizeMethod='scale'
            />
+           :<Image
+              style={styles.profilePic}
+           
+              source={require('./default/defaultProfilePick.png')}
+              resizeMethod='scale'
+              tintColor='white'
+            />}
            <TouchableOpacity 
                 style={styles.pickerButton}
                 onPress={()=>{openCamer(setImagePath,setImage)}}
@@ -153,16 +192,22 @@ export default function getStartedProfilePick({route}) {
            
            <TouchableOpacity 
                 onPress={async()=>{
-                   await uploadProfilePicture(image,username,firstName,lastName,email,birthday,password,gender)
+                  await connectedWithServer(setServerContion)
+                  if(!imagePath){
+                    alert('profile picture is required')
+                  }
+                  else if(serverContion=='connected'){
+                    await signUp(image,username,firstName,lastName,email,birthday,password,gender)
                     //testt(image);
                    // otherTest(imagePath)
+                  }
                 }}
             
                 style={styles.pickerButton}
             >
                 <Text style={styles.pickerText}>Next</Text>
            </TouchableOpacity>
-           <Text style={styles.errorText}>{pictureRequire(imagePath)!='ok'?pictureRequire(imagePath):''}</Text>
+           <Text style={styles.errorText}>{pictureRequire(imagePath)}</Text>
 
         </ScrollView>
   );
@@ -170,7 +215,6 @@ export default function getStartedProfilePick({route}) {
 
 const styles = StyleSheet.create({
   container:{
-      //backgroundColor:'black',
     height:height,
     width:width,
 },
@@ -183,7 +227,6 @@ titlePage:{
   },
     profilePic:{
         backgroundColor:'#e24731',
-        //backgroundColor:'black',
         width:methods.circleObject(1.6),
         height:methods.circleObject(1.6),
         alignSelf:'center',
@@ -193,7 +236,6 @@ titlePage:{
         borderColor:'black',
         borderWidth:1,
         padding:width/25,
-        //elevation:width/25,
     },
     pickerButton:{
         backgroundColor:'#e24731',

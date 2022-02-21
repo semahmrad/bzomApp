@@ -9,13 +9,16 @@ import client from '../../confProject/config_server'
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
-const connectedWithServer=async(setServerContion)=>{
+const connectedWithServer=async(setServerContion,route,navigation,firstName,lastName,birthDay,gender,phone,codePhone)=>{
   await client.post("signUpValidator/concting")
    .then(resultat=>{
-    setServerContion(resultat.data)
+    setServerContion(resultat.data);
+    if(verifchamps(firstName,lastName,birthDay,gender,phone)=='ok'){
+      navigation.navigate('getStartedProfilePick',{signUp:route.params,firstName:firstName,lastName:lastName,birthday:birthDay,gender:gender,phone:phone,phoneWithCode:codePhone})
+    }
    // console.log('resultat.data',resultat.data);
   
-   })
+   }).catch(err=>{console.log('err==>',err);})
 }
 const verifchamps=(firstName,lastName,birthDay,gender,phone)=>{
   let name_format = /^[a-zA-Z]{4,}$/;
@@ -158,10 +161,7 @@ export default function getStarted({route}) {
             <TouchableOpacity
                 style={styles.nextButton}
                 onPress={async ()=>{
-                  await connectedWithServer(setServerContion);
-                  if(verifchamps(firstName,lastName,birthDay,gender,phone)&&serverContion=='connected'){
-                    navigation.navigate('getStartedProfilePick',{signUp:route.params,firstName:firstName,lastName:lastName,birthday:birthDay,gender:gender,phone:phone,phoneWithCode:codePhone})
-                }
+                  await connectedWithServer(setServerContion,route,navigation,firstName,lastName,birthDay,gender,phone,codePhone);
                 }}
             >
                 <Text style={styles.nextText}>Next</Text>

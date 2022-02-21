@@ -6,23 +6,32 @@ import methods from './../../usedMethods/usedMethods'
 import{useNavigation} from "@react-navigation/native"
 import axios from 'axios'
 import client from '../../confProject/config_server'
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
-const  testApiConsumize = async (email,password,setLoading,setErrorMessage)=>{
+const  loginApis = async (emialOrUserName,password,setErrorMessage,navigation)=>{
   
   await client.post('sign/in',
 
     {
-        authenticator:email,
+        authenticator:emialOrUserName.toLowerCase(),
         password:password
     }
     
   ).then((result)=>{
     console.log(result.data.code,"<<<<=======================<<<<<")
-    if(result.data.code==200) setLoading(true);
+    if(result.data.code==200) {
+      //setErrorMessage('');
+      navigation.navigate('Profile');
+      setEmialOrUserName
+
+      console.log('token ===>',result.data.token)
+    }
     else{
-      setErrorMessage(result.data.msg)
+      console.log(result.data.msg)
+      setErrorMessage(result.data.msg);
     }
     
     
@@ -32,14 +41,27 @@ const  testApiConsumize = async (email,password,setLoading,setErrorMessage)=>{
   });
 }
 
+
+
+const getDataFromlocalStorage = async () => {
+  try {
+    const value = await AsyncStorage.getItem('userPayloadSignUp')
+    if(value !== null) {
+        console.log('storage',value.username);
+        console.log('storage',JSON.stringify(value));
+    }
+  } catch(e) {
+  
+  }
+}
 export default function login() {
  const navigation=useNavigation();
- const [email,setEmail]=useState();
+ const [emialOrUserName,setEmialOrUserName]=useState();
  const [password,setPassword]=useState();
- const [loading,setLoading]=useState(false);
- const [errorMessage,setErrorMessage]=useState("");
+ const [errorMessage,setErrorMessage]=useState('');
 
- 
+
+ getDataFromlocalStorage();
   return (
       <View style={styles.container} >
         <Image
@@ -54,8 +76,8 @@ export default function login() {
             style={styles.inputLogin}
             placeholderTextColor="#6f6e6e"
             placeholder='Email or Username'
-            onChangeText={setEmail}
-            value={email}
+            onChangeText={setEmialOrUserName}
+            value={emialOrUserName}
            
           />
           <Text style={styles.textForInput}>Password</Text>
@@ -69,6 +91,7 @@ export default function login() {
             
           />
           <TouchableOpacity
+            style={styles.resetPasswordButton}
             onPress={()=>{
               
               navigation.navigate('resetPassword')
@@ -76,14 +99,12 @@ export default function login() {
           >
             <Text style={styles.resetPassword}>Recover password?</Text>
           </TouchableOpacity>
+          <Text style={styles.errorMsg}>{errorMessage}</Text>
           
           <TouchableOpacity
             style={styles.loginButton}
-            onPress={()=>{
-              testApiConsumize(email,password,setLoading,setErrorMessage);
-              if(loading){
-                navigation.navigate('Profile')
-              }
+            onPress={async ()=>{
+              await loginApis(emialOrUserName,password,setErrorMessage,navigation);
             }}
           >
             <Text style={styles.loginText}>PROCEED</Text>
@@ -182,20 +203,30 @@ const styles = StyleSheet.create({
     color:'#525050',
     
   },
+  resetPasswordButton:{
+    //backgroundColor:'black',
+    height:height/30,
+    justifyContent:'center',
+    width:width/2.5,
+    marginRight:(width-(width/1.08))/2,
+    alignSelf:'flex-end',
+    alignItems:'center'
+  },
   resetPassword:{
     fontSize:height/55,
-    //marginLeft:width/1.55,
-    marginTop:height/55,
-    alignSelf:'flex-end',
-    marginRight:(width-(width/1.08))/2,
-    color:'#3228b4'
+    color:'#3228b4',
+  },
+  errorMsg:{
+    color:'red',
+    textAlign:'center',
+    //marginTop:height/100,
   },
   loginButton:{
     width:width/1.1,
     height:height/14,
     backgroundColor:'#e24731',
     alignSelf:'center',
-    marginTop:height/35,
+    marginTop:height/100,
     borderRadius:width/45,
     justifyContent:'center',
     elevation:width/25,
@@ -209,7 +240,7 @@ const styles = StyleSheet.create({
   },
   or:{
     textAlign:'center',
-    marginTop:height/60,
+    marginTop:height/150,
     fontWeight:'bold',
     fontSize:height/40,
     color:'#b6b6b6',
@@ -219,7 +250,7 @@ const styles = StyleSheet.create({
     width:width/1.08,
     height:height/20,
     alignSelf:'center',
-    marginTop:height/35,
+    marginTop:height/100,
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'space-between',
