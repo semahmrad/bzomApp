@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useRef} from 'react';
 import { StyleSheet, Text, View, Image, ScrollView,Dimensions,TouchableOpacity, ViewBase,TextInput } from "react-native";
 import { Input } from 'react-native-elements';
 import dimension from '../../screenSizes/screenOfSizes'
@@ -8,14 +8,20 @@ import axios from 'axios'
 import client from '../../confProject/config_server'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import Recaptcha from 'react-native-recaptcha-that-works';
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
 export default function validationByEmail({route}) {
 
-//const email=route.params?.email.toLowerCase();
-const email ='semahmrad@gmail.com';
-const[codeValidation,setCodeValidation]=useState()
+const email=route.params?.email.toLowerCase();
+//const email ='semahmrad@gmail.com';
+const[codeValidation,setCodeValidation]=useState();
+const[disableButton,setDisableButton]=useState(false);
+
+
+
   return (
     <View style={styles.container} >
         <Text style={styles.title}>Verify Email </Text>
@@ -34,8 +40,20 @@ const[codeValidation,setCodeValidation]=useState()
 
         <View style={styles.contReciveCodeContainer}>
             <Text style={styles.contReciveCodeText}>Don't recive code? </Text>
+            
             <TouchableOpacity
+                disabled={disableButton}
                 style={styles.tryAgainbutton}
+                
+                onPress={()=>{
+                    
+              
+                    setDisableButton(true)
+                    setTimeout(()=>{
+                        alert('hello');
+                        setDisableButton(false)
+                    },1000)
+                }}
             >
                 <Text style={styles.tryAgainText}> Try Again</Text>
             </TouchableOpacity>

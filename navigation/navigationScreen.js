@@ -26,9 +26,10 @@ const Navigation=()=>{
     return(
         <NavigationContainer>
             <Stack.Navigator sccreenOption={{headerShown:false}}>
+            <Stack.Screen name='signIn' component={Login} options={{tabBarShowLabel:true,headerShown: false}}/>
+
                 <Stack.Screen name='validation' component={ValidationByEmail} options={{tabBarShowLabel:true,headerShown: false}}/>
 
-                <Stack.Screen name='signIn' component={Login} options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='signup' component={Signup} options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='getStartedProfilePick' component={GetStartedProfilePick} options={{tabBarShowLabel:true,headerShown: false}}/>
 

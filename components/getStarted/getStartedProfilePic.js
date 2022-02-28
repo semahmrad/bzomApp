@@ -11,16 +11,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
-
-
-const connectedWithServer=async(setServerContion)=>{
-  await client.post("signUpValidator/concting")
-   .then(resultat=>{
-    setServerContion(resultat.data)
-   // console.log('resultat.data',resultat.data);
-  
-   })
-}
 const openGallary=async(setImagePath,setImage)=>{
     await ImagePicker.openPicker({
          width:methods.circleObject(0.1),
@@ -42,19 +32,6 @@ const openCamer=async(setImagePath,setImage)=>{
         setImagePath(picture.path)
         setImage(picture)
       });
-}
-
-
-const userPayloadWhenSignUp=(image,username,firstName,lastName,email,gender)=>{
-    return {
-      profileImage:image,
-      username,
-      firstName,
-      lastName,
-      email,
-      gender
-    }
-
 }
 
 const signUp=async(image,username,firstName,lastName,email,birthday,password,gender,navigation)=>{
@@ -89,14 +66,23 @@ const signUp=async(image,username,firstName,lastName,email,birthday,password,gen
     await axios(config)
     .then(async(resp)=> {
           if(resp.data.msg='user created'){
-              try {
-                  await AsyncStorage.setItem('token', resp.data.token);
-                  await AsyncStorage.setItem('userPayloadSignUp',JSON.stringify(userPayloadWhenSignUp(image,username,firstName,lastName,email,gender)));
+            console.log('resp.data.msg', resp.data.msg);
+           let imageBase64=resp.data.userPayload.profilePic
+           //setImageBase64(resp.data.userPayload.profilePic)
+            console.log('###########imageBase64##############',);
+          
+           // console.log('profilePic APIS', resp.data.userPayload.profilePic);
+            try {
+              
+              
+              
+              await AsyncStorage.setItem('profilePic',imageBase64);
+              
+              
 
-              }catch (e) {
-                  console.log('error',e)
-              }
-              navigation.navigate('validation',{email:email});
+            } catch (e) {
+              console.log('SET storage e==>',e)
+            }
           }
          
     })
@@ -140,13 +126,12 @@ const calculateAge=(birth,dateNow)=>{
   return age;
 }
 
+
+
 export default function getStartedProfilePick({route}) {
  const navigation=useNavigation();
  const [imagePath,setImagePath]=useState(null);
  const [image,setImage]=useState(null);
-
- //verif connexion Withserver
- const [serverContion,setServerContion]=useState("wait");
  
  console.log('route params',route.params)
 
@@ -159,7 +144,9 @@ export default function getStartedProfilePick({route}) {
  let gender=route.params.gender ;
  console.log('birthday',birthday)
  var today = new Date();  
- console.log("ddd",calculateAge(birthday,new Date()))
+ console.log("ddd",calculateAge(birthday,new Date()));
+
+
 
   return (
         <ScrollView style={styles.container} >
@@ -198,10 +185,12 @@ export default function getStartedProfilePick({route}) {
                 }}
             
                 style={styles.pickerButton}
+                disabled={!imagePath}
             >
                 <Text style={styles.pickerText}>Next</Text>
            </TouchableOpacity>
            <Text style={styles.errorText}>{pictureRequire(imagePath)}</Text>
+          
 
         </ScrollView>
   );
@@ -252,5 +241,11 @@ titlePage:{
         color:'red',
         textAlign:'center',
         marginTop:height/100,
+      },
+      justTest:{
+        height:height/10,
+        width:width/5,
+        //backgroundColor:'red',
+        alignSelf:'center',
       },
 });
