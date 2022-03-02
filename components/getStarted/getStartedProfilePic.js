@@ -65,13 +65,9 @@ const signUp=async(image,username,firstName,lastName,email,birthday,password,gen
 
     await axios(config)
     .then(async(resp)=> {
-      //console.log("res data=> ",resp.data.token)
           if(resp.data.code==200){
-          //  console.log('resp.data.msg', resp.data.msg);
           let imageBase64=resp.data.userPayload.profilePic
           let token=resp.data.token
-          //console.log('token',token)
-           // console.log('profilePic APIS', resp.data.userPayload.profilePic);
             try {
               await AsyncStorage.setItem('profilePic',imageBase64);
               await AsyncStorage.setItem('token',token);
