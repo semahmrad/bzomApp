@@ -23,7 +23,12 @@ const  loginApis = async (emialOrUserName,password,setErrorMessage,navigation)=>
   ).then((result)=>{
     console.log(result.data.code,"<<<<=======================<<<<<")
     if(result.data.code==200) {
-      //setErrorMessage('');
+      console.log('resp==>',result.data.token);
+      let token =result.data.token;
+      try{
+        AsyncStorage.setItem('token',token);
+      }catch(e){console.log('err Async ',err)}
+      
       navigation.navigate('Profile');
       setEmialOrUserName
 
@@ -40,8 +45,6 @@ const  loginApis = async (emialOrUserName,password,setErrorMessage,navigation)=>
       console.log('err ....!',JSON.stringify(err));
   });
 }
-
-
 
 const getDataFromlocalStorage = async () => {
   try {

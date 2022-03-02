@@ -65,21 +65,16 @@ const signUp=async(image,username,firstName,lastName,email,birthday,password,gen
 
     await axios(config)
     .then(async(resp)=> {
-          if(resp.data.msg='user created'){
-            console.log('resp.data.msg', resp.data.msg);
-           let imageBase64=resp.data.userPayload.profilePic
-           //setImageBase64(resp.data.userPayload.profilePic)
-            console.log('###########imageBase64##############',);
-          
+      //console.log("res data=> ",resp.data.token)
+          if(resp.data.code==200){
+          //  console.log('resp.data.msg', resp.data.msg);
+          let imageBase64=resp.data.userPayload.profilePic
+          let token=resp.data.token
+          //console.log('token',token)
            // console.log('profilePic APIS', resp.data.userPayload.profilePic);
             try {
-              
-              
-              
               await AsyncStorage.setItem('profilePic',imageBase64);
-              
-              
-
+              await AsyncStorage.setItem('token',token);
             } catch (e) {
               console.log('SET storage e==>',e)
             }
@@ -97,6 +92,11 @@ const pictureRequire=(imagePath)=>{
     }else{
       return ''
     }
+}
+const getToken=async()=>{
+  let token=await AsyncStorage.getItem('token');
+  console.log('getToken',token);
+  return token;
 }
 
 const convertBirthdayDate=(birthday)=>{
@@ -128,6 +128,7 @@ const calculateAge=(birth,dateNow)=>{
 
 
 
+
 export default function getStartedProfilePick({route}) {
  const navigation=useNavigation();
  const [imagePath,setImagePath]=useState(null);
@@ -145,6 +146,8 @@ export default function getStartedProfilePick({route}) {
  console.log('birthday',birthday)
  var today = new Date();  
  console.log("ddd",calculateAge(birthday,new Date()));
+
+ console.log('console get token',getToken())
 
 
 

@@ -9,11 +9,13 @@ import EditButton from './../components/profileComponent/editPicturebutton'
 import SpaceCloseImagePickButton from '../components/profileComponent/spaceCloseButtonImagePicker'
 import EditAlbum from './../components/profileComponent/editAlbum'
 import ButtomTabs from './../navigation/buttomNavigationOptions'
-import dimension from '../screenSizes/screenOfSizes'
+import dimension from '../screenSizes/screenOfSizes';
+import client from '../confProject/config_server'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
-
+import axios from 'axios'
 const imgSrc=profileData.profile_Pic;
 const userName=profileData.user_name;
 const bio=profileData.bio;
@@ -21,18 +23,62 @@ const matches =profileData.matches_nbr;
 const nbrPictures=profileData.album.length;
 const albumImg=profileData.album;
 
+const getToken=async(setToken)=>{
+    
+    try{
+        await AsyncStorage.getItem('token').then(res=>{
+            setToken(res)
+        });
+       // console.log('getToken=',token);
+    
+        
+    }catch(err){console.log('err=',err)}
+  }
 
+const justTestJWT =async(token)=>{
+    console.log('Bearer',token)
+    var config = {
+        method: 'post',
+        url: 'http://192.168.1.253:3000/user/jwtTest',
+        headers: { 
+          //'Authorization': `Bearer ${token}`
+          'Authorization': 'Bearer '+token
+        }
+      };
+      
+      axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      
+
+  }
+  
 
 
 export default function profile(){
 
-    console.log("height========profile=======>",height)
+ 
+      
+
+    
 
 const [buttonVisibilty,setButtonVisibilty]=useState(false)
 const [editGalaryVisibility,setEditGalaryVisibility]=useState(false)
-const [imagePath,setImagePath]=useState(albumImg[0].img_path)
+const [imagePath,setImagePath]=useState(albumImg[0].img_path);
 
-    return (
+const [token,setToken]=useState('')
+useEffect(()=>{
+    getToken(setToken);
+},[])
+justTestJWT(token);
+
+//console.log('barer',token);
+
+return (
         <View style={styles.container}>
             <EditAlbum
                 albumImg={albumImg}
