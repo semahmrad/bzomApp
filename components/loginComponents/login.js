@@ -6,10 +6,22 @@ import methods from './../../usedMethods/usedMethods'
 import{useNavigation} from "@react-navigation/native"
 import axios from 'axios'
 import client from '../../confProject/config_server'
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 let width =dimension.width
-let height=dimension.heightWhenNavBar
+let height=dimension.heightWhenNavBar;
+
+
+const loginUserPayload=async(firstName,lastName,birthday,gender,profilePicture)=>{
+    try{
+      await AsyncStorage.setItem('firstName',firstName);
+      await AsyncStorage.setItem('lastName',lastName);
+      await AsyncStorage.setItem('birthday',birthday);
+      await AsyncStorage.setItem('gender',gender);
+      await AsyncStorage.setItem('profilePicture',profilePicture);
+    }
+    catch(e){console.log('user Payload login ',e)}
+}
 
 const  loginApis = async (emialOrUserName,password,setErrorMessage,navigation)=>{
   
@@ -21,18 +33,20 @@ const  loginApis = async (emialOrUserName,password,setErrorMessage,navigation)=>
     }
     
   ).then((result)=>{
-    console.log(result.data.code,"<<<<=======================<<<<<")
-    if(result.data.code==200) {
-      console.log('resp==>',result.data.token);
-      let token =result.data.token;
-      try{
-        AsyncStorage.setItem('token',token);
-      }catch(e){console.log('err Async ',err)}
-      
-      navigation.navigate('Profile');
-      setEmialOrUserName
+  
 
-      console.log('token ===>',result.data.token)
+    if(result.data.code==200) {
+      let firstName=result.data.userPayload.firstName;
+      let lastName=result.data.userPayload.lastName;
+      let birthday= result.data.userPayload.birthday
+      let gender=result.data.userPayload.gender
+      let profilePicture=result.data.userPayload.profilePicture
+      loginUserPayload(firstName,lastName,birthday,gender,profilePicture);
+ 
+          if(result.data.isVerify){
+            navigation.navigate('Profile',{firstName:firstName,lastName:lastName,birthday:birthday,gender:gender,profilePicture:profilePicture})
+          }
+          else{navigation.navigate('validation')}
     }
     else{
       console.log(result.data.msg)
@@ -46,17 +60,7 @@ const  loginApis = async (emialOrUserName,password,setErrorMessage,navigation)=>
   });
 }
 
-const getDataFromlocalStorage = async () => {
-  try {
-    const value = await AsyncStorage.getItem('userPayloadSignUp')
-    if(value !== null) {
-        console.log('storage',value.username);
-        console.log('storage',JSON.stringify(value));
-    }
-  } catch(e) {
-  
-  }
-}
+
 export default function login() {
  const navigation=useNavigation();
  const [emialOrUserName,setEmialOrUserName]=useState();
@@ -64,7 +68,6 @@ export default function login() {
  const [errorMessage,setErrorMessage]=useState('');
 
 
- getDataFromlocalStorage();
   return (
       <View style={styles.container} >
         <Image

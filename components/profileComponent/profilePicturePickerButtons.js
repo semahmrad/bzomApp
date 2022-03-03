@@ -4,8 +4,46 @@ import ImagePicker from 'react-native-image-crop-picker';
 import picConfig from '../imagePickerConfiguration'
 import ExtraDimensions from 'react-native-extra-dimensions-android';
 import sizes from  '../../screenSizes/screenOfSizes'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 let width =sizes.width
 let height=sizes.height
+
+
+const getToken=async(setToken)=>{
+    await AsyncStorage.getItem('token').then(token=>{
+        setToken(token);
+    }).catch(err=>console.log('err change profile pic async',err));
+
+}
+const signUp=async(newPicture,token)=>{
+
+    const newProfilePicData=new FormData();
+    newProfilePicData.append('newPicture',{
+      uri:newPicture.path,
+      name:'image',
+      type:newPicture.mime
+    });  
+    var config = {
+        method: 'post',
+        url: configServer.base_url+'sign/up',
+        headers: {
+        'content-type': 'multipart/form-data;',
+        'accept':'application/json'
+           
+           },
+        data : newProfilePicData
+      };
+
+    await axios(config)
+    .then(async(resp)=> {
+        console.log('responce of server in change profile picture',resp.data);
+
+    })
+    .catch(function (error) {
+      console.log('error==>',error);
+    });
+}
 
 const changeProfilePic=(setImagePath)=>{
     ImagePicker.openPicker({
@@ -31,8 +69,15 @@ const openCamer=(setImagePath)=>{
 }
 
 export default function profilePickerButton(props){
-  
+
     const {buttonVisibilty,setButtonVisibilty,setImagePath}=props
+    const[token,setToken]=useState(null)
+    useEffect(()=>{
+        getToken(setToken)
+    },[]);
+    //console.log('change profile Pic Token =>',token);
+  
+   
    
     return (
             <View>

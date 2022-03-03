@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity,Dimensions } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity,BackHandler,Alert } from "react-native";
 
 import ProfilePic from '../components/profileComponent/pictureComponent'
 import profileData from './../testData/profile.json'
@@ -46,7 +46,7 @@ const justTestJWT =async(token)=>{
         }
       };
       
-      axios(config)
+      await axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
       })
@@ -54,21 +54,48 @@ const justTestJWT =async(token)=>{
         console.log(error);
       });
       
-
   }
   
+  const backAction = () => {
+    Alert.alert("Hold on!", "Are you sure you want to go back?", [
+      {
+        text: "Cancel",
+        onPress: () => null,
+        style: "cancel"
+      },
+      { text: "YES", onPress: () => BackHandler.exitApp() }
+    ]);
+    return true;
+  };
 
 
-export default function profile(){
 
- 
+  const getFullName=(firstName,lastName)=>{
+    let firstName1=firstName.charAt(0).toUpperCase() + firstName.slice(1);
+    let lastName1=lastName.charAt(0).toUpperCase() + lastName.slice(1);
+    return firstName1+' '+lastName1;
+  }
+
+export default function profile({route}){
+    let profilePicture =route.params.profilePicture;
+    let name=getFullName(route.params.firstName,route.params.lastName);
+    console.log('=========>',profilePicture.substr(1,10))
+
+    useEffect(()=>{
+    
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
+          return () => backHandler.remove();
+    },[]);
       
 
     
 
 const [buttonVisibilty,setButtonVisibilty]=useState(false)
 const [editGalaryVisibility,setEditGalaryVisibility]=useState(false)
-const [imagePath,setImagePath]=useState(albumImg[0].img_path);
+const [imagePath,setImagePath]=useState(profilePicture);
 
 const [token,setToken]=useState('')
 useEffect(()=>{
@@ -102,8 +129,8 @@ return (
 
             <ProfilePic
                 setButtonVisibilty={setButtonVisibilty}
-                imgSrc={albumImg[0].img_path}
-                userName={userName}
+                imgSrc={profilePicture}
+                userName={name}
                 bio={bio}
                 buttonVisibilty={buttonVisibilty}
                 imagePath={imagePath}

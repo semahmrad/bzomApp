@@ -1,25 +1,88 @@
-import React,{useState,useRef} from 'react';
-import { StyleSheet, Text, View, Image, ScrollView,Dimensions,TouchableOpacity, ViewBase,TextInput } from "react-native";
+import React,{useState,useRef, useEffect} from 'react';
+import { StyleSheet, Text, View, Image, ScrollView,Alert,TouchableOpacity, BackHandler,TextInput } from "react-native";
 import { Input } from 'react-native-elements';
 import dimension from '../../screenSizes/screenOfSizes'
 import methods from './../../usedMethods/usedMethods'
 import{useNavigation} from "@react-navigation/native"
 import axios from 'axios'
 import client from '../../confProject/config_server'
+import configServer from '../../confProject/conf_serv'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Recaptcha from 'react-native-recaptcha-that-works';
+import Navigation from '../../navigation/navigationScreen';
 let width =dimension.width
-let height=dimension.heightWhenNavBar
+let height=dimension.heightWhenNavBar;
 
+const getEmail= async(setEmail)=>{
+    try{
+        await AsyncStorage.getItem('email').then(email=>{
+            setEmail(email.toLowerCase());
+        }).catch(err=>{console.log('err get token ',err)});
+    }catch(err){console.log('catch err',err)}
+}
+
+const getToken=async(setToken)=>{
+    try{
+        await AsyncStorage.getItem('token').then(token=>{
+            setToken(token);
+        }).catch(err=>{console.log('err get token ',err)});
+    }catch(err){console.log('catch err',err)}
+   
+}
+
+
+const verifyUrAccount =async(secretCode,token,navigation)=>{
+    const config={
+        method: 'post',
+        url: configServer.base_url+'user/verify/account',
+        headers: {
+            'Authorization': 'Bearer '+token
+        },
+        data : {secretCode:secretCode}
+    }
+    await axios(config)
+    .then(resp=>{
+        console.log('resp data',resp.data)
+        if(resp.data.code==200){
+            navigation.navigate('Profile');
+            try{AsyncStorage.setItem('isVerify','true')}
+            catch(err){console.log('err in is verify',err)  }
+        }
+    })
+    .catch(err=>console.log('error in verify account ',err ))
+}
+const backAction = () => {
+    Alert.alert("Hold on!", "Are you sure you want to go back?", [
+      {
+        text: "Cancel",
+        onPress: () => null,
+        style: "cancel"
+      },
+      { text: "YES", onPress: () => BackHandler.exitApp() }
+    ]);
+    return true;
+  };
 export default function validationByEmail({route}) {
 
-const email=route.params?.email.toLowerCase();
-//const email ='semahmrad@gmail.com';
+//const email=route.params?.email.toLowerCase();
+const navigation=useNavigation();
 const[codeValidation,setCodeValidation]=useState();
 const[disableButton,setDisableButton]=useState(false);
+const[token,setToken]=useState(null);
+const[email,setEmail]=useState(null);
 
+
+useEffect(()=>{
+    getToken(setToken);
+    getEmail(setEmail);
+    const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+      return () => backHandler.remove();
+},[]);
 
 
   return (
@@ -62,6 +125,7 @@ const[disableButton,setDisableButton]=useState(false);
 
         <TouchableOpacity
             style={styles.continueButton}
+            onPress={()=>{verifyUrAccount(codeValidation,token,navigation)}}
         >
             <Text style={styles.textButton}>Continue</Text>
         </TouchableOpacity>

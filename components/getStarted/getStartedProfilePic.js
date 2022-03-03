@@ -5,6 +5,7 @@ import methods from './../../usedMethods/usedMethods'
 import{useNavigation} from "@react-navigation/native"
 import ImagePicker from 'react-native-image-crop-picker';
 import client from '../../confProject/config_server'
+import configServer from '../../confProject/conf_serv'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -51,10 +52,11 @@ const signUp=async(image,username,firstName,lastName,email,birthday,password,gen
     imageData.append('password',password);
     imageData.append('gender',gender.toLowerCase());
     
+
   
     var config = {
         method: 'post',
-        url: 'http://192.168.1.253:3000/sign/up',
+        url: configServer.base_url+'sign/up',
         headers: {
         'content-type': 'multipart/form-data;',
         'accept':'application/json'
@@ -65,15 +67,18 @@ const signUp=async(image,username,firstName,lastName,email,birthday,password,gen
 
     await axios(config)
     .then(async(resp)=> {
+      //console.log('token when sign up=========>=',resp.data.token)
           if(resp.data.code==200){
           let imageBase64=resp.data.userPayload.profilePic
           let token=resp.data.token
             try {
               await AsyncStorage.setItem('profilePic',imageBase64);
               await AsyncStorage.setItem('token',token);
+              await AsyncStorage.setItem('email',email);
             } catch (e) {
               console.log('SET storage e==>',e)
             }
+            navigation.navigate('validation')
           }
          
     })
@@ -91,7 +96,7 @@ const pictureRequire=(imagePath)=>{
 }
 const getToken=async()=>{
   let token=await AsyncStorage.getItem('token');
-  console.log('getToken',token);
+
   return token;
 }
 
@@ -126,12 +131,13 @@ const calculateAge=(birth,dateNow)=>{
 
 
 export default function getStartedProfilePick({route}) {
+
  const navigation=useNavigation();
  const [imagePath,setImagePath]=useState(null);
  const [image,setImage]=useState(null);
  
- console.log('route params',route.params)
-
+ //console.log('route params',route.params)
+ //console.log('configServer.base_url=======>'+configServer.base_url)
  let username =route.params.signUp.username;
  let email =route.params.signUp.email;
  let password =route.params.signUp.password;
@@ -143,7 +149,7 @@ export default function getStartedProfilePick({route}) {
  var today = new Date();  
  console.log("ddd",calculateAge(birthday,new Date()));
 
- console.log('console get token',getToken())
+
 
 
 

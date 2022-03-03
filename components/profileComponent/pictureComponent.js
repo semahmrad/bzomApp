@@ -10,9 +10,9 @@ let height=dimension.heightWhenNavBar
 
 
 export default function Picture(props){
-    const {imgSrc,userName,bio,buttonVisibilty,setButtonVisibilty,imagePath,setImagePath}=props
+    const {userName,bio,buttonVisibilty,setButtonVisibilty,imagePath,setImagePath}=props
     //const [imagePath,setImagePath]=useState(imgSrc)
- 
+    console.log("part of image ",imagePath.substr(1,12))
 
     return (
         <View style={styles.container}>
@@ -25,7 +25,7 @@ export default function Picture(props){
             
                 <Image
                     style={styles.imageStyles}
-                    source={{uri:imagePath}}
+                    source={{uri:`data:image/jpeg;base64,${imagePath}`}}
                    // resizeMode='contain'
                 />
        
