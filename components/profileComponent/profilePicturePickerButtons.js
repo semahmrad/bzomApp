@@ -4,7 +4,10 @@ import ImagePicker from 'react-native-image-crop-picker';
 import picConfig from '../imagePickerConfiguration'
 import ExtraDimensions from 'react-native-extra-dimensions-android';
 import sizes from  '../../screenSizes/screenOfSizes'
+
+import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import configServer from './../../confProject/conf_serv'
 
 let width =sizes.width
 let height=sizes.height
@@ -16,20 +19,21 @@ const getToken=async(setToken)=>{
     }).catch(err=>console.log('err change profile pic async',err));
 
 }
-const signUp=async(newPicture,token)=>{
+const changeProfilePicApis=async(newPicture,token,setProfilImage)=>{
 
-    const newProfilePicData=new FormData();
-    newProfilePicData.append('newPicture',{
+   const newProfilePicData=new FormData();
+    newProfilePicData.append('newProfilePic',{
       uri:newPicture.path,
       name:'image',
       type:newPicture.mime
-    });  
+    }); 
     var config = {
         method: 'post',
-        url: configServer.base_url+'sign/up',
+        url: configServer.base_url+'user/change/profile/picture',
         headers: {
         'content-type': 'multipart/form-data;',
-        'accept':'application/json'
+        'accept':'application/json',
+        'Authorization': 'Bearer '+token
            
            },
         data : newProfilePicData
@@ -37,7 +41,19 @@ const signUp=async(newPicture,token)=>{
 
     await axios(config)
     .then(async(resp)=> {
-        console.log('responce of server in change profile picture',resp.data);
+        console.log('======>iam here 1')
+        if(resp.data.code==200){
+            console.log('======>iam here 2')
+            try{
+                console.log('resp.data',resp.data.msg)
+                AsyncStorage.setItem('profilePicture',resp.data.newPicture);
+                setProfilImage(resp.data.newPicture)
+            }catch(err){console.log('error when storage new pic ',err)}
+            
+        }
+        else{
+            alert(resp.data.msg);
+        }
 
     })
     .catch(function (error) {
@@ -45,8 +61,8 @@ const signUp=async(newPicture,token)=>{
     });
 }
 
-const changeProfilePic=(setImagePath)=>{
-    ImagePicker.openPicker({
+const changeProfilePic=async(setProfilImage,token)=>{
+    await ImagePicker.openPicker({
         //freeStyleCropEnabled:true,
          width:picConfig.widthProfilePic,
          height: picConfig.heightProfilePic,
@@ -54,28 +70,32 @@ const changeProfilePic=(setImagePath)=>{
          
        }).then(image => {
          console.log('image.path========>',image.path);
-         setImagePath(image.path)
-       }).catch(e=>{console.warn(error)})
+         setProfilImage(image.path);
+         //call api for profile picture chaneg 
+         changeProfilePicApis(image,token,setProfilImage);
+         
+       }).catch(e=>{console.warn(e)})
 }
-const openCamer=(setImagePath)=>{
-    ImagePicker.openCamera({
+const openCamer=async(setProfilImage,token)=>{
+    await ImagePicker.openCamera({
         width:picConfig.widthProfilePic,
         height: picConfig.heightProfilePic,
         cropping: true,
       }).then(image => {
-        console.log(image);
-        setImagePath(image.path)
-      });
+        
+        setProfilImage(image.path);
+        changeProfilePicApis(image,token,setProfilImage);
+      }).catch(e=>{console.warn(e)});
 }
 
 export default function profilePickerButton(props){
 
-    const {buttonVisibilty,setButtonVisibilty,setImagePath}=props
+    const {buttonVisibilty,setButtonVisibilty,setProfilImage}=props
     const[token,setToken]=useState(null)
     useEffect(()=>{
         getToken(setToken)
     },[]);
-    //console.log('change profile Pic Token =>',token);
+   // console.log('change profile Pic Token =>',token);
   
    
    
@@ -87,7 +107,7 @@ export default function profilePickerButton(props){
                     
                         <TouchableOpacity
                             onPress={()=>{
-                                changeProfilePic(setImagePath);
+                                changeProfilePic(setProfilImage,token,setProfilImage);
                                 setButtonVisibilty(false);
                             }}
                         >
@@ -96,7 +116,7 @@ export default function profilePickerButton(props){
 
                         <TouchableOpacity
                             onPress={()=>{
-                                openCamer(setImagePath);
+                                openCamer(setProfilImage,token);
                                 setButtonVisibilty(false);
                             }}
                         >

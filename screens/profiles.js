@@ -75,29 +75,53 @@ const justTestJWT =async(token)=>{
     let lastName1=lastName.charAt(0).toUpperCase() + lastName.slice(1);
     return firstName1+' '+lastName1;
   }
+  const getFromAsyncStorage= async (key,setValue)=>{
+    try{
+    await AsyncStorage.getItem(key).then(res=>{
+      setValue(res)
+    });
+  }catch(err){console.log('get from ',key,err);}
+  }
+  const getPayloadData=async(setFirstName,setLastName,setProfilImage)=>{
+    await getFromAsyncStorage('firstName',setFirstName);
+    await getFromAsyncStorage('lastName',setLastName);
+    await getFromAsyncStorage('profilePicture',setProfilImage);
+   
+  }
 
 export default function profile({route}){
-    let profilePicture =route.params.profilePicture;
-    let name=getFullName(route.params.firstName,route.params.lastName);
-    console.log('=========>',profilePicture.substr(1,10))
+    
+
+  const [buttonVisibilty,setButtonVisibilty]=useState(false)
+  const [editGalaryVisibility,setEditGalaryVisibility]=useState(false);
+  
+  const [firstName,setFirstName]=useState('');
+  const [lastName,setLastName]=useState('');
+  const [prfilImage,setProfilImage]=useState(null);
+  const [name,setName]=useState();
+  
+  
+  const [token,setToken]=useState('')
 
     useEffect(()=>{
-    
+      getPayloadData(setFirstName,setLastName,setProfilImage);
         const backHandler = BackHandler.addEventListener(
             "hardwareBackPress",
             backAction
           );
+          setName(getFullName(firstName,lastName))
           return () => backHandler.remove();
+          
     },[]);
+    useEffect(()=>{
+      getPayloadData(setFirstName,setLastName,setProfilImage);
+      setName(getFullName(firstName,lastName))
+          
+          
+    },);
       
 
-    
 
-const [buttonVisibilty,setButtonVisibilty]=useState(false)
-const [editGalaryVisibility,setEditGalaryVisibility]=useState(false)
-const [imagePath,setImagePath]=useState(profilePicture);
-
-const [token,setToken]=useState('')
 useEffect(()=>{
     getToken(setToken);
 },[])
@@ -111,7 +135,7 @@ return (
                 albumImg={albumImg}
                 editGalaryVisibility={editGalaryVisibility}
                 setEditGalaryVisibility={setEditGalaryVisibility}
-                setImagePath={setImagePath}
+                setProfilImage={setProfilImage}
 
             />
             <SpaceCloseImagePickButton
@@ -129,12 +153,12 @@ return (
 
             <ProfilePic
                 setButtonVisibilty={setButtonVisibilty}
-                imgSrc={profilePicture}
+                //imgSrc={profilePicture}
                 userName={name}
                 bio={bio}
                 buttonVisibilty={buttonVisibilty}
-                imagePath={imagePath}
-                setImagePath={setImagePath}
+                prfilImage={prfilImage}
+                setProfilImage={setProfilImage}
             />
             
            

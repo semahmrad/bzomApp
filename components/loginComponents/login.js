@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { StyleSheet, Text, View, Image, ScrollView,Dimensions,TouchableOpacity, ViewBase,TextInput } from "react-native";
 import { Input } from 'react-native-elements';
 import dimension from '../../screenSizes/screenOfSizes'
@@ -22,6 +22,21 @@ const loginUserPayload=async(firstName,lastName,birthday,gender,profilePicture)=
     }
     catch(e){console.log('user Payload login ',e)}
 }
+const justHey=()=>{
+  var config = {
+    method: 'post',
+    url: 'http://192.168.1.253:3000/sign/justhey',
+    headers: { }
+  };
+  
+  axios(config)
+  .then(function (response) {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
 
 const  loginApis = async (emialOrUserName,password,setErrorMessage,navigation)=>{
   
@@ -44,7 +59,7 @@ const  loginApis = async (emialOrUserName,password,setErrorMessage,navigation)=>
       loginUserPayload(firstName,lastName,birthday,gender,profilePicture);
  
           if(result.data.isVerify){
-            navigation.navigate('Profile',{firstName:firstName,lastName:lastName,birthday:birthday,gender:gender,profilePicture:profilePicture})
+            navigation.navigate('Profile',)
           }
           else{navigation.navigate('validation')}
     }
@@ -62,12 +77,15 @@ const  loginApis = async (emialOrUserName,password,setErrorMessage,navigation)=>
 
 
 export default function login() {
+
  const navigation=useNavigation();
  const [emialOrUserName,setEmialOrUserName]=useState();
  const [password,setPassword]=useState();
  const [errorMessage,setErrorMessage]=useState('');
 
-
+  useEffect(()=>{
+    justHey();
+  },[])
   return (
       <View style={styles.container} >
         <Image

@@ -44,7 +44,7 @@ const addPicVisibility=(galary,setGalary)=>{
     }
     else return null
 }
-const makeProfilePicView=(makeProfilePicVisibility,setMakeProfilePicVisibility,setImagePath,selectedPic,setEditGalaryVisibility)=>{
+const makeProfilePicView=(makeProfilePicVisibility,setMakeProfilePicVisibility,setProfilImage,selectedPic,setEditGalaryVisibility)=>{
 
     if(makeProfilePicVisibility){
     return (
@@ -52,7 +52,7 @@ const makeProfilePicView=(makeProfilePicVisibility,setMakeProfilePicVisibility,s
                
         <TouchableOpacity
             onPress={()=>{
-                setImagePath(selectedPic);
+                setProfilImage(selectedPic);
                 setMakeProfilePicVisibility(false)
                 setEditGalaryVisibility(false)
             }}
@@ -76,7 +76,7 @@ const makeProfilePicView=(makeProfilePicVisibility,setMakeProfilePicVisibility,s
 
 
 export default function editAlbum(props){
-const {albumImg,editGalaryVisibility,setEditGalaryVisibility,setImagePath}=props;
+const {albumImg,editGalaryVisibility,setEditGalaryVisibility,setProfilImage}=props;
 const [galary,setGalary]=useState(albumImg);
 const [makeProfilePicVisibility,setMakeProfilePicVisibility]=useState(false);
 const [selectedPic,setSelectedPic]=useState('');
@@ -159,7 +159,7 @@ const [selectedPic,setSelectedPic]=useState('');
                     />
                    
 
-                   {makeProfilePicView(makeProfilePicVisibility,setMakeProfilePicVisibility,setImagePath,selectedPic,setEditGalaryVisibility)}
+                   {makeProfilePicView(makeProfilePicVisibility,setMakeProfilePicVisibility,setProfilImage,selectedPic,setEditGalaryVisibility)}
                 </View>
 
             : null}        

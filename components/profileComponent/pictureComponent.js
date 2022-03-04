@@ -10,9 +10,8 @@ let height=dimension.heightWhenNavBar
 
 
 export default function Picture(props){
-    const {userName,bio,buttonVisibilty,setButtonVisibilty,imagePath,setImagePath}=props
-    //const [imagePath,setImagePath]=useState(imgSrc)
-    console.log("part of image ",imagePath.substr(1,12))
+    const {userName,bio,buttonVisibilty,setButtonVisibilty,prfilImage,setProfilImage}=props
+
 
     return (
         <View style={styles.container}>
@@ -20,12 +19,12 @@ export default function Picture(props){
             <ButtonPickerProfilePicture
                 setButtonVisibilty={setButtonVisibilty}
                 buttonVisibilty={buttonVisibilty}
-                setImagePath={setImagePath}
+                setProfilImage={setProfilImage}
             />
             
                 <Image
                     style={styles.imageStyles}
-                    source={{uri:`data:image/jpeg;base64,${imagePath}`}}
+                    source={{uri:`data:image/jpeg;base64,${prfilImage}`}}
                    // resizeMode='contain'
                 />
        
