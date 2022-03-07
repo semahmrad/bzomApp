@@ -18,25 +18,11 @@ const loginUserPayload=async(firstName,lastName,birthday,gender,profilePicture)=
       await AsyncStorage.setItem('lastName',lastName);
       await AsyncStorage.setItem('birthday',birthday);
       await AsyncStorage.setItem('gender',gender);
-      await AsyncStorage.setItem('profilePicture',profilePicture);
+      await AsyncStorage.setItem('profilePic',profilePicture);
     }
     catch(e){console.log('user Payload login ',e)}
 }
-const justHey=()=>{
-  var config = {
-    method: 'post',
-    url: 'http://192.168.1.253:3000/sign/justhey',
-    headers: { }
-  };
-  
-  axios(config)
-  .then(function (response) {
-    console.log(JSON.stringify(response.data));
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-}
+
 
 const  loginApis = async (emialOrUserName,password,setErrorMessage,navigation)=>{
   
@@ -84,7 +70,7 @@ export default function login() {
  const [errorMessage,setErrorMessage]=useState('');
 
   useEffect(()=>{
-    justHey();
+
   },[])
   return (
       <View style={styles.container} >

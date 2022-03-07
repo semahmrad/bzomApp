@@ -35,26 +35,7 @@ const getToken=async(setToken)=>{
     }catch(err){console.log('err=',err)}
   }
 
-const justTestJWT =async(token)=>{
-    console.log('Bearer',token)
-    var config = {
-        method: 'post',
-        url: 'http://192.168.1.253:3000/user/jwtTest',
-        headers: { 
-          //'Authorization': `Bearer ${token}`
-          'Authorization': 'Bearer '+token
-        }
-      };
-      
-      await axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-      
-  }
+
   
   const backAction = () => {
     Alert.alert("Hold on!", "Are you sure you want to go back?", [
@@ -85,7 +66,7 @@ const justTestJWT =async(token)=>{
   const getPayloadData=async(setFirstName,setLastName,setProfilImage)=>{
     await getFromAsyncStorage('firstName',setFirstName);
     await getFromAsyncStorage('lastName',setLastName);
-    await getFromAsyncStorage('profilePicture',setProfilImage);
+    await getFromAsyncStorage('profilePic',setProfilImage);
    
   }
 
@@ -125,7 +106,7 @@ export default function profile({route}){
 useEffect(()=>{
     getToken(setToken);
 },[])
-justTestJWT(token);
+
 
 //console.log('barer',token);
 
