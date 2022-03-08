@@ -10,7 +10,6 @@ import SpaceCloseImagePickButton from '../components/profileComponent/spaceClose
 import EditAlbum from './../components/profileComponent/editAlbum'
 import ButtomTabs from './../navigation/buttomNavigationOptions'
 import dimension from '../screenSizes/screenOfSizes';
-import client from '../confProject/config_server'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 let width =dimension.width
 let height=dimension.heightWhenNavBar

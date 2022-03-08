@@ -1,18 +1,46 @@
 import React,{useEffect,useState} from "react";
 import { StyleSheet, FlatList, View,  Dimensions,Image,TouchableOpacity,Text } from "react-native";
 import ImagePicker from 'react-native-image-crop-picker';
-
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import configServer from './../../confProject/conf_serv'
+import getFromAsync from './../../getFromAsyncStorage/getFromStorage'
 import dimension from '../../screenSizes/screenOfSizes'
+import axios from 'axios'
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
 const saveTheNewGalaryChange=(setEditGalaryVisibility)=>{
     setEditGalaryVisibility(false)
 }
+//Apis
+const addNewPicApis=async(token,image)=>{
+    const formAddImage=new FormData();
+    formAddImage.append('newPic',{
+        uri:image.path,
+        name:'image',
+        type:image.mime
+      });
+    var config = {
+        method: 'post',
+        url: configServer.base_url+'user/add/picture/',
+        headers: { 
+          'Authorization': 'Bearer '+token,
+          'content-type': 'multipart/form-data;',
+          'accept':'application/json'
+          
+        },
+        data : formAddImage
+      };
+      await axios(config).then(res=>{
+          console.log('res add new pic',res.data)
 
-const addPic =(galary,setGalary)=>{
- 
+      }).catch(err=>{
+          console.log('err =>'+err.message);
+      })
+}
+
+const addPic =async(galary,setGalary,token)=>{
+
     ImagePicker.openPicker({
         //freeStyleCropEnabled:true,
          width:width*2,
@@ -24,15 +52,16 @@ const addPic =(galary,setGalary)=>{
             img_id:galary.length+1,
             img_path:image.path,
         }
+        addNewPicApis(token,image)
         setGalary([...galary,picAdd])
        }).catch(e=>{console.warn(error)})
 }
 
-const addPicVisibility=(galary,setGalary)=>{
+const addPicVisibility=(galary,setGalary,token)=>{
     if(galary.length<6){
         return(
             <TouchableOpacity
-                 onPress={()=>addPic(galary,setGalary)}
+                 onPress={()=>addPic(galary,setGalary,token)}
                  style={styles.addPicButton}
             >
                 <Image
@@ -76,14 +105,19 @@ const makeProfilePicView=(makeProfilePicVisibility,setMakeProfilePicVisibility,s
 
 
 export default function editAlbum(props){
-const {albumImg,editGalaryVisibility,setEditGalaryVisibility,setProfilImage}=props;
-const [galary,setGalary]=useState(albumImg);
-const [makeProfilePicVisibility,setMakeProfilePicVisibility]=useState(false);
-const [selectedPic,setSelectedPic]=useState('');
+
+    const {albumImg,editGalaryVisibility,setEditGalaryVisibility,setProfilImage}=props;
+    const [galary,setGalary]=useState(albumImg);
+    const [makeProfilePicVisibility,setMakeProfilePicVisibility]=useState(false);
+    const [selectedPic,setSelectedPic]=useState('');
+    const [token,setToken]=useState(null);
+    useEffect(()=>{
+        getFromAsync.getFromStorage('token',setToken);
+        console.log('token=>',token)
+    },[])
 
 
-
-
+    console.log('token',token)
     return (
       
           <View style={styles.container}>
@@ -93,7 +127,7 @@ const [selectedPic,setSelectedPic]=useState('');
                     <View style={styles.titleContainer}>
                         <Text style={styles.editGalryText}>Edit Galary</Text>
                    
-                            {addPicVisibility(galary,setGalary)}
+                            {addPicVisibility(galary,setGalary,token)}
                         
                             <TouchableOpacity
                                     style={styles.doneButton}

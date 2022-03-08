@@ -34,7 +34,6 @@ const  loginApis = async (emialOrUserName,password,setErrorMessage,navigation)=>
     }
     
   ).then((result)=>{
-  
 
     if(result.data.code==200) {
       let firstName=result.data.userPayload.firstName;
