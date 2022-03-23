@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { StyleSheet, Text, View, Image, ScrollView,Dimensions,TouchableOpacity, ViewBase,TextInput } from "react-native";
 import dimension from '../../screenSizes/screenOfSizes'
 import methods from './../../usedMethods/usedMethods'
@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
-const openGallary=async(setImagePath,setImage)=>{
+const openGallary=async(setImagePath,setImage,setNextButtonDisabled)=>{
     await ImagePicker.openPicker({
          width:methods.circleObject(0.1),
          height: methods.circleObject(0.1),
@@ -22,9 +22,10 @@ const openGallary=async(setImagePath,setImage)=>{
       
          setImagePath(picture.path);
          setImage(picture);
+         setNextButtonDisabled(false);
        }).catch(e=>{console.warn(e)})
 }
-const openCamer=async(setImagePath,setImage)=>{
+const openCamer=async(setImagePath,setImage,setNextButtonDisabled)=>{
     await ImagePicker.openCamera({
         width:methods.circleObject(0.1),
         height: methods.circleObject(0.1),
@@ -32,6 +33,7 @@ const openCamer=async(setImagePath,setImage)=>{
       }).then(picture => {
         setImagePath(picture.path)
         setImage(picture)
+        setNextButtonDisabled(false);
       });
 }
 
@@ -79,7 +81,7 @@ const signUp=async(image,username,firstName,lastName,email,birthday,password,gen
               console.log('SET storage e==>',e)
             }
             navigation.navigate('validation')
-          }
+          }else{alert(resp.data.msg)}
          
     })
     .catch(function (error) {
@@ -135,6 +137,7 @@ export default function getStartedProfilePick({route}) {
  const navigation=useNavigation();
  const [imagePath,setImagePath]=useState(null);
  const [image,setImage]=useState(null);
+ const [nextButtonDisabled,setNextButtonDisabled]=useState(true);
  
  //console.log('route params',route.params)
  //console.log('configServer.base_url=======>'+configServer.base_url)
@@ -148,7 +151,6 @@ export default function getStartedProfilePick({route}) {
  console.log('birthday',birthday)
  var today = new Date();  
  console.log("ddd",calculateAge(birthday,new Date()));
-
 
 
 
@@ -172,25 +174,30 @@ export default function getStartedProfilePick({route}) {
             />}
            <TouchableOpacity 
                 style={styles.pickerButton}
-                onPress={()=>{openCamer(setImagePath,setImage)}}
+                onPress={()=>{openCamer(setImagePath,setImage,setNextButtonDisabled)}}
             >
                <Text style={styles.pickerText}>Take Picture</Text>
            </TouchableOpacity>
 
            <TouchableOpacity 
                 style={styles.pickerButton}
-                onPress={()=>{openGallary(setImagePath,setImage)}}
+                onPress={()=>{openGallary(setImagePath,setImage,setNextButtonDisabled)}}
            >
                <Text style={styles.pickerText}>Upload Picture</Text>
            </TouchableOpacity>
            
            <TouchableOpacity 
+             
                 onPress={async()=>{
+                  
+                  setNextButtonDisabled(true);
+                  setTimeout(()=>{setNextButtonDisabled(false)},3000)
                  await signUp(image,username,firstName,lastName,email,birthday,password,gender,navigation);
+            
                 }}
             
                 style={styles.pickerButton}
-                disabled={!imagePath}
+                disabled={nextButtonDisabled}
             >
                 <Text style={styles.pickerText}>Next</Text>
            </TouchableOpacity>

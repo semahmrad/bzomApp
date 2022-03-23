@@ -51,7 +51,10 @@ export default function imageDisplay({route,navigation}){
                          <ImageViewer 
                             imageUrls={
                                 getArrauImageSource(albumImg).map(item=>{
-                                    return   { url: item,}
+                                    return   { uri: item,}
+                                   
+
+                                   
                                 })
                                 }
                                 index={index}

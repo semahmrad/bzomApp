@@ -12,13 +12,15 @@ let width =dimension.width
 let height=dimension.heightWhenNavBar;
 
 
-const loginUserPayload=async(firstName,lastName,birthday,gender,profilePicture)=>{
+const loginUserPayload=async(token,firstName,lastName,birthday,gender,profilePicture)=>{
     try{
+      await AsyncStorage.setItem('token',token);
       await AsyncStorage.setItem('firstName',firstName);
       await AsyncStorage.setItem('lastName',lastName);
       await AsyncStorage.setItem('birthday',birthday);
       await AsyncStorage.setItem('gender',gender);
       await AsyncStorage.setItem('profilePic',profilePicture);
+      
     }
     catch(e){console.log('user Payload login ',e)}
 }
@@ -36,15 +38,16 @@ const  loginApis = async (emialOrUserName,password,setErrorMessage,navigation)=>
   ).then((result)=>{
 
     if(result.data.code==200) {
+      let token =result.data.token
       let firstName=result.data.userPayload.firstName;
       let lastName=result.data.userPayload.lastName;
       let birthday= result.data.userPayload.birthday
       let gender=result.data.userPayload.gender
       let profilePicture=result.data.userPayload.profilePicture
-      loginUserPayload(firstName,lastName,birthday,gender,profilePicture);
+      loginUserPayload(token,firstName,lastName,birthday,gender,profilePicture);
  
           if(result.data.isVerify){
-            navigation.navigate('Profile',)
+            navigation.navigate('Profile',{semah:'semah'})
           }
           else{navigation.navigate('validation')}
     }

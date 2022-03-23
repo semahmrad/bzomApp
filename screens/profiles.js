@@ -10,29 +10,15 @@ import SpaceCloseImagePickButton from '../components/profileComponent/spaceClose
 import EditAlbum from './../components/profileComponent/editAlbum'
 import ButtomTabs from './../navigation/buttomNavigationOptions'
 import dimension from '../screenSizes/screenOfSizes';
+import getFromAsync from '../getFromAsyncStorage/getFromStorage'
+import configServer from './../confProject/conf_serv'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 let width =dimension.width
 let height=dimension.heightWhenNavBar
 
 import axios from 'axios'
-const imgSrc=profileData.profile_Pic;
-const userName=profileData.user_name;
-const bio=profileData.bio;
-const matches =profileData.matches_nbr;
-const nbrPictures=profileData.album.length;
-const albumImg=profileData.album;
 
-const getToken=async(setToken)=>{
-    
-    try{
-        await AsyncStorage.getItem('token').then(res=>{
-            setToken(res)
-        });
-       // console.log('getToken=',token);
-    
-        
-    }catch(err){console.log('err=',err)}
-  }
+
 
 
   
@@ -55,21 +41,46 @@ const getToken=async(setToken)=>{
     let lastName1=lastName.charAt(0).toUpperCase() + lastName.slice(1);
     return firstName1+' '+lastName1;
   }
-  const getFromAsyncStorage= async (key,setValue)=>{
-    try{
-    await AsyncStorage.getItem(key).then(res=>{
-      setValue(res)
-    });
-  }catch(err){console.log('get from ',key,err);}
-  }
-  const getPayloadData=async(setFirstName,setLastName,setProfilImage)=>{
-    await getFromAsyncStorage('firstName',setFirstName);
-    await getFromAsyncStorage('lastName',setLastName);
-    await getFromAsyncStorage('profilePic',setProfilImage);
+ 
+  const getPayloadData=async(setFirstName,setLastName,setProfilImage,setToken)=>{
+     await getFromAsync.getFromStorage('firstName',setFirstName);
+     await getFromAsync.getFromStorage('lastName',setLastName);
+     await getFromAsync.getFromStorage('profilePic',setProfilImage);
+     await getFromAsync.getFromStorage('token',setToken);
    
   }
 
+  const getGalaryApi=async(token,setAlbum)=>{
+    
+   
+      var config = {
+        method: 'post',
+        url: configServer.base_url+'user/gallery',
+        headers: { 
+          'Authorization': 'Bearer '+token,
+        },
+      };
+       axios(config).then(res=>{
+        
+        console.log(res.data.msg)
+        if(res.data.code==200){
+          setAlbum(res.data.gallery);
+        }
+        else {console.warn(res.data.msg)}
+      }).catch(err=>{
+        console.log(err.message)
+        alert(err.message);
+      })
+ 
+    
+  }
+
 export default function profile({route}){
+const bio=profileData.bio;
+const matches =profileData.matches_nbr;
+const nbrPictures=profileData.album.length;
+//const albumImg=profileData.album;
+
     
 
   const [buttonVisibilty,setButtonVisibilty]=useState(false)
@@ -79,12 +90,14 @@ export default function profile({route}){
   const [lastName,setLastName]=useState('');
   const [prfilImage,setProfilImage]=useState(null);
   const [name,setName]=useState();
+  const [album,setAlbum]=useState('');
+  const [token,setToken]=useState(null)
   
-  
-  const [token,setToken]=useState('')
+
 
     useEffect(()=>{
-      getPayloadData(setFirstName,setLastName,setProfilImage);
+      getPayloadData(setFirstName,setLastName,setProfilImage,setToken);
+     // getFromAsync.getFromStorage('token',setToken);
         const backHandler = BackHandler.addEventListener(
             "hardwareBackPress",
             backAction
@@ -94,25 +107,30 @@ export default function profile({route}){
           
     },[]);
     useEffect(()=>{
-      getPayloadData(setFirstName,setLastName,setProfilImage);
-      setName(getFullName(firstName,lastName))
-          
-          
+      getPayloadData(setFirstName,setLastName,setProfilImage,setToken);
+      //getFromAsync.getFromStorage('token',setToken);
+      setName(getFullName(firstName,lastName));
+
+    
     },);
-      
-
-
+        
 useEffect(()=>{
-    getToken(setToken);
-},[])
+
+  if(token){
+    getGalaryApi(token,setAlbum);
+    
+  }
+
+  
+},[token])
 
 
-//console.log('barer',token);
 
 return (
         <View style={styles.container}>
             <EditAlbum
-                albumImg={albumImg}
+                albumImg={album}
+                setAlbum={setAlbum}
                 editGalaryVisibility={editGalaryVisibility}
                 setEditGalaryVisibility={setEditGalaryVisibility}
                 setProfilImage={setProfilImage}
@@ -150,7 +168,7 @@ return (
             />
 
             <AlbumPic
-                albumImg={albumImg}
+                albumImg={album}
             />
             <ButtomTabs
                 style={styles.buttomComponent}

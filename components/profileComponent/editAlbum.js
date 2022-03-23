@@ -39,7 +39,7 @@ const addNewPicApis=async(token,image)=>{
       })
 }
 
-const addPic =async(galary,setGalary,token)=>{
+const addPic =async(galary,setGalary,token,setAlbum,albumImg)=>{
 
     ImagePicker.openPicker({
         //freeStyleCropEnabled:true,
@@ -52,16 +52,18 @@ const addPic =async(galary,setGalary,token)=>{
             img_id:galary.length+1,
             img_path:image.path,
         }
+       // setGalary([...galary,picAdd]);
+       setAlbum([...albumImg,picAdd])
         addNewPicApis(token,image)
-        setGalary([...galary,picAdd])
+       
        }).catch(e=>{console.warn(error)})
 }
 
-const addPicVisibility=(galary,setGalary,token)=>{
-    if(galary.length<6){
+const addPicVisibility=(galary,setGalary,token,setAlbum,albumImg)=>{
+    if(galary.length<100){
         return(
             <TouchableOpacity
-                 onPress={()=>addPic(galary,setGalary,token)}
+                 onPress={()=>addPic(galary,setGalary,token,setAlbum,albumImg)}
                  style={styles.addPicButton}
             >
                 <Image
@@ -106,18 +108,24 @@ const makeProfilePicView=(makeProfilePicVisibility,setMakeProfilePicVisibility,s
 
 export default function editAlbum(props){
 
-    const {albumImg,editGalaryVisibility,setEditGalaryVisibility,setProfilImage}=props;
-    const [galary,setGalary]=useState(albumImg);
+    const {albumImg,setAlbum,editGalaryVisibility,setEditGalaryVisibility,setProfilImage}=props;
+    const [galary,setGalary]=useState('');
     const [makeProfilePicVisibility,setMakeProfilePicVisibility]=useState(false);
     const [selectedPic,setSelectedPic]=useState('');
     const [token,setToken]=useState(null);
+
+    //for test 
+    const [loadPage,setLoadPage]=useState(false);
     useEffect(()=>{
         getFromAsync.getFromStorage('token',setToken);
-        console.log('token=>',token)
-    },[])
+    },[]);
+    
+    useEffect(()=>{
+       // setGalary(albumImg)
+    
 
+    },);
 
-    console.log('token',token)
     return (
       
           <View style={styles.container}>
@@ -127,7 +135,7 @@ export default function editAlbum(props){
                     <View style={styles.titleContainer}>
                         <Text style={styles.editGalryText}>Edit Galary</Text>
                    
-                            {addPicVisibility(galary,setGalary,token)}
+                            {addPicVisibility(galary,setGalary,token,setAlbum,albumImg)}
                         
                             <TouchableOpacity
                                     style={styles.doneButton}
@@ -140,7 +148,7 @@ export default function editAlbum(props){
                     <FlatList
                     style={styles.flatList}
                     
-                    data={galary}
+                    data={albumImg}
                     keyExtractor={item=>item.img_id}
                     numColumns={3}
                     renderItem={(({item,index})=>{
@@ -158,24 +166,23 @@ export default function editAlbum(props){
                                 </TouchableOpacity>
                                 <TouchableOpacity 
                                 onPress={()=>{
-                                    setSelectedPic(item.img_path)
+                                    setSelectedPic(item.imageBase64)
                                     setMakeProfilePicVisibility(true)
 
                                 }}
                                     
                                 >
                                     <Image 
-                                    source={{uri:item.img_path}}
-                                    style={styles.imgPath}
-                                    resizeMode='stretch'
+                                      
+                                        source={{uri:`data:image/jpeg;base64,${item.imageBase64}`}}
+                                        style={styles.imgPath}
+                                        resizeMode='stretch'
                                     />
                                     
                                 </TouchableOpacity>
                               
                               
-                            </View>
-                            
-                            
+                            </View>      
                     )
                  
                 })}

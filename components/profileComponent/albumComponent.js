@@ -13,7 +13,7 @@ export default function album(props,){
 
   
 
-    const {albumImg,}=props
+    const {albumImg}=props
     const navigation = useNavigation();
 
     return (
@@ -28,14 +28,15 @@ export default function album(props,){
                 data={albumImg}
                 keyExtractor={item=>item.img_id}
                 renderItem={(({item,index})=>{
+                    console.log("img_id",item.img_id)
                     return(
                     <TouchableOpacity
                         onPress={()=>navigation.navigate('imageDisplay',{albumImg:albumImg,index:index,})}
                     >
                         <View >
                             <Image 
-                                source={{uri:item.img_path}}
-                                style={styles.imgPath}
+                                source={{uri:`data:image/jpeg;base64,${item.imageBase64}`}}
+                                style={styles.image}
                                 resizeMode='contain'
                             />
                             <View style={styles}>
@@ -43,10 +44,6 @@ export default function album(props,){
                             </View>
                         </View>
                     </TouchableOpacity>
-                        
-
-                      
-                  
 
                 )})}
             />      
@@ -68,8 +65,8 @@ const styles = StyleSheet.create({
     flatList:{
       //paddingRight:width/20
     },
-    imgPath:{
-        width:width/1.35,
+    image:{
+        width:width/1.55,
         height:height/2.7,
         borderWidth:width/100,
         //borderColor:"white",

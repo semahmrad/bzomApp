@@ -8,8 +8,10 @@ import Home from './../screens/homeScreen'
 import ProfileVisited from '../components/profileWhenVisited/profileWhenVisited'
 import Message from '../screens/messages'
 import Chat from '../components/messagesComponents/ChatScreen'
-import Ptofile from '../screens/profiles'
+import Ptofile from '../screens/profile'
+//import Ptofile from '../screens/profiles'
 import ImageDisplay from '../components/profileComponent/imagesDisplay'
+import GalleryUpdate from '../components/profileComp/galleryUpdate'
 import Setting from '../screens/settings'
 import ChangePassword from '../components/settingsComponent/settingsScreens/changePassword'
 import PersonalInformation from '../components/settingsComponent/settingsScreens/personalInformation'
@@ -38,7 +40,7 @@ const Navigation=()=>{
                 <Stack.Screen name='newPassword' component={NewPassword} options={{tabBarShowLabel:true,headerShown: false}}/>
 
                 <Stack.Screen name='codeResetPassword' component={CodeResetPassword} options={{tabBarShowLabel:true,headerShown: false}}/>
-
+                <Stack.Screen name='galleryUpdate' component={GalleryUpdate} options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='resetPassword' component={ResetPassword} options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='home' component={Home}  options={{tabBarShowLabel:true,headerShown: false}}/>
                 <Stack.Screen name='profileWhenVisited' component={ProfileVisited}  options={{tabBarShowLabel:true,headerShown: false}}/>
