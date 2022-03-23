@@ -41,10 +41,44 @@ const getGalaryApi=async(token,setGalary)=>{
       });
 }
 
-const testKeyIfExist=(jsonObject,key)=>{
-    const keysArray=Object.keys(jsonObject).filter(keyItem=>keyItem==key);
-    if(keysArray>0){return true}
-    else{return false}
+//Apis
+const addNewPicApis=async(token,imagePth)=>{
+    console.log('imagePth',imagePth)
+    const formAddImage=new FormData();
+    console.log("===============>1");
+    formAddImage.append('newPic',{
+        uri:imagePth,
+        name:'image',
+        type:'image/jpeg'
+      });
+    var config = {
+        method: 'post',
+        url: configServer.base_url+'user/add/picture/',
+        headers: { 
+          'Authorization': 'Bearer '+token,
+          'content-type': 'multipart/form-data;',
+          'accept':'application/json'
+          
+        },
+        data : formAddImage
+      };
+      console.log("===============>2");
+      await axios(config).then(res=>{
+          console.log('res add new pic',res.data);
+          console.log("===============>3");
+
+      }).catch(err=>{
+        console.log("===============>4");
+          console.log('err =>'+err.message);
+      });
+}
+const actionsFilter=(actionsArray,token)=>{
+    for(let i=0;i<actionsArray.length;i++){
+        if(actionsArray[i].option=='add'){
+            addNewPicApis(token,actionsArray[i].imagePath)
+        }
+    }
+
 }
 
 
@@ -66,6 +100,8 @@ export default function profile({route}){
     useEffect(()=>{
         if(token){
             getGalaryApi(token,setGallery);
+            
+            console.log('token=>',token)
         }
         
         getFromAsync.getFromStorage('firstName',setFirstName);
@@ -77,19 +113,21 @@ export default function profile({route}){
     useEffect(()=>{
         if(!token){
             getFromAsync.getFromStorage('token',setToken);
+            console.log("token==>",token);
            
         }
         if(!profilePic){
             getFromAsync.getFromStorage('profilePic',setProfilePic);
         }
         
-      if(route.params!=undefined) {
-          if(route.params.actions!=undefined){
-            console.log('actions=> : ',route.params.actions);
-          }
-          
-          
-      }
+        if(route.params!=undefined) {
+            if(route.params.actions!=undefined){
+              console.log('actions=> : ',route.params.actions);
+              if(route.params.actions.length>0){
+                  actionsFilter(route.params.actions,token);
+              }
+            }
+        }
         
     },);
     useEffect(()=>{
@@ -171,7 +209,7 @@ const styles = StyleSheet.create({
         alignSelf:'center',
 
         borderRadius:width/25,
-        borderWidth:5,
+        borderWidth:1,
         borderColor:'black',
     },
     galleryOptionsButton:{

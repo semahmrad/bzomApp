@@ -15,6 +15,7 @@ const saveTheNewGalaryChange=(setEditGalaryVisibility)=>{
 //Apis
 const addNewPicApis=async(token,image)=>{
     const formAddImage=new FormData();
+    console.log('image.mime  : ',image.mime)
     formAddImage.append('newPic',{
         uri:image.path,
         name:'image',
