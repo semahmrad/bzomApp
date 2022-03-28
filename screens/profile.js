@@ -42,40 +42,14 @@ const getGalaryApi=async(token,setGalary)=>{
 }
 
 //Apis
-const addNewPicApis=async(token,imagePth)=>{
-    console.log('imagePth',imagePth)
-    const formAddImage=new FormData();
-    console.log("===============>1");
-    formAddImage.append('newPic',{
-        uri:imagePth,
-        name:'image',
-        type:'image/jpeg'
-      });
-    var config = {
-        method: 'post',
-        url: configServer.base_url+'user/add/picture/',
-        headers: { 
-          'Authorization': 'Bearer '+token,
-          'content-type': 'multipart/form-data;',
-          'accept':'application/json'
-          
-        },
-        data : formAddImage
-      };
-      console.log("===============>2");
-      await axios(config).then(res=>{
-          console.log('res add new pic',res.data);
-          console.log("===============>3");
 
-      }).catch(err=>{
-        console.log("===============>4");
-          console.log('err =>'+err.message);
-      });
-}
-const actionsFilter=(actionsArray,token)=>{
+const actionsFilter=async(actionsArray,token,setReload,reload)=>{
+    console.log('==========>',reload);
     for(let i=0;i<actionsArray.length;i++){
         if(actionsArray[i].option=='add'){
-            addNewPicApis(token,actionsArray[i].imagePath)
+            setReload(!reload)
+            await addNewPicApis(token,actionsArray[i].imagePath);
+           
         }
     }
 
@@ -96,12 +70,12 @@ export default function profile({route}){
     //images
     const [currentImg,setCurrentImg]=useState();
     //actions from gallery update
-    const [actions,setActions]=useState();
+    const [reload,setReload]=useState(route.params.reload);
     useEffect(()=>{
         if(token){
             getGalaryApi(token,setGallery);
-            
-            console.log('token=>',token)
+            console.log('token=>',token);
+           
         }
         
         getFromAsync.getFromStorage('firstName',setFirstName);
@@ -119,21 +93,16 @@ export default function profile({route}){
         if(!profilePic){
             getFromAsync.getFromStorage('profilePic',setProfilePic);
         }
-        
-        if(route.params!=undefined) {
-            if(route.params.actions!=undefined){
-              console.log('actions=> : ',route.params.actions);
-              if(route.params.actions.length>0){
-                  actionsFilter(route.params.actions,token);
-              }
-            }
+        if(!true){
+        getGalaryApi(token,setGallery);
+        setReload(false);
+        console.log("Reload");
+        console.log('reload,reload',reload)
         }
-        
     },);
     useEffect(()=>{
-       //console.log('test life cycle====>',gallaryUpdates[0].imageId)
-    
-    },);
+       
+    },[!reload]);
 console.log("currentImg : ",currentImg)
 return (
         <View style={styles.container}>

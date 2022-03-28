@@ -5,6 +5,9 @@ import dimension from  './../../screenSizes/screenOfSizes'
 import usedMethodes from '../../usedMethods/usedMethods'
 import ImagePicker from 'react-native-image-crop-picker';
 import colors from './../../projectColor/colors'
+import getFromAsync from '../../getFromAsyncStorage/getFromStorage'
+import configServer from './../../confProject/conf_serv'
+import axios from 'axios'
 
 let width =dimension.width
 let height=dimension.heightWhenNavBar
@@ -31,19 +34,19 @@ const testImageType=(image)=>{
         )
     }
 }
-const DeleteImageFromArray=(arr,id,setChanged,changed)=>{
+const DeleteImageFromArray=(arr,id,setActions,actions)=>{
 
-       if(changed.filter(elem=>elem.imageId==id).length>0){
-            setChanged(changed.filter(elem=>elem.imageId!=id));
+       if(actions.filter(elem=>elem.imageId==id).length>0){
+            setActions(actions.filter(elem=>elem.imageId!=id));
        }
        else{
-        setChanged([{imageId:id,option:'remove'},...changed])
+        setActions([{imageId:id,option:'remove'},...actions])
        }
         
         return arr.filter(element=>element.img_id!=id);
 
 }
-const addImageFromGallery=(setAlbum,album,setChanged,changed)=>{
+const addImageFromGallery=(setAlbum,album,setActions,actions)=>{
     ImagePicker.openPicker({
        
          width:width*2,
@@ -57,7 +60,7 @@ const addImageFromGallery=(setAlbum,album,setChanged,changed)=>{
         }
       
        setAlbum([picAdd,...album]);
-       setChanged([{imageId:picAdd.img_id,imagePath:image.path,option:'add'},...changed])
+       setActions([{imageId:picAdd.img_id,imagePath:image.path,option:'add'},...actions])
         
        
        }).catch(e=>{console.warn(e)})
@@ -82,22 +85,91 @@ const imageOption=(imageOptionVisibility,setImageOptionVisibility,imageSelected)
         );
     }else{return null}
 }
+//APIS###############
+const addNewPicApis=async(token,imagePath)=>{
+    console.log('imagePth',imagePath)
+    const formAddImage=new FormData();
+    formAddImage.append('newPic',{
+        uri:imagePath,
+        name:'image',
+        type:'image/jpeg'
+      });
+    var config = {
+        method: 'post',
+        url: configServer.base_url+'user/add/picture/',
+        headers: { 
+          'Authorization': 'Bearer '+token,
+          'content-type': 'multipart/form-data;',
+          'accept':'application/json'
+          
+        },
+        data : formAddImage
+      };
+      await axios(config).then(res=>{
+          console.log('res add new pic',res.data);
+      }).catch(err=>{
+          console.log('err =>'+err.message);
+      });
+}
 
+const deleteImageApis=async(token,imageId)=>{
+
+    var config = {
+        method: 'post',
+        url: configServer.base_url+'user/remove/picture',
+        headers: { 
+          'Authorization': 'Bearer '+token,
+          'Content-Type': 'application/json'
+          
+        },
+        data : {"imageId":imageId}
+      };
+     
+      await axios(config).then(res=>{
+          console.log('deleteImageApis',res.data);
+      }).catch(err=>{
+          console.log('err1 =>'+err.message);
+      });
+}
+
+
+const doActions= async(actions,token,setActions)=>{
+    actions.forEach(action => {
+        if(action.option='add'){
+            setTimeout(()=>{
+                addNewPicApis(token,action.imagePath);
+            },100);
+        }
+        if(action.option='remove'){
+            setTimeout(()=>{
+                deleteImageApis(token,action.imageId);
+            },100)
+           
+        }
+    });
+}
 export default function pictureProfileVisited({route}){
     const navigation=useNavigation();
     const [album,setAlbum]=useState([])
-    const [changed,setChanged]=useState([]);
+    const [actions,setActions]=useState([]);
 
+    const [token,setToken]=useState('');
     const [imageOptionVisibility,setImageOptionVisibility]=useState(false);
     const [imageSelected,setImageSelected]=useState('');
 
-    
+    console.log('Actions==>',actions);
     //const gallery=route.params.gallery;
     useEffect(()=>{
         const gallery=route.params.gallery;
         setAlbum(gallery);
      
     },[])
+    useEffect(()=>{
+        if(!token){
+            getFromAsync.getFromStorage('token',setToken);
+            console.log("token==>",token); 
+        }
+    },)
 
     return (
         <View style={styles.container}>
@@ -117,7 +189,7 @@ export default function pictureProfileVisited({route}){
                 <TouchableOpacity 
                     style={styles.addPicButton}
                     onPress={()=>{
-                        addImageFromGallery(setAlbum,album,setChanged,changed)
+                        addImageFromGallery(setAlbum,album,setActions,actions)
                     }}
                 >
                     <Image 
@@ -128,7 +200,8 @@ export default function pictureProfileVisited({route}){
                 <TouchableOpacity 
                     style={styles.doneButton}
                     onPress={()=>{
-                        navigation.navigate('Profile',{actions:changed,})
+                         doActions(actions,token,setActions)
+                        navigation.navigate('Profile',{reload:true});
                     }}
                 >
                     <Text style={styles.doneText}>Done</Text>
@@ -150,7 +223,7 @@ export default function pictureProfileVisited({route}){
                                     <TouchableOpacity
                                         style={styles.crossButton}
                                         onPress={()=>{
-                                            setAlbum(DeleteImageFromArray(album,item.img_id,setChanged,changed));
+                                            setAlbum(DeleteImageFromArray(album,item.img_id,setActions,actions));
                                             //changetArray.push();
                                            
                                         }}
@@ -270,12 +343,7 @@ const styles = StyleSheet.create({
         width:(width-(width/35)*3)/2,
         height:((width-(width/35)*3)/2)*1.3,
         borderWidth:width/100,
-        //borderColor:"white",
-        //borderRadius:width/20,
-      
-        //resizeMode:'contain',
         alignSelf:'center',
-        //borderRadius:width/20,
         marginLeft:width/35,
        
         marginTop:height/40,
