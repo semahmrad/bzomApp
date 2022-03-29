@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -17,7 +17,7 @@ import configServer from './../confProject/conf_serv';
 import methodsUsed from './../usedMethods/usedMethods';
 import colors from './../projectColor/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 let width = dimension.width;
 let height = dimension.heightWhenNavBar;
 import axios from 'axios';
@@ -51,18 +51,6 @@ const getGalaryApi = async (token, setGalary) => {
     });
 };
 
-//Apis
-
-const actionsFilter = async (actionsArray, token, setReload, reload) => {
-  console.log('==========>', reload);
-  for (let i = 0; i < actionsArray.length; i++) {
-    if (actionsArray[i].option == 'add') {
-      setReload(!reload);
-      await addNewPicApis(token, actionsArray[i].imagePath);
-    }
-  }
-};
-
 export default function profile({route}) {
   const navigation = useNavigation();
 
@@ -80,6 +68,7 @@ export default function profile({route}) {
   let token;
   useEffect(() => {
     const fetchToken = async () => {
+      //   console.log('profile useEffect was called');
       token = await AsyncStorage.getItem('token');
       getGalaryApi(token, setGallery);
       getFromAsync.getFromStorage('firstName', setFirstName);
@@ -88,6 +77,20 @@ export default function profile({route}) {
     };
     fetchToken();
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      const fetchToken = async () => {
+        token = await AsyncStorage.getItem('token');
+        getGalaryApi(token, setGallery);
+        getFromAsync.getFromStorage('profilePic', setProfilePic);
+      };
+      fetchToken();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <ScrollView>
