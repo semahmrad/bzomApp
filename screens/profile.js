@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,6 +8,7 @@ import {
   BackHandler,
   Alert,
   ScrollView,
+  AppState,
 } from 'react-native';
 
 import Swiper from 'react-native-swiper';
@@ -50,7 +51,25 @@ const getGalaryApi = async (token, setGalary) => {
       alert(err.message);
     });
 };
+const calcAge = dayBirth => {
+  //now
+  let birthDay = new Date(dayBirth);
+  let daysBirth = birthDay.getDate();
+  let monthBirth = birthDay.getMonth() + 1;
+  let yearBirth = birthDay.getFullYear();
+  //birth
+  let daysNow = new Date().getDate();
+  let monthNow = new Date().getMonth() + 1;
+  let yearNow = new Date().getFullYear();
 
+  if (daysNow - daysBirth < 0) {
+    monthNow -= 1;
+  }
+  if (monthNow - monthBirth < 0) {
+    yearNow -= 1;
+  }
+  return yearNow - yearBirth;
+};
 export default function profile({route}) {
   const navigation = useNavigation();
 
@@ -61,19 +80,32 @@ export default function profile({route}) {
   //name
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  //images
-  const [currentImg, setCurrentImg] = useState();
+  //birthday
+  const [age, setAge] = useState();
   //actions from gallery update
   const [reload, setReload] = useState();
   let token;
+  let birthday = '';
   useEffect(() => {
     const fetchToken = async () => {
       //   console.log('profile useEffect was called');
+
       token = await AsyncStorage.getItem('token');
+      birthday = await AsyncStorage.getItem('birthday');
+      setAge(calcAge(birthday));
+
       getGalaryApi(token, setGallery);
       getFromAsync.getFromStorage('firstName', setFirstName);
       getFromAsync.getFromStorage('lastName', setLastName);
       getFromAsync.getFromStorage('profilePic', setProfilePic);
+
+      console.log(
+        'birthday = ',
+        new Date(birthday),
+        ' day :',
+        new Date(birthday).getMonth(),
+      );
+      console.log('now :', new Date(), ' day : ', new Date().getMonth());
     };
     fetchToken();
   }, []);
@@ -82,7 +114,10 @@ export default function profile({route}) {
     const unsubscribe = navigation.addListener('focus', () => {
       const fetchToken = async () => {
         token = await AsyncStorage.getItem('token');
+
         getGalaryApi(token, setGallery);
+        console.log('token ==>', token);
+        console.log('sett gallary ==>', gallery.length);
         getFromAsync.getFromStorage('profilePic', setProfilePic);
       };
       fetchToken();
@@ -91,6 +126,30 @@ export default function profile({route}) {
     return unsubscribe;
   }, [navigation]);
 
+  //test app state
+
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        console.log('App has come to the foreground!');
+      }
+
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+      console.log('AppState', appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+  console.log('appStateVisible : ', appStateVisible);
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -131,7 +190,9 @@ export default function profile({route}) {
             />
           </View>
         </View>
-        <Text style={styles.nameText}>{getFullName(firstName, lastName)}</Text>
+        <Text style={styles.nameText}>
+          {getFullName(firstName, lastName)} ,{age}
+        </Text>
       </ScrollView>
     </View>
   );

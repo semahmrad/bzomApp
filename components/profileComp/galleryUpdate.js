@@ -7,6 +7,7 @@ import {
   FlatList,
   ScrollView,
   TouchableOpacity,
+  AppState,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import dimension from './../../screenSizes/screenOfSizes';
@@ -255,6 +256,9 @@ export default function pictureProfileVisited({route}) {
                 </TouchableOpacity>
               </View>
             );
+          }}
+          onEndReached={() => {
+            alert('list ended');
           }}
         />
       </View>
