@@ -35,6 +35,7 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-get-location": "^2.1.2",
     "react-native-image-crop-picker": "^0.36.2",
+    "react-native-image-gallery": "^2.1.5",
     "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-modal": "^13.0.0",
@@ -54,7 +55,7 @@
     "react-native-slider": "^0.11.0",
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^12.1.1",
-    "react-native-swiper": "^1.6.0",
+    "react-native-swiper": "^1.5.3",
     "rn-fetch-blob": "^0.12.0"
   },
   "devDependencies": {

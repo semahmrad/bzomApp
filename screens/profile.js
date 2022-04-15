@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import Swiper from 'react-native-swiper';
+import ImageViewer from 'react-native-image-zoom-viewer';
 import dimension from '../screenSizes/screenOfSizes';
 import getFromAsync from '../getFromAsyncStorage/getFromStorage';
 import configServer from './../confProject/conf_serv';
@@ -28,13 +29,19 @@ const getFullName = (firstName, lastName) => {
   let lastName1 = lastName.charAt(0).toUpperCase() + lastName.slice(1);
   return firstName1 + ' ' + lastName1;
 };
-const getGalaryApi = async (token, setGalary) => {
+const getGalaryApi = async (
+  token,
+  setGalary,
+  startImagePosition,
+  elementNumber,
+) => {
   var config = {
     method: 'post',
     url: configServer.base_url + 'user/gallery',
     headers: {
       Authorization: 'Bearer ' + token,
     },
+    data: {start: startImagePosition, step: elementNumber},
   };
   await axios(config)
     .then(res => {
@@ -49,6 +56,26 @@ const getGalaryApi = async (token, setGalary) => {
     .catch(err => {
       console.log(err.message);
       alert(err.message);
+    });
+};
+
+const getHashtagsApi = async (token, setHashtagsSelected) => {
+  var config = {
+    method: 'post',
+    url: configServer.base_url + 'user/get/hashtags',
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  };
+  await axios(config)
+    .then(result => {
+      if (result.data.code == 200) {
+        setHashtagsSelected(result.data.hashtags);
+      }
+    })
+    .catch(err => {
+      console.log('err ', err);
+      alert(err);
     });
 };
 const calcAge = dayBirth => {
@@ -86,6 +113,14 @@ export default function profile({route}) {
   const [reload, setReload] = useState();
   let token;
   let birthday = '';
+  //gallery step and start position
+
+  let startImagePosition = 0;
+  let elementNumber = 7;
+
+  //hashtagsSelected
+  const [hashtagsSelected, setHashtagsSelected] = useState();
+
   useEffect(() => {
     const fetchToken = async () => {
       //   console.log('profile useEffect was called');
@@ -93,30 +128,34 @@ export default function profile({route}) {
       token = await AsyncStorage.getItem('token');
       birthday = await AsyncStorage.getItem('birthday');
       setAge(calcAge(birthday));
+      //get hashtags
+      getHashtagsApi(token, setHashtagsSelected);
 
-      getGalaryApi(token, setGallery);
+      getGalaryApi(token, setGallery, startImagePosition, elementNumber);
+
       getFromAsync.getFromStorage('firstName', setFirstName);
       getFromAsync.getFromStorage('lastName', setLastName);
       getFromAsync.getFromStorage('profilePic', setProfilePic);
-
-      console.log(
-        'birthday = ',
-        new Date(birthday),
-        ' day :',
-        new Date(birthday).getMonth(),
-      );
-      console.log('now :', new Date(), ' day : ', new Date().getMonth());
     };
     fetchToken();
   }, []);
 
+  //exec when navigate
   useEffect(() => {
+    let startImagePosition = 0;
+    let elementNumber = 7;
     const unsubscribe = navigation.addListener('focus', () => {
+      console.log('hey=============>');
+      //for selected hashtags items
+
       const fetchToken = async () => {
         token = await AsyncStorage.getItem('token');
+        //get hashtags
+        getHashtagsApi(token, setHashtagsSelected);
 
-        getGalaryApi(token, setGallery);
-        console.log('token ==>', token);
+        //get gallery images
+        getGalaryApi(token, setGallery, startImagePosition, elementNumber);
+
         console.log('sett gallary ==>', gallery.length);
         getFromAsync.getFromStorage('profilePic', setProfilePic);
       };
@@ -155,8 +194,14 @@ export default function profile({route}) {
       <ScrollView>
         <View style={styles.swiperAndimgContainer}>
           <Swiper
+            index={0}
+            onIndexChanged={async index => {
+              console.warn('current index : ', index);
+            }}
+            renderPagination={(index, total, context) => {
+              console.warn('current index : ', index);
+            }}
             style={styles.swiper}
-            //autoplay={true}
             showsPagination={false}>
             {gallery.map(image => {
               return (
@@ -193,6 +238,38 @@ export default function profile({route}) {
         <Text style={styles.nameText}>
           {getFullName(firstName, lastName)} ,{age}
         </Text>
+        {/* Personal Information  */}
+        <View style={styles.PersonalInfo}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.PersonalInfoTitle}>Personal Information</Text>
+            <TouchableOpacity
+              style={styles.editPersonalInfoButton}
+              onPress={() => {
+                alert('change the personal information');
+              }}>
+              <View style={styles.iconAndContentConainer}>
+                <Image
+                  source={require('./icons/editGallery.png')}
+                  style={styles.personalInfoEditIcon}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.livingIn}>Living in : Tunisie</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.hashtagsConstainer}
+          onPress={() => {
+            navigation.navigate('updateHashtags');
+          }}>
+          <Text style={styles.hashtagsTitle}>Hashtags</Text>
+          <View>
+            <Image
+              source={require('./icons/hashtags.png')}
+              style={styles.personalInfoEditIcon}
+            />
+          </View>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -200,7 +277,7 @@ export default function profile({route}) {
 const styles = StyleSheet.create({
   container: {
     height: height / 1.13,
-    //backgroundColor:'red'
+    backgroundColor: '#e1e1e2',
   },
   swiperAndimgContainer: {
     height: height / 1.9 + methodsUsed.circleObject(3.2) + 2,
@@ -279,5 +356,52 @@ const styles = StyleSheet.create({
   imagesOptionsText: {
     color: 'white',
     alignSelf: 'center',
+  },
+  //personal information
+  PersonalInfo: {
+    //borderTopWidth: 3,
+    borderColor: '#e0e0e0',
+    marginTop: height / 20,
+    marginBottom: height / 50,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+  },
+  PersonalInfoTitle: {
+    fontSize: height / 45,
+    fontWeight: '500',
+    color: colors.baseColor,
+    marginLeft: width / 20,
+  },
+  editPersonalInfoButton: {
+    width: methodsUsed.circleObject(11),
+    height: methodsUsed.circleObject(11),
+    marginLeft: width / 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  personalInfoEditIcon: {
+    width: methodsUsed.circleObject(18),
+    height: methodsUsed.circleObject(18),
+    tintColor: 'black',
+  },
+  livingIn: {
+    marginLeft: width / 15,
+    color: '#767676',
+    marginTop: height / 150,
+  },
+  //hashtags styles
+  hashtagsConstainer: {
+    marginTop: height / 50,
+    marginBottom: height / 50,
+    borderTopColor: '#dadada',
+    borderTopWidth: 3,
+  },
+  hashtagsTitle: {
+    fontSize: height / 45,
+    fontWeight: '500',
+    color: colors.baseColor,
+    marginLeft: width / 20,
+    marginTop: height / 100,
   },
 });

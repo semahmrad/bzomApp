@@ -1,0 +1,62 @@
+{
+  "sport": [
+    "Football",
+    "Handball",
+    "Bascketball",
+    "Baseball",
+    "Boxing",
+    "BMX",
+    "Bowling",
+    "Running",
+    "Crossfit",
+    "Golf",
+    "Tennis"
+  ],
+  "food": [
+    "Rendang",
+    "Sushi",
+    "Pad thai",
+    "Ramen",
+    "Peking duck",
+    "Ice cream",
+    "Salad",
+    "Running",
+    "Kebab",
+    "Tacos",
+    "Pizza"
+  ],
+  "Movies": ["Romance", "Action", "Historical", "Comedy", "Horror", "Crime"],
+  "Books": [
+    "Manga",
+    "Classics",
+    "Adventure",
+    "Biography",
+    "Crime fiction",
+    "Fiction",
+    "Non fiction",
+    "Horror",
+    "Poetry",
+    "Religion",
+    "Romance",
+    "Comics"
+  ],
+  "Travel": [
+    "Paris",
+    "Beijing",
+    "Shanghai",
+    "Dalian",
+    "Milan",
+    "Roma",
+    "London",
+    "Hong Kong",
+    "Suhou",
+    "Macau",
+    "Tokyo",
+    "Seoul",
+    "Dubai",
+    "Barcelona",
+    "Berlin",
+    "Hanoi",
+    "Istanbul"
+  ]
+}

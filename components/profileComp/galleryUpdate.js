@@ -38,8 +38,8 @@ const testImageType = image => {
   }
 };
 
-const addImageFromGallery = (setAlbum, album, token, setApiError) => {
-  ImagePicker.openPicker({
+const addImageFromGallery = async (setAlbum, album, token, setApiError) => {
+  await ImagePicker.openPicker({
     width: width * 2,
     height: width * 2.5,
     cropping: true,
@@ -105,13 +105,15 @@ const addNewPicApis = async (token, imagePath, setApiError) => {
     },
     data: formAddImage,
   };
-  axios(config)
+  await axios(config)
     .then(res => {
       setApiError(null);
       console.log('res add new pic', res.data);
+      console.warn(res.data);
     })
     .catch(err => {
       setApiError(err);
+      console.warn(err.message);
       console.log('err =>' + err.message);
     });
 };
@@ -160,6 +162,47 @@ const changeProfilePicApi = async (token, imageId, navigation) => {
       console.log('err1 =>' + err.message);
     });
 };
+const getGalaryApi = async (
+  token,
+  setAlbum,
+  album,
+  startImagePosition,
+  elementNumber,
+  //for test if in last gallery or not
+  setLastGallery,
+) => {
+  var config = {
+    method: 'post',
+    url: configServer.base_url + 'user/gallery',
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+
+    data: {start: startImagePosition, step: elementNumber},
+  };
+  await axios(config)
+    .then(res => {
+      console.log(' elementNumber = ', elementNumber);
+      console.log(res.data.msg);
+      console.warn(res.data.msg);
+      if (res.data.code == 200) {
+        if (album.length >= res.data.gallery.length) {
+          console.log('length is here =>', res.data.gallery.length);
+          setAlbum(album.concat(res.data.gallery));
+        }
+        if (res.data.gallery.length < elementNumber) {
+          setLastGallery(true);
+        }
+      } else {
+        console.warn(res.data.msg);
+      }
+    })
+    .catch(err => {
+      console.log(err.message);
+      console.warn(err.message);
+      alert(err.message);
+    });
+};
 //#################
 
 export default function pictureProfileVisited({route}) {
@@ -169,12 +212,18 @@ export default function pictureProfileVisited({route}) {
   const [imageOptionVisibility, setImageOptionVisibility] = useState(false);
   const [imageSelected, setImageSelected] = useState('');
   const [apiError, setApiError] = useState(null);
-
+  const [startImagePosition, setStartImagePosition] = useState(7);
+  const [lastGallery, setLastGallery] = useState(false);
+  console.log('lastGallery : ', lastGallery);
+  //let startImagePosition = 0;
+  let elementNumber = 7;
   useEffect(() => {
     const gallery = route.params.gallery;
     setAlbum(gallery);
+
     const fetchToken = async () => {
       let token = await AsyncStorage.getItem('token');
+      // getGalaryApi(token, setAlbum, album, startImagePosition, elementNumber);
       setToken(token);
     };
     fetchToken();
@@ -257,8 +306,18 @@ export default function pictureProfileVisited({route}) {
               </View>
             );
           }}
-          onEndReached={() => {
-            alert('list ended');
+          onEndReached={async () => {
+            if (!lastGallery) {
+              setStartImagePosition(startImagePosition + elementNumber);
+              await getGalaryApi(
+                token,
+                setAlbum,
+                album,
+                startImagePosition,
+                elementNumber,
+                setLastGallery,
+              );
+            }
           }}
         />
       </View>
